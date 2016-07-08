@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use App\Events\User\WasConfirmed;
+use App\Events\User\WasConfirmed as UserWasConfirmed;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -167,7 +167,7 @@ class User extends Authenticatable implements Contracts\Confirmable
             $this->confirmed_at = Carbon::now();
 
             if ($this->save()) {
-                event(new WasConfirmed($this, auth()->user()));
+                event(new UserWasConfirmed($this, auth()->user()));
 
                 return true;
             }
