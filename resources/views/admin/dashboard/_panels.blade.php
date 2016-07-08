@@ -33,7 +33,7 @@
         <h3 class="panel-title"><strong>Permissions</strong></h3>
       </div>
       <div class="panel-body">
-        <a href="{{ url('admin/permissions') }}" class="card-number">{{ $permissionsCount }}</a>
+        <a href="{{ url('admin/permission') }}" class="card-number">{{ $permissionsCount }}</a>
         <hr>
         @can('create-permission')
           <a class="btn btn-success btn-raised pull-left" href="{{ url('admin/permission/create') }}" role="button">New Permission</a>
