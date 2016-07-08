@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Models\Role;
-use App\Http\Requests\Request;
 
 class CreateRoleRequest extends Request
 {
@@ -28,10 +27,5 @@ class CreateRoleRequest extends Request
             'name' => 'required|max:255|unique:roles',
             'label' => 'required|max:255|different:name',
         ];
-    }
-
-    public function persist()
-    {
-        return Role::create($this->all());
     }
 }

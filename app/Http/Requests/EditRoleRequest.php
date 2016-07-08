@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Validator;
 use App\Models\Role;
 
 class EditRoleRequest extends Request
@@ -24,26 +23,11 @@ class EditRoleRequest extends Request
      */
     public function rules()
     {
+        $role = $this->route('role');
+
         return [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique:roles,name,' . $role->id,
             'label' => 'required|max:255|different:name',
         ];
-    }
-
-    public function persist(Role $role)
-    {
-        if ($role->name !== $this->input('name')) {
-            $validator = Validator::make($this->only('name'), [
-                'name' => 'unique:roles',
-            ]);
-
-            if ($validator->fails()) {
-                return back()->withErrors($validator)->withInput();
-            }
-        }
-
-        // event !
-
-        return $role->fill($this->all())->save();
     }
 }
