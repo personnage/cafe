@@ -17,6 +17,7 @@ class CreateRolesTable extends Migration
             $table->string('name'); // manager or editor
             $table->string('label')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('permissions', function (Blueprint $table) {
