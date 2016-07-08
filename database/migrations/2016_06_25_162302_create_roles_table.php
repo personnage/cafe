@@ -25,6 +25,7 @@ class CreateRolesTable extends Migration
             $table->string('name'); // edit-forum or update-post
             $table->string('label')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         $statement = 'CREATE INDEX %1$s_on_%2$s_trigram ON %1$s USING gin (%2$s gin_trgm_ops);';
