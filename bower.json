@@ -1,0 +1,21 @@
+{
+  "name": "app",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "private": true,
+  "dependencies": {
+    "jquery": "^2.2",
+    "bootstrap": "twitter#^3.3.6",
+    "bootstrap-material-design": "^0.5.10",
+    "remarkable-bootstrap-notify": "^3.1.3"
+  }
+}

@@ -1,0 +1,59 @@
+version: '2'
+services:
+  laravel:
+    build:
+      context: ./
+      dockerfile: ./docker/laravel/Dockerfile
+    ports:
+      - 8888:8000
+    links:
+      - beanstalkd:queue
+      - postgres:db
+      - redis
+    volumes:
+      # RW (Laravel spec)
+      # - /var/www/html/storage
+      # - /var/www/html/bootstrap/cache
+      # Mount
+      - ./:/var/www/html
+
+  node:
+    build:
+      context: ./
+      dockerfile: ./docker/node/Dockerfile
+    volumes_from:
+      - laravel:rw
+    stop_signal: SIGKILL
+
+  nginx:
+    build:
+      context: ./docker/nginx
+    ports:
+      - 8080:80
+    links:
+      - laravel:fpm
+    volumes_from:
+      - laravel:ro
+
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_DATABASE}
+      PGDATA: /var/lib/postgresql/data/dbstore
+    volumes:
+      - allcafe_dbstore:/var/lib/postgresql/data/dbstore
+
+  redis:
+    image: redis
+
+  beanstalkd:
+    image: schickling/beanstalkd
+    stop_signal: SIGKILL
+
+volumes:
+  allcafe_dbstore:
+    external: false
