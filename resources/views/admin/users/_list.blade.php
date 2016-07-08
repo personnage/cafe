@@ -11,9 +11,11 @@
     @foreach ($users as $user)
       <tr>
         <td>
-          <a href="{{ url('admin/user', $user->id) }}" class="text-muted">
-            <i class="material-icons @if($user->trashed())text-danger @endif">person</i> {{ $user->name }}
-          </a>
+          <span class="text-middle text-nowrap">
+            <i class="material-icons @if($user->trashed())text-danger @endif">person</i>
+            <a href="{{ url('admin/user', $user->id) }}" class="text-muted">{{ $user->name }}</a>
+          </span>
+
           @if ($user->admin)
             <span class="text-danger">(Admin)</span>
             @if (Auth::id()===$user->id)
@@ -23,9 +25,10 @@
         </td>
 
         <td>
-          <a href="mailto:{{ $user->email }}" class="text-muted">
-            <i class="material-icons">mail_outline</i> {{ $user->email }}
-          </a>
+          <span class="text-middle">
+            <i class="material-icons">mail_outline</i>
+            <a href="mailto:{{ $user->email }}" class="text-muted">{{ $user->email }}</a>
+          </span>
         </td>
 
         <td>

@@ -12,7 +12,7 @@
       <tr>
         <td>
           <span class="text-middle text-nowrap">
-            <i class="material-icons">card_membership</i>
+            <i class="material-icons @if($role->trashed())text-danger @endif">card_membership</i>
             <a href="{{ url('admin/role', $role->id) }}" class="text-muted">{{ $role->name }}</a>
           </span>
         </td>
