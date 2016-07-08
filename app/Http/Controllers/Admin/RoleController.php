@@ -14,9 +14,21 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return 'Hello world!';
+        $roles = Role::filter($request->input('filter'));
+
+        if ($request->has('search')) {
+            $roles = $roles->search($request->input('search'));
+        }
+
+        $roles = $roles->sort($request->input('sort'));
+        $roles = $roles->simplePaginate($request->input('per_page') ?? 15);
+
+        return view('admin.roles.index', compact('roles'))
+            ->with('active', Role::count())
+            ->with('deleted', Role::onlyTrashed()->count())
+        ;
     }
 
     /**
@@ -39,9 +51,11 @@ class RoleController extends Controller
      */
     public function store(CreateRoleRequest $request)
     {
-        $request->persist();
+        if (Role::create($request->all())->wasRecentlyCreated) {
+            return back()->with('notice', 'Role was successfully created.');
+        }
 
-        return back()->with('notice', 'Role was successfully created.');
+        return back()->with('alert', 'Error occurred. Role was not created.');
     }
 
     /**
@@ -50,9 +64,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $role_id)
     {
-        //
+        return $role_id;
     }
 
     /**
@@ -75,11 +89,9 @@ class RoleController extends Controller
      */
     public function update(EditRoleRequest $request, Role $role)
     {
-        if ($request->persist($role)) {
-            return back()->with('notice', 'Role was successfully updated.');
-        }
+        $role->fill($request->all())->save();
 
-        return back()->with('alert', 'Error occurred. Role was not updated.');
+        return back()->with('notice', 'Role was successfully updated.');
     }
 
     /**
@@ -88,8 +100,37 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $role_id)
     {
-        //
+        $role = Role::withTrashed()->findOrFail($role_id);
+
+        if ($role->forceDelete()) {
+            return redirect()->route('admin.role.index', ['filter' => 'deleted'])
+                ->with('notice', 'The role is being deleted.');
+        }
+
+        return back()->with('alert', 'Error occurred. Role was not deleted.');
+    }
+
+    public function delete(Role $role)
+    {
+        if ($role->delete()) {
+            return back()->with('notice', 'The role is being deleted.');
+        }
+
+        return back()->with('alert', 'Error occurred. Role was not deleted.');
+    }
+
+    public function restore($role_id)
+    {
+        $role = Role::withTrashed()->findOrFail($role_id);
+
+        if ($role->trashed()) {
+            $role->restore();
+
+            return back()->with('notice', 'The role restored.');
+        }
+
+        return back()->with('alert', 'Error occurred. Role was not restored.');
     }
 }

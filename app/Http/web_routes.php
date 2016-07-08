@@ -44,6 +44,8 @@ Route::group([
     Route::get('user/{user}/impersonate', 'UserController@impersonate');
     Route::resource('user', 'UserController');
 
+    Route::patch('role/{role}/delete', 'RoleController@delete');
+    Route::patch('role/{role}/restore', 'RoleController@restore');
     Route::resource('role', 'RoleController');
 
     // Route::resource('permission', 'PermissionController');
