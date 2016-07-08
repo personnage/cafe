@@ -26,7 +26,7 @@ class EditRoleRequest extends Request
         $role = $this->route('role');
 
         return [
-            'name' => 'required|max:255|unique:roles,name,' . $role->id,
+            'name' => 'required|max:255|unique:roles,name,'.$role->id,
             'label' => 'required|max:255|different:name',
         ];
     }
