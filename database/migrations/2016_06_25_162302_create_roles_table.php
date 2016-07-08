@@ -27,6 +27,13 @@ class CreateRolesTable extends Migration
             $table->timestamps();
         });
 
+        $statement = 'CREATE INDEX %1$s_on_%2$s_trigram ON %1$s USING gin (%2$s gin_trgm_ops);';
+
+        Schema::getConnection()->statement(sprintf($statement, 'roles', 'name'));
+        Schema::getConnection()->statement(sprintf($statement, 'roles', 'label'));
+        Schema::getConnection()->statement(sprintf($statement, 'permissions', 'name'));
+        Schema::getConnection()->statement(sprintf($statement, 'permissions', 'label'));
+
         Schema::create('permission_role', function (Blueprint $table) {
             $table->unsignedInteger('permission_id');
             $table->unsignedInteger('role_id');
