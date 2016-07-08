@@ -163,6 +163,9 @@ return [
          */
         Laravel\Socialite\SocialiteServiceProvider::class,
         Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
+
+        // раскомментировать -> запустить artisan ide-helper:generate -> закомментировать обратно
+        // Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
     ],
 
     /*

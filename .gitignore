@@ -8,3 +8,5 @@
 /resources/assets/vendor/bower_components
 /resources/template
 /vendor
+.idea
+_ide_helper.php
