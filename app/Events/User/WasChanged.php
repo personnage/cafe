@@ -7,11 +7,9 @@ use App\Models\User;
 class WasChanged extends Event
 {
     public $user;
-    public $updater;
 
-    public function __construct(User $user, User $updater)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->updater = $updater;
     }
 }
