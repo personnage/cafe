@@ -52,6 +52,19 @@ class User extends Authenticatable implements Contracts\Confirmable
         'admin' => 'boolean',
     ];
 
+    # Accessor
+
+    /**
+     * Get the user's name.
+     *
+     * @param  string  $value
+     * @return string  Return name field if exist otherwise username.
+     */
+    public function getNameAttribute($value)
+    {
+        return $value ?? $this->username;
+    }
+
     # Scopes
 
     /**
