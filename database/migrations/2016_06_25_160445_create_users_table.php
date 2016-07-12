@@ -14,8 +14,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->index();
             $table->string('email')->unique();
+            $table->string('username')->unique();
             $table->string('password', 60);
             $table->rememberToken();
             $table->timestamps();
@@ -26,11 +26,11 @@ class CreateUsersTable extends Migration
         $statement = 'CREATE INDEX %s ON users USING gin (%s gin_trgm_ops);';
 
         Schema::getConnection()->statement(sprintf(
-            $statement, 'users_on_name_trigram', 'name'
+            $statement, 'users_on_email_trigram', 'email'
         ));
 
         Schema::getConnection()->statement(sprintf(
-            $statement, 'users_on_email_trigram', 'email'
+            $statement, 'users_on_username_trigram', 'username'
         ));
     }
 
