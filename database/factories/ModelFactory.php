@@ -28,6 +28,13 @@ $factory->define(App\Models\Role::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Models\Permission::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word,
+        'label' => $faker->sentence,
+    ];
+});
+
 $factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
     return [
         'user_id' => factory(App\Models\User::class)->create()->id,
