@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CreateUserRequest;
-use App\Http\Requests\EditUserRequest;
+use App\Http\Requests\{CreateUserRequest, EditUserRequest};
 use App\Models\User;
 use App\Repositories\UserRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -74,20 +74,34 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        $request->persist();
+        $user = User::forceCreate(array_merge($request->except('_token'), [
+            'password' => bcrypt(str_random(10)),
+            'notification_email' => $request->input('email'),
 
-        return back()->with('notice', 'User was successfully created.');
+            'admin' => !! $request->input('admin'),
+            'confirmed_at' => Carbon::now(),
+            'created_by_id' => auth()->id(),
+        ]));
+
+        if ($user->wasRecentlyCreated) {
+            $user->resetAuthenticationToken();
+            $user->save();
+
+            return back()->with('notice', 'User was successfully created.');
+        }
+
+        return back()->with('alert', 'Error occurred. User was not created.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $user
+     * @param  int  $user_id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, int $user)
+    public function show(Request $request, int $user_id)
     {
-        $user = User::withTrashed()->findOrFail($user);
+        $user = User::withTrashed()->findOrFail($user_id);
 
         return view('admin.users.show', compact('user'));
     }
@@ -113,11 +127,18 @@ class UserController extends Controller
      */
     public function update(EditUserRequest $request, User $user)
     {
-        if ($request->persist($user)) {
-            return back()->with('notice', 'User was successfully updated.');
+        // The administrator cannot absolve themselves of responsibility.
+        if (auth()->id() !== $user->id) {
+            $user->admin = !! $request->input('admin');
         }
 
-        return back()->with('alert', 'Error occurred. User was not updated.');
+        if (strlen($request->input('password')) > 1) {
+            $user->password = bcrypt($request->input('password'));
+        }
+
+        $user->fill($request->except('password'))->save();
+
+        return back()->with('notice', 'User was successfully updated.');
     }
 
     /**

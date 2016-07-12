@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CreateRoleRequest;
-use App\Http\Requests\EditRoleRequest;
+use App\Http\Requests\{CreateRoleRequest, EditRoleRequest};
 use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -39,8 +39,9 @@ class RoleController extends Controller
     public function create()
     {
         $role = new Role;
+        $permissions = Permission::all();
 
-        return view('admin.roles.create', compact('role'));
+        return view('admin.roles.create', compact('role', 'permissions'));
     }
 
     /**

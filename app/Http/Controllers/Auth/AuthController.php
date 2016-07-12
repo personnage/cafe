@@ -57,7 +57,18 @@ class AuthController extends Controller
      */
     public function register(RegisteredUserRequest $request)
     {
-        $request->persist();
+        $user = User::create(array_merge($request->except('password'), [
+            'password' => bcrypt($request->input('passworf')),
+            'notification_email' => $request->input('email'),
+        ]));
+
+        if ($user->wasRecentlyCreated) {
+            // I don't know!
+            // $user->resetAuthenticationToken();
+            // $user->save();
+
+            dispatch(new SendConfirmationToEmail($user));
+        }
 
         return redirect('/almost_there');
     }

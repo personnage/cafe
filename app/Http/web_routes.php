@@ -48,7 +48,9 @@ Route::group([
     Route::patch('role/{role}/restore', 'RoleController@restore');
     Route::resource('role', 'RoleController');
 
-    // Route::resource('permission', 'PermissionController');
+    Route::patch('permission/{permission}/delete', 'PermissionController@delete');
+    Route::patch('permission/{permission}/restore', 'PermissionController@restore');
+    Route::resource('permission', 'PermissionController');
 });
 
 // Личный кабинет для зарегистрированного пользователя.

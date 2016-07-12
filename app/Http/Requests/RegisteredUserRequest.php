@@ -2,12 +2,18 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
-use App\Events\User\WasRegistered;
-use App\Jobs\SendConfirmationToEmail;
-
-class RegisteredUserRequest extends CreateUserRequest
+class RegisteredUserRequest extends Request
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return ! $this->user()->check();
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -20,33 +26,5 @@ class RegisteredUserRequest extends CreateUserRequest
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ];
-    }
-
-    /**
-     * Create new user instance.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
-    public function make(array $data)
-    {
-        $user = User::create($data);
-        $user->resetAuthenticationToken();
-        $user->save();
-
-        event(new WasRegistered($user));
-        dispatch(new SendConfirmationToEmail($user));
-
-        return $user;
-    }
-
-    /**
-     * Get password for given user.
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->input('password');
     }
 }
