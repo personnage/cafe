@@ -11,7 +11,7 @@ class RegisteredUserRequest extends Request
      */
     public function authorize()
     {
-        return ! $this->user()->check();
+        return is_null($this->user());
     }
 
     /**
@@ -22,9 +22,9 @@ class RegisteredUserRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'username' => 'required|max:255|unique:users',
         ];
     }
 }

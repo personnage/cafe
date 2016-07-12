@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Jobs\SendConfirmationToEmail;
 use App\Http\Requests\RegisteredUserRequest;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -58,14 +59,12 @@ class AuthController extends Controller
     public function register(RegisteredUserRequest $request)
     {
         $user = User::create(array_merge($request->except('password'), [
-            'password' => bcrypt($request->input('passworf')),
+            'password' => bcrypt($request->input('password')),
             'notification_email' => $request->input('email'),
         ]));
 
         if ($user->wasRecentlyCreated) {
-            // I don't know!
-            // $user->resetAuthenticationToken();
-            // $user->save();
+            $user->resetAuthenticationToken()->save();
 
             dispatch(new SendConfirmationToEmail($user));
         }

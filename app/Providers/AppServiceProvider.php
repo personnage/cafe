@@ -73,7 +73,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         User::updated(function ($user) {
-            event(new UserWasChanged($user, auth()->user()));
+            event(new UserWasChanged($user));
         });
 
         User::deleted(function ($user) {
