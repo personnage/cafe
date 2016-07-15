@@ -3,7 +3,7 @@
     <div class="col-sm-6">
       <form method="GET" action="{{ url('admin/user') }}" class="bs-component" accept-charset="UTF-8">
         <div class="form-group label-floating is-empty">
-          <label class="control-label" for="namesearch">Name, email or username</label>
+          <label class="control-label" for="namesearch">Name or email</label>
           <div class="input-group">
             <input type="search" name="search" autocomplete="off" id="namesearch" class="form-control" spellcheck="false">
             @if(Request::has('filter'))

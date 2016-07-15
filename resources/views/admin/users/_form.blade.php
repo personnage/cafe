@@ -21,18 +21,6 @@
       </div>
     </div>
 
-    <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-      <label for="username" class="col-sm-2 control-label">Username</label>
-      <div class="col-sm-10">
-        <input type="text" name="username" value="{{ old('username', $user->username) }}" id="username" class="form-control" placeholder="Username" autocomplete="off" required>
-        @if ($errors->has('username'))
-            <span class="help-block">
-                <strong>{{ $errors->first('username') }}</strong>
-            </span>
-        @endif
-      </div>
-    </div>
-
     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
       <label for="email" class="col-sm-2 control-label">Email</label>
       <div class="col-sm-10">
