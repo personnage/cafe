@@ -13,10 +13,10 @@ class CreateContentCategoriesTable extends Migration
     public function up()
     {
         Schema::create('content_categories', function (Blueprint $table) {
-            $table->increments('id')->nullable();
+            $table->increments('id');
             $table->string('name');
             $table->string('seo_name');
-            $table->integer('parent_id')->nullable();
+            $table->integer('parent_id');
             $table->integer('type_id');
 
             $table->index('seo_name');
