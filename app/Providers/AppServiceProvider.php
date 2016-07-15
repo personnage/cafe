@@ -13,10 +13,9 @@ use App\Events\Role\{
 };
 
 use App\Events\User\{
-    WasChanged as UserWasChanged,
     WasCreated as UserWasCreated,
     WasDeleted as UserWasDeleted,
-    WasRegistered as UserWasRegistered,
+
     WasRestored as UserWasRestored
 };
 
@@ -47,25 +46,20 @@ class AppServiceProvider extends ServiceProvider
 
     protected function events()
     {
-        // User::created(function ($user) {
-        //     if (is_null($user->created_by_id)) {
-        //         event(new UserWasRegistered($user));
-        //     } else {
-        //         event(new UserWasCreated($user, auth()->user()));
-        //     }
-        // });
+        User::created(function ($user) {
+            event(new UserWasCreated($user, auth()->user() ?? $user));
+        });
 
-        // User::updated(function ($user) {
-        //     event(new UserWasChanged($user));
-        // });
+        User::deleted(function ($user) {
+            event(new UserWasDeleted($user, auth()->user()));
+        });
 
-        // User::deleted(function ($user) {
-        //     event(new UserWasDeleted($user, auth()->user(), true));
-        // });
+        User::restored(function ($user) {
+           event(new UserWasRestored($user, auth()->user()));
+        });
 
-        // User::restored(function ($user) {
-        //    event(new UserWasRestored($user, auth()->user()));
-        // });
+
+
 
         // Role::created(function ($role) {
         //     // If create role from factory, user not exist.

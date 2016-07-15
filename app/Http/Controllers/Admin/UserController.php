@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\{CreateUserRequest, EditUserRequest};
+use App\Events\User\Impersonated;
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\EditUserRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Carbon\Carbon;
+use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    use ResetsPasswords;
+
     /**
      * The user repository instance.
      *
@@ -86,6 +91,8 @@ class UserController extends Controller
         if ($user->wasRecentlyCreated) {
             $user->resetAuthenticationToken();
             $user->save();
+
+            $this->sendResetLinkEmail($request);
 
             return back()->with('notice', 'User was successfully created.');
         }
@@ -225,7 +232,7 @@ class UserController extends Controller
 
         auth()->login($user);
 
-        // event(new HasImpersonated(auth()->id(), $user));
+        event(new Impersonated($user, auth()->user()));
 
         return redirect()->to($request->root());
     }

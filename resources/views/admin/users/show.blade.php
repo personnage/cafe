@@ -65,9 +65,6 @@
           <dt>Name</dt>
           <dd>{{ $user->name }}</dd>
 
-          <dt>Username</dt>
-          <dd>{{ $user->username }}</dd>
-
           <dt>Confirmed at</dt>
           @if($user->isConfirmed())
             <dd>{{ $user->confirmed_at->toDayDateTimeString() }}</dd>

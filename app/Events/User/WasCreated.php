@@ -6,7 +6,14 @@ use App\Models\User;
 
 class WasCreated extends Event
 {
+    /**
+     * @var User
+     */
     public $user;
+
+    /**
+     * @var User
+     */
     public $creator;
 
     public function __construct(User $user, User $creator)

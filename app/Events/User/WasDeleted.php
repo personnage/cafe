@@ -6,19 +6,19 @@ use App\Models\User;
 
 class WasDeleted extends Event
 {
+    /**
+     * @var User
+     */
     public $user;
-    public $by;
-    public $forever;
 
     /**
-     * @param User   $user
-     * @param User   $by
-     * @param bool   $forever
+     * @var User
      */
-    public function __construct(User $user, User $by, $forever)
+    public $by;
+
+    public function __construct(User $user, User $by)
     {
         $this->user = $user;
         $this->by = $by;
-        $this->forever = $forever;
     }
 }

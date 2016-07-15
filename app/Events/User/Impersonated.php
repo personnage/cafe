@@ -4,7 +4,7 @@ namespace App\Events\User;
 
 use App\Models\User;
 
-class WasRestored extends Event
+class Impersonated extends Event
 {
     /**
      * @var User
@@ -14,11 +14,11 @@ class WasRestored extends Event
     /**
      * @var User
      */
-    public $by;
+    public $impersonator;
 
-    public function __construct(User $user, User $by)
+    public function __construct(User $user, User $impersonator)
     {
         $this->user = $user;
-        $this->by = $by;
+        $this->impersonator = $impersonator;
     }
 }
