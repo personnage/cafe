@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Jobs\SendConfirmationToEmail;
+use App\Events\User\WasRegistered;
 use App\Http\Requests\RegisteredUserRequest;
+use App\Jobs\SendConfirmationToEmail;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -25,18 +26,18 @@ class AuthController extends Controller
     use AuthenticatesAndRegistersUsers, ThrottlesLogins, OAuth;
 
     /**
-     * The fields containing the user name.
-     *
-     * @var string
-     */
-    protected $username = 'login';
-
-    /**
      * Where to redirect users after login.
      *
      * @var string
      */
     protected $redirectTo = '/';
+
+    /**
+     *  Where to redirect users after registred.
+     *
+     * @var string
+     */
+    protected $redirectAlmost = '/almost_there';
 
     /**
      * Create a new authentication controller instance.
@@ -51,8 +52,6 @@ class AuthController extends Controller
     /**
      * Handle a registration request for the application.
      *
-     * @see    \Illuminate\Foundation\Auth\RegistersUsers::register
-     * @event  \App\Events\User\WasRegistered
      * @param  \App\Http\Requests\RegisteredUserRequest  $request
      * @return \Illuminate\Http\Response
      */
@@ -66,28 +65,10 @@ class AuthController extends Controller
         if ($user->wasRecentlyCreated) {
             $user->resetAuthenticationToken()->save();
 
-            dispatch(new SendConfirmationToEmail($user));
+            event(new WasRegistered($user));
         }
 
-        return redirect('/almost_there');
-    }
-
-    /**
-     * Get the needed authorization credentials from the request.
-     *
-     * @see    \Illuminate\Foundation\Auth\AuthenticatesUsers::getCredentials
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
-    protected function getCredentials(Request $request)
-    {
-        $credentials = $request->only($this->loginUsername(), 'password');
-
-        $loginKey = filter_var($credentials[$this->loginUsername()], \FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        $loginValue = array_pull($credentials, $this->loginUsername());
-
-        // Update credentials
-        return array_merge($credentials, [$loginKey => $loginValue]);
+        return redirect($this->redirectAlmost);
     }
 
     /**
@@ -99,13 +80,12 @@ class AuthController extends Controller
      */
     protected function authenticated(Request $request, User $user)
     {
-        if ($user->isConfirmed()) {
-            return redirect()->intended($this->redirectPath());
+        if (! $user->isConfirmed()) {
+            auth()->logout();
+
+            return $this->sendFailedLoginResponse($request);
         }
 
-        // Because the user is logged in, but did not pass the current rules.
-        auth()->logout();
-
-        return $this->sendFailedLoginResponse($request);
+        return redirect()->intended($this->redirectPath());
     }
 }

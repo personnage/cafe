@@ -28,7 +28,7 @@ class ConfirmationsController extends Controller
      *
      * @var string
      */
-    protected $redirectToAfterResend = '/almost_there';
+    protected $redirectAlmost = '/almost_there';
 
     /**
      * Create a new confirmation controller instance.
@@ -104,7 +104,7 @@ class ConfirmationsController extends Controller
         if (! is_null($user) && ! $user->isConfirmed()) {
             $this->dispatch(new SendConfirmationToEmail($user));
 
-            return redirect($this->redirectToAfterResend);
+            return redirect($this->redirectAlmost);
         }
 
         return redirect($this->redirectTo);
@@ -119,7 +119,7 @@ class ConfirmationsController extends Controller
     protected function validateSendConfirmationLinkEmail(Request $request)
     {
         // Exclude "exists" rule from validation.
-        $this->validate($request, ['email' => 'required|email']);
+        $this->validate($request, ['email' => 'required|email|max:255']);
     }
 
     /**

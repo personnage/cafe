@@ -26,7 +26,6 @@ class EditUserRequest extends Request
         return [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users,email,'.$user->id,
-            'username' => 'required|max:255|unique:users,username,'.$user->id,
             'password' => 'min:6|confirmed',
         ];
     }
