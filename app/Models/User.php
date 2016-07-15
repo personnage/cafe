@@ -31,7 +31,6 @@ class User extends Authenticatable implements Contracts\Confirmable
     protected $fillable = [
         'name',
         'email',
-        'username',
         'password',
         'notification_email',
     ];
@@ -51,19 +50,6 @@ class User extends Authenticatable implements Contracts\Confirmable
     protected $casts = [
         'admin' => 'boolean',
     ];
-
-    # Accessor
-
-    /**
-     * Get the user's name.
-     *
-     * @param  string  $value
-     * @return string  Return name field if exist otherwise username.
-     */
-    public function getNameAttribute($value)
-    {
-        return $value ?? $this->username;
-    }
 
     # Scopes
 
@@ -125,7 +111,6 @@ class User extends Authenticatable implements Contracts\Confirmable
 
         return $query->where('name', 'ILIKE', $pattern)
                   ->orWhere('email', 'ILIKE', $pattern)
-               ->orWhere('username', 'ILIKE', $pattern)
        ;
     }
 
@@ -161,11 +146,9 @@ class User extends Authenticatable implements Contracts\Confirmable
      */
     public function getCreatedByIdAttribute($value)
     {
-        if (is_null($value)) {
-            return ;
+        if (! is_null($value)) {
+            return User::withTrashed()->whereId($value)->first() ?? $value;
         }
-
-        return User::withTrashed()->whereId($value)->first() ?? $value;
     }
 
     /**
@@ -180,7 +163,7 @@ class User extends Authenticatable implements Contracts\Confirmable
             $this->confirmed_at = Carbon::now();
 
             if ($this->save()) {
-                event(new UserWasConfirmed($this, auth()->user()));
+                event(new UserWasConfirmed($this, auth()->user() ?? $this));
 
                 return true;
             }
