@@ -2,10 +2,11 @@
 *.sqlite
 
 .git
+.DS_Store
 node_modules
 node_modules
 public/storage/*
-public/vendor/bower_components
+/resources/assets/vendor/bower_components
 storage/app/*
 storage/logs/*
 vendor
@@ -13,4 +14,4 @@ vendor
 docker/*
 docker-compose.yml
 
-doc
+docs
