@@ -19,9 +19,9 @@ class CreateContentTable extends Migration
             $table->text('announcement');
             $table->text('body');
             $table->boolean('comments_allowed');
-            $table->integer('category_id');
-            $table->integer('city_id');
-            $table->integer('user_id');
+            $table->unsignedInteger('category_id');
+            $table->unsignedInteger('city_id');
+            $table->unsignedInteger('user_id');
             $table->timestamps();
             $table->softDeletes();
 

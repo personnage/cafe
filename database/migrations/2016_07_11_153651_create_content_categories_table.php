@@ -16,8 +16,8 @@ class CreateContentCategoriesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('url');
-            $table->integer('parent_id');
-            $table->integer('type_id');
+            $table->unsignedInteger('parent_id');
+            $table->unsignedInteger('type_id');
 
             $table->index('url');
             $table->index('parent_id');
