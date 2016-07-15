@@ -15,11 +15,11 @@ class CreateContentCategoriesTable extends Migration
         Schema::create('content_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('seo_name');
+            $table->string('url');
             $table->integer('parent_id');
             $table->integer('type_id');
 
-            $table->index('seo_name');
+            $table->index('url');
             $table->index('parent_id');
             $table->index('type_id');
         });

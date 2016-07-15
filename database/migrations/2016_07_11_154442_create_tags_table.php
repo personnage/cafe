@@ -15,9 +15,9 @@ class CreateTagsTable extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('seo_name');
+            $table->string('url');
 
-            $table->index('seo_name');
+            $table->index('url');
         });
     }
 

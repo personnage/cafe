@@ -15,7 +15,7 @@ class CreateContentTable extends Migration
         Schema::create('content', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('seo_name');
+            $table->string('url');
             $table->text('announcement');
             $table->text('body');
             $table->boolean('comments_allowed');
@@ -25,7 +25,7 @@ class CreateContentTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index('seo_name');
+            $table->index('url');
             $table->index(['city_id', 'category_id']);
         });
     }
