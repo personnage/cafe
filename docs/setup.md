@@ -1,12 +1,22 @@
 # Setup
 
+## Prepare environment
+
+If `.env` file not exist
+
+    php -r "print(file_exists('.env') ? 'Yes! I\'m here!' : 'Sorry! Not sorry!').PHP_EOL;"
+
+create it:
+
+    php -r "copy('.env.example', '.env');"
+
 ## Deploy
 
 ### Build fresh the images
 
 Verify `docker-compose.yml` file:
     
-    docker-compose config
+    docker-compose config -q
 
 and if success, make it
 
@@ -47,3 +57,7 @@ This command will install all of the dependencies described in bower.json file.
 ### Up migration
 
     docker-compose exec laravel php artisan migrate
+
+### Generate app key:
+
+    docker-compose exec laravel php artisan key:generate
