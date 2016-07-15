@@ -13,8 +13,16 @@ class SendConfirmationToEmail extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
+    /**
+     * @var Confirmable
+     */
     protected $user;
 
+    /**
+     * View name.
+     *
+     * @var string|null
+     */
     protected $view;
 
     /**
@@ -53,10 +61,11 @@ class SendConfirmationToEmail extends Job implements ShouldQueue
         $view = $this->view ?? 'auth.emails.confirmation';
 
         Mail::send($view, compact('user'), function($message) use ($user) {
-            $message->from('noreply@allcafe.ru', 'AllCafe Application');
-
-            $message->to($user->getEmailForConfirmation(), $user->name)
-              ->subject('Confirmation instructions');
+            $message
+                ->from('noreply@allcafe.ru', 'AllCafe Application')
+                ->to($user->getEmailForConfirmation(), $user->name)
+                ->subject('Confirmation instructions')
+            ;
         });
     }
 }
