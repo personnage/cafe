@@ -1,15 +1,19 @@
 <?php
 
-namespace App\Listeners\Login;
+namespace App\Listeners;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Http\Request;
-use Illuminate\Queue\InteractsWithQueue;
 
-class UpdateSigninable
+class HandleUserWasLogin
 {
+    /**
+     * @var Request
+     */
+    protected $request;
+
     /**
      * Create the event listener.
      *
@@ -21,7 +25,7 @@ class UpdateSigninable
     }
 
     /**
-     * Set or update fields of the current login to application.
+     * Send notification (subscribers only) after the login.
      *
      * @param  Login  $event
      * @return void
@@ -30,6 +34,17 @@ class UpdateSigninable
     {
         $user = $event->user;
 
+        $this->updateSignInfo($user);
+    }
+
+    protected function updateSignInfo($user)
+    {
+        if (! $user->isConfirmed()) {
+            return ;
+        }
+
+        $user->increment('sign_in_count');
+
         $user->forceFill([
             'last_sign_in_at' => $user->current_sign_in_at ?? Carbon::now(),
             'current_sign_in_at' => Carbon::now(),
@@ -37,7 +52,5 @@ class UpdateSigninable
             'last_sign_in_ip' => $user->current_sign_in_ip ?? $this->request->ip(),
             'current_sign_in_ip' => $this->request->ip(),
         ])->save();
-
-        $user->increment('sign_in_count');
     }
 }
