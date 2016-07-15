@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use App\Events as E;
-use App\Listeners as L;
+use App\Events;
+use App\Listeners;
+
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -15,20 +16,20 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        // \Illuminate\Auth\Events\Login::class => [
-        //     Listeners\Login\UpdateSigninable::class,
-        //     Listeners\Login\NotificationOnEmail::class,
-        // ],
-        // \Illuminate\Auth\Events\Failed::class => [
-        //     Listeners\Login\UpdateFailedAttempts::class,
-        // ],
-
-        E\User\WasCreated::class => [
-            L\SendResetLinkEmail::class,
+        Events\User\WasRegistered::class => [
+            Listeners\HandleUserWasRegistered::class,
         ],
 
-        E\User\WasRegistered::class => [
+        Events\User\WasConfirmed::class => [
             //
+        ],
+
+        \Illuminate\Auth\Events\Login::class => [
+            Listeners\HandleUserWasLogin::class,
+        ],
+
+        \Illuminate\Auth\Events\Failed::class => [
+            Listeners\HandleUserWasFailed::class,
         ],
     ];
 

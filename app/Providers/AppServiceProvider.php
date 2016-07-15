@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\{User, Role};
+use App\Models\User;
+use App\Models\Role;
 
 use App\Events\Role\{
     WasChanged as RoleWasChanged,
@@ -46,43 +47,45 @@ class AppServiceProvider extends ServiceProvider
 
     protected function events()
     {
-        Role::created(function ($role) {
-            // If create role from factory, user not exist.
-            auth()->check() &&
-            event(new RoleWasCreated($role, auth()->user()));
-        });
+        // User::created(function ($user) {
+        //     if (is_null($user->created_by_id)) {
+        //         event(new UserWasRegistered($user));
+        //     } else {
+        //         event(new UserWasCreated($user, auth()->user()));
+        //     }
+        // });
 
-        Role::updated(function ($role) {
-            event(new RoleWasChanged($role, auth()->user()));
-        });
+        // User::updated(function ($user) {
+        //     event(new UserWasChanged($user));
+        // });
 
-        Role::deleted(function ($role) {
-            event(new RoleWasDeleted($role, auth()->user(), true));
-        });
+        // User::deleted(function ($user) {
+        //     event(new UserWasDeleted($user, auth()->user(), true));
+        // });
 
-        Role::restored(function ($role) {
-           event(new RoleWasRestored($role, auth()->user()));
-        });
+        // User::restored(function ($user) {
+        //    event(new UserWasRestored($user, auth()->user()));
+        // });
 
-        User::created(function ($user) {
-            if (is_null($user->created_by_id)) {
-                event(new UserWasRegistered($user));
-            } else {
-                event(new UserWasCreated($user, auth()->user()));
-            }
-        });
+        // Role::created(function ($role) {
+        //     // If create role from factory, user not exist.
+        //     auth()->check() &&
+        //     event(new RoleWasCreated($role, auth()->user()));
+        // });
 
-        User::updated(function ($user) {
-            event(new UserWasChanged($user));
-        });
+        // Role::updated(function ($role) {
+        //     event(new RoleWasChanged($role, auth()->user()));
+        // });
 
-        User::deleted(function ($user) {
-            event(new UserWasDeleted($user, auth()->user(), true));
-        });
+        // Role::deleted(function ($role) {
+        //     event(new RoleWasDeleted($role, auth()->user(), true));
+        // });
 
-        User::restored(function ($user) {
-           event(new UserWasRestored($user, auth()->user()));
-        });
+        // Role::restored(function ($role) {
+        //    event(new RoleWasRestored($role, auth()->user()));
+        // });
+
+
 
         // User::deleted(function ($user) {
         //     try {
