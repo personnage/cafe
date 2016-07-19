@@ -14,19 +14,22 @@ class CreateContentTable extends Migration
     {
         Schema::create('content', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('url');
+            $table->string('name')->index();
+            $table->string('title');
             $table->text('announcement');
             $table->text('body');
             $table->boolean('comments_allowed');
-            $table->unsignedInteger('category_id');
-            $table->unsignedInteger('city_id');
+            $table->unsignedInteger('content_category_id')->index();
             $table->unsignedInteger('user_id');
+
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index('url');
-            $table->index(['city_id', 'category_id']);
+            $table->foreign('content_category_id')
+                ->references('id')
+                ->on('content_categories')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
