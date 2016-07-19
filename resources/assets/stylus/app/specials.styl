@@ -1,0 +1,84 @@
+.specials
+  margin-top 20px
+.specialsBlock
+  margin-top 15px
+  &:nth-child(even)
+    padding-right 0
+    @media (max-width 768px)
+      padding-right 15px
+    .specialsBlock__info
+      margin-left 15px
+  &:nth-child(odd)
+    padding-left 0
+    @media (max-width 768px)
+      padding-left 15px
+  .item
+    &:hover strong
+      color #f34235
+      border 0
+.specialsBlock__pic
+  width 100%
+.specialsBlock__info
+  position absolute
+  left 1px
+  bottom 1px
+  height 85px
+  padding-top 15px
+  text-align center
+  background rgba(255, 255, 255, .8)
+  width 96%
+  table
+    width 100%
+    height 65px
+  strong
+    font 20px 'ProximaNova-Bold', Arial, sans-serif
+    font-weight bold
+    border-bottom 1px solid #b4ccdf
+
+.headerNoMargin
+  margin 0
+  background #ffffff
+  border-top 1px solid #d1d1d1
+  border-right 1px solid #d1d1d1
+  border-left 1px solid #d1d1d1
+.buttonsBlock
+  margin 25px 0
+
+.banketsList
+  display block
+.banketsList__item
+  display inline-block
+  & + .banketsList__item
+    margin-top 10px
+  .body
+    margin-top 10px
+    a
+      font-size 18px
+    p
+      margin-top 5px
+      font 14px/19px 'PT Serif', Georgia, serif
+      color #444444
+      @media (max-width 768px)
+        display none
+.banketsList__item__disabled
+  opacity .3
+
+.banket__head
+  padding 0 19px
+  margin-bottom 30px
+  .info
+    margin-top 35px
+    .row
+      & + .row
+        margin-top 10px
+.banket__tail
+  padding 10px 0
+  border-top 1px solid #d1d1d1
+  margin auto 0
+
+.banket__info
+  p
+    font 14px/19px 'PT Serif', Georgia, serif
+    color #212224
+.banket__menu
+  margin-top 0 !important

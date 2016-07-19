@@ -1,0 +1,122 @@
+#map-main
+  background url("/assets/img/app/main/map.jpg") no-repeat scroll 0 0 rgba(0, 0, 0, 0)
+  border 1px solid #d1d1d1
+  height 568px
+  margin-bottom 25px
+  @media (max-width 1210px)
+    height auto
+    background-size auto 100%
+  @media (max-width 760px)
+    height auto
+    background #ffffff
+  .citiesBlock
+    padding 45px 0 0 40px
+    @media (max-width 760px)
+      padding 25px 0 0 10px
+    p
+      font-size 30px
+      color rgb(0, 0, 0)
+      margin-bottom 50px
+      font-family "ProximaNova-Reg", Arial, sans-serif
+      @media (max-width 760px)
+        font-size 25px
+        margin-bottom 30px
+        line-height 120%
+    .main-cities
+      margin-bottom 20px
+      a
+        background-color rgb(242, 89, 22)
+        border 1px solid #652f17
+        border-radius 3px
+        color rgb(255, 255, 255)
+        padding 10px 15px
+        display inline-block
+        &:hover
+          background #ff7b47
+          color #fff
+          text-decoration none
+    .big-cities
+      margin-bottom 30px
+      @media (max-width 760px)
+        margin-bottom 20px
+      a
+        background-color #fff
+        border 1px solid #f25916
+        border-radius 3px
+        color #444
+        font-size 14px
+        padding 10px 15px
+        margin-top 5px
+        display inline-block
+        @media (max-width 760px)
+          float left
+          margin-top 5px
+          margin-right 5px
+          width auto
+        &:hover
+          background #ff7b47
+          color #fff
+          text-decoration none
+    .other-cities
+      margin-bottom 30px
+      @media (max-width 760px)
+        clear both
+      a
+        background-color rgb(255, 255, 255)
+        border 1px solid rgb(196, 196, 196)
+        border-radius 3px
+        color rgb(68, 68, 68)
+        font-size 14px
+        padding 10px 15px
+        margin-top 5px
+        display inline-block
+        &:hover
+          background #ff7b47
+          color #fff
+          text-decoration none
+  .other-countries
+    padding-left 60px
+    @media (max-width 760px)
+      padding 25px
+    p
+      color rgb(0, 0, 0)
+      font-size 18px
+      margin-bottom 40px
+    a
+      background-color rgb(255, 255, 255)
+      border 1px solid rgb(196, 196, 196)
+      border-radius 3px
+      color rgb(68, 68, 68)
+      font-size 14px
+      height 36px
+      padding 10px 15px
+      width 92px
+      margin-right 10px
+      &:hover
+        background #ff7b47
+        color #fff
+        text-decoration none
+    .pull-right
+      a
+        border medium none
+        display block
+        float left
+        &#appStore
+          background url("/assets/img/app/main/app_store.png") no-repeat scroll 0 0 transparent
+          background-size 100% auto
+          &:hover
+            background-position 0 -43px
+        &#googlePlay
+          background url("/assets/img/app/main/gplay.png") no-repeat scroll 0 0 transparent
+          background-size 100% auto
+  .mapMain__logo
+    padding 40px 40px 0 30px
+    img
+      margin-bottom 15px
+    p
+      font-size 14px
+      margin-bottom 0
+      &#allcafe
+        color rgb(242, 89, 22)
+        font-size 16px
+        font-weight bold

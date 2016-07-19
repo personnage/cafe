@@ -1,0 +1,86 @@
+.newsBlock
+  padding 0
+  div
+    padding 0
+    &.newsBlock__block
+      padding-right 30px
+      @media (max-width 1210px)
+        padding 0
+      @media (max-width 760px)
+        padding 0
+    & + .asideNews
+      height 760px
+      background #fff
+  a
+    text-decoration none
+    border none
+    cursor pointer
+.newsBlock__main
+  background #fff
+  height 540px
+  @media (max-width 760px)
+    height auto
+    margin-bottom 10px
+  img
+    width 100%
+    max-height 400px
+  .info
+    padding 15px 30px
+    a
+      font-size 20px
+      font-weight bold
+      line-height 200%
+.newsBlock__list
+  padding-left 35px
+  @media (min-width: 768px)
+    padding-left 25px
+  @media (max-width 760px)
+    padding 0
+  li
+    display inline-block
+    width 100%
+    background #fff
+    &:nth-child(n+4)
+      @media (max-width 760px)
+        display none
+    & + li
+      margin-top 10px
+    img
+      float left
+      margin-right 20px
+    .info
+      padding 20px 0
+      @media (min-width: 768px)
+        padding 15px 0
+.newsBlock__bottom
+  background #dcdcdc
+  height 200px
+  margin-top 15px
+  img
+    float left
+    margin-right 20px
+  .info
+    padding-top 50px
+    padding-right 30px
+    a
+      font-size 20px
+      font-weight bold
+      line-height 200%
+.sideBanner
+  height 450px
+  padding 10px !important
+  overflow hidden
+.moreNews
+  margin-top 15px
+  padding 10px !important
+  p
+    font-weight bold
+  ul
+    li
+      display block
+      padding 20px 0
+      border-bottom 1px solid #dedede
+      &:first-child
+        border-top 1px solid #dedede
+      &:last-child
+        border-bottom none

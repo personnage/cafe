@@ -1,0 +1,114 @@
+.menu
+  z-index 20
+  height 48px
+  min-height 48px
+  background #444648
+  box-shadow 0 1px 2px 0 rgba(0, 0, 0, .25)
+  border none
+  border-radius 0
+  @media (max-width 760px)
+    min-height 0
+    height 10px
+    background #fff
+    box-shadow none
+    margin-bottom 0
+  .container
+    padding 0
+    .navbar-header
+      .navbar-toggle
+        &:hover
+          background #fff
+        @media (max-width 760px)
+          border none
+          position absolute
+          top -45px
+          right 0
+          span
+            background #000
+    .navbar-collapse
+      padding 0
+      ul.nav
+        background #444648
+        @media (max-width 760px)
+          margin 0 0 0 10px
+        li.dropdown, li.link
+          line-height 48px
+          text-transform uppercase
+          border-left 1px solid #363739
+          border-right 1px solid #363739
+          position inherit
+          &.open
+            background #3a3a3b
+          &:hover
+            a:not(.orange-button)
+              background #3a3a3b
+            .submenu
+              display block
+          a
+            font 14px 'ProximaNova-Bold', Arial, sans-serif
+            color #ffffff
+            font-weight bold
+            border none
+        .submenu
+          position absolute
+          display none
+          z-index 100001
+          left 0
+          top 48px
+          width 100%
+          min-height 230px
+          background #3a3a3b
+          text-transform none
+          @media (max-width 760px)
+            position inherit
+            margin-bottom 10px
+          .container
+            margin-top 35px
+            @media (max-width 760px)
+              margin-top 10px
+            .submenu__column
+              padding-left 0
+              ul
+                display block
+                margin-top -10px
+                padding-left 20px
+                li
+                  display block
+                  a
+                    display block
+                    padding 7px 0 9px
+                    font 14px 'PT Serif', Georgia, serif
+                    line-height 22px
+                    color #fff
+                    border-bottom 1px solid #2f3235
+                    &:hover
+                      background url('http://allcafe.ru/assets/img/main/smbg.png') repeat-y 100% 0
+                      text-decoration none
+                  &.with-icon
+                    span
+                      display block
+                      padding-left 30px
+                      background-position 0 50%
+                      background-repeat no-repeat
+                    &.kp
+                      span
+                        background-image url('/assets/img/app/main/sm-kp.png')
+                    &.bn
+                      span
+                        background-image url('/assets/img/app/main/sm-bn.png')
+                    &.sv
+                      span
+                        background-image url('/assets/img/app/main/sm-sv.png')
+                    &.dp
+                      span
+                        background-image url('/assets/img/app/main/sm-dp.png')
+                    &.vv
+                      span
+                        background-image url('/assets/img/app/main/sm-vv.png')
+                    &.vo
+                      span
+                        background-position-y 11px
+                        background-image url('/assets/img/app/main/sm-vo.png')
+                    &.mal
+                      span
+                        background-image url('/assets/img/app/main/sm_man.png')

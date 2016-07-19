@@ -1,0 +1,208 @@
+.address
+  background #F5F5F5
+  padding 15px 20px 10px 20px
+  margin 25px 0
+  display inline-block
+  width 70%
+  @media (max-width 768px)
+    width 100%
+  &.right
+    float right
+    margin 10px 0 4px 15px
+    display block
+    width auto
+    ul
+      margin 0
+  &.left
+    float left
+    margin 10px 15px 4px 0
+    display block
+    width auto
+    padding 13px 20px 3px
+    ul
+      margin 0
+  p
+    strong
+      font-size 20px
+  hr
+    border-bottom 1px dotted #ccc
+    margin 10px 0
+  img
+    float left
+    margin-right 25px
+    max-width 150px
+    height auto !important
+  ul
+    list-style outside none none
+    margin 15px 15px 15px 125px
+    li
+      margin-bottom 10px
+      line-height: 20px
+      padding-left: 25px
+      &:before
+        content "" !important
+        margin 0 !important
+        display none !important
+      &:nth-child(1)
+        background: rgba(0, 0, 0, 0) url("/assets/img/app/icons/adress.png") no-repeat scroll 0 0
+      &:nth-child(2)
+        background: rgba(0, 0, 0, 0) url("/assets/img/app/icons/phone.png") no-repeat scroll 0 0
+      &:nth-child(3)
+        background: rgba(0, 0, 0, 0) url("/assets/img/app/icons/web.png") no-repeat scroll 0 0
+      i
+        color rgb(243, 119, 61)
+        font-size 25px
+        vertical-align middle
+      a
+        word-break break-all
+        
+div
+  &.longdesc
+    background url('/assets/img/app/main/sg.png') no-repeat 50% 100%
+    position absolute
+    z-index 300
+    bottom 19px
+    width 100%
+    padding 45px 50px
+    color #fff
+    height 100%
+span
+  &.longdesc
+    color: white
+    position: relative
+    top: -45px
+    text-shadow: 1px 1px 2px #3C3C3C
+    z-index: 999
+    display: block
+    text-align: center
+
+.typeHeader
+  margin-bottom 10px
+  padding 0 15px 5px 15px
+  h1
+    font-weight bold
+.typeBlock
+  border-radius 1px
+  min-height 140px
+  a
+    margin-right 15px
+  .info
+    h2
+      margin 0
+
+.articleHeader
+  h1
+    padding 0 19px
+.articleHeader__info
+  padding 15px
+  border-top 1px solid #d1d1d1
+  @media (max-width: 768px)
+    padding 15px 25px
+
+.newsItem__info
+  padding 24px 19px
+  .info
+    padding-left 30px
+  a
+    &.title
+      @media (min-width: 768px) and (max-width 768px)
+        font-size 15px
+      @media (min-width: 992px)
+        font-size 18px
+      @media (min-width: 1200px)
+        font-size 18px
+      &:hover
+        border-bottom none
+  p
+    margin 15px 0
+    @media (max-width 768px)
+      display none
+.newsItem__tail
+  color #777
+  padding 15px 15px 10px 15px
+  border-top 1px solid #d1d1d1
+  a
+    color #777
+    display inline-block
+    &.star
+      background url("/assets/img/app/icons/likes.png") no-repeat scroll -16px 0 rgba(0, 0, 0, 0)
+      height 16px
+      width 16px
+      margin-right 15px
+      margin-top -3px
+      margin-left 10px
+      &:hover
+        background-position -16px -16px
+      span
+        margin-left 17px
+    &.recommend
+      background url("/assets/img/app/icons/likes.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0)
+      height 16px
+      width 16px
+      margin-right 15px
+      margin-top -3px
+      &:hover
+        background-position 0 -16px
+      span
+        margin-left 17px
+  span
+    &.add
+      height 15px
+      width 15px
+      background url("/assets/img/app/icons/likes.png") no-repeat scroll -48px -16px transparent
+      padding-left 20px
+      &:hover
+        background-position -48px 0
+
+.itemBlock
+  display block
+.itemBlock__head
+  margin-bottom 19px
+  .info
+    padding 15px 0
+    time
+      font-size 100%
+    .tagsBlock
+      margin-top 10px
+.itemBlock__body
+  padding 19px
+  p
+    font-family 'PT Serif', serif
+    line-height 150%
+
+.lastNewsBlock
+  margin-top 25px
+.lastNewsBlock__row
+  &:nth-child(2)
+    @media (max-width 768px)
+      display none
+  & + .lastNewsBlock__row
+    margin-top 15px
+.lastNewsBlock__item
+  &:nth-child(1), &:nth-child(4)
+    padding-left 0
+    @media (max-width 768px)
+      padding 0 15px
+  &:nth-child(3), &:nth-child(6)
+    padding-right 0
+    padding-left 30px
+    @media (max-width 768px)
+      padding 0 15px
+  img
+    border-left 1px solid #d1d1d1
+    border-right 1px solid #d1d1d1
+    border-top 1px solid #d1d1d1
+    height 194px
+    width 99.3%
+  .info
+    background #fff
+    border 1px solid #d1d1d1
+    .main
+      padding 15px 10px
+      a
+        font-size 16px
+      p
+        margin 15px 0
+    .tagsBlock
+      padding 15px 10px
+      border-top 1px solid #d1d1d1

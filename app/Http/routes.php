@@ -14,12 +14,7 @@
 Route::auth();
 
 Route::get('/', function (\Illuminate\Http\Request $request) {
-    // auth()->logout();
-    // auth()->loginUsingId(2);
-
-    $posts = App\Models\Post::all();
-
-    return view('welcome', compact('posts'));
+    return view('app.home.main');
 });
 
 /**
@@ -72,4 +67,43 @@ Route::post('confirmation', 'Auth\ConfirmationsController@sendConfirmationLinkEm
 Route::group(['prefix' => 'auth/{provider}', 'namespace' => 'Auth'], function () {
     Route::get('/', 'AuthController@redirectToProvider');
     Route::get('login', 'AuthController@handleProviderCallback');
+});
+
+
+
+
+
+Route::get('/news', function () {
+    return view('app.content.type');
+});
+
+// news template
+Route::get('/news/total', function () {
+    return view('app.content.news.category');
+});
+
+Route::get('/news/total/{year}/{month}/{day}/{name}', function () {
+    return view('app.content.news.item');
+});
+
+// articles template
+Route::get('/news/boris', function () {
+    return view('app.content.articles.category');
+});
+
+Route::get('/news/boris/{articleTitle}', function () {
+    return view('app.content.articles.item');
+});
+
+//bankets template
+Route::get('restaurants/specials', function () {
+    return view('app.content.bankets.types');
+});
+
+Route::get('restaurants/specials/{id}', function() {
+    return view('app.content.bankets.category');
+});
+
+Route::get('restaurants/specials/{id}/{name}', function() {
+    return view('app.content.bankets.item');
 });

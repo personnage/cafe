@@ -1,18 +1,10 @@
 var elixir = require('laravel-elixir');
-
 require('laravel-elixir-stylus');
 
 elixir.config.sourcemaps = false;
 
-/*
- |--------------------------------------------------------------------------
- | Elixir Asset Management
- |--------------------------------------------------------------------------
- |
- | Elixir provides a clean, fluent API for defining some basic Gulp tasks
- | for your Laravel application. By default, we are compiling the Sass
- | file for our application, as well as publishing vendor resources.
- |
+/**
+ * Dashboard vendor dependencies.
  */
 elixir(function(mix) {
     var vendor_path = 'resources/assets/vendor/';
@@ -59,6 +51,43 @@ elixir(function(mix) {
 });
 
 /**
+ * Application vendor dependencies.
+ */
+elixir(function(mix) {
+    var vendor_path = 'resources/assets/vendor/';
+
+    /**
+     * Main js files without css dependencies.
+     */
+    mix.scripts([
+        'bower_components/jquery/dist/jquery.js',
+
+    ], './public/assets/js/app/lib.js', vendor_path);
+
+    /**
+     * JavaScript bootstrap set.
+     */
+    mix.scripts([
+        // http://getbootstrap.com/getting-started/#support-ie10-width
+        'ie10-viewport-bug-workaround.js',
+
+        'bower_components/bootstrap/dist/js/bootstrap.js',
+
+    ], './public/assets/js/app/bootstrap-pkg.js', vendor_path);
+
+    /**
+     * CSS bootstrap set.
+     */
+    mix.styles([
+        // http://getbootstrap.com/getting-started/#support-ie10-width
+        'ie10-viewport-bug-workaround.css',
+
+        'bower_components/bootstrap/dist/css/bootstrap.css',
+
+    ], './public/assets/css/app/bootstrap-pkg.css', vendor_path);
+});
+
+/**
  * Stylus preproc
  */
 elixir(function(mix) {
@@ -89,4 +118,19 @@ elixir(function(mix) {
  */
 elixir(function(mix) {
     mix.version('assets/**/*.+(css|js)');
+});
+
+
+/**
+ * Copying images
+ */
+elixir(function(mix) {
+    mix.copy('resources/assets/images', './public/assets/img');
+});
+
+/**
+ * Copying fonts
+ */
+elixir(function(mix) {
+    mix.copy('resources/assets/fonts', './public/assets/fonts');
 });
