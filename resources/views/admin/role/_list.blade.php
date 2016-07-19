@@ -1,9 +1,9 @@
 @include('admin.shared._alert')
-@include('admin.roles._filter')
+@include('admin.role._filter')
 
 <hr>
 
-@include('admin.roles._well')
+@include('admin.role._well')
 
 <div class="table-responsive">
   <table class="table table-middle table-list table-hover">

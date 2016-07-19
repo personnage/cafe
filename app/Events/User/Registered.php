@@ -4,7 +4,7 @@ namespace App\Events\User;
 
 use App\Models\User;
 
-class WasRegistered extends Event
+class Registered extends Event
 {
     /**
      * @var User

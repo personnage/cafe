@@ -26,7 +26,7 @@
             Sort <span class="caret"></span>
             <div class="ripple-container"></div>
           </a>
-          @include('admin.roles._sort')
+          @include('admin.role._sort')
         </div>
         <a href="{{ url('admin/role/create') }}" class="btn btn-raised">New Role<div class="ripple-container"></div></a>
       </div>

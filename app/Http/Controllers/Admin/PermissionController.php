@@ -65,7 +65,9 @@ class PermissionController extends Controller
      */
     public function show(int $permission_id)
     {
-        return $permission_id;
+        $permission = Permission::withTrashed()->with('roles')->findOrFail($permission_id);
+
+        return view('admin.permission.show', compact('permission'));
     }
 
     /**

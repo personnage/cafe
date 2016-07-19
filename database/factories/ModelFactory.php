@@ -30,7 +30,7 @@ $factory->define(App\Models\Role::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Models\Permission::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->word,
+        'name' => $faker->words($nb = 2, $asText = true),
         'label' => $faker->sentence,
     ];
 });

@@ -18,25 +18,19 @@ elixir(function(mix) {
     var vendor_path = 'resources/assets/vendor/';
 
     /**
-     * CSS vendor dependency.
-     */
-    mix.styles([
-        // http://getbootstrap.com/getting-started/#support-ie10-width
-        'ie10-viewport-bug-workaround.css',
-
-        'bower_components/bootstrap/dist/css/bootstrap.css',
-
-        'bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.css',
-        'bower_components/bootstrap-material-design/dist/css/ripples.css',
-
-    ], './public/assets/css/admin/vendor.css', vendor_path);
-
-    /**
-     * JavaScript vendor dependency.
+     * Main js files without css dependencies.
      */
     mix.scripts([
         'bower_components/jquery/dist/jquery.js',
+        'bower_components/randomcolor/randomColor.js',
+        'bower_components/isotope/dist/isotope.pkgd.js',
 
+    ], './public/assets/js/admin/lib.js', vendor_path);
+
+    /**
+     * JavaScript bootstrap set.
+     */
+    mix.scripts([
         // http://getbootstrap.com/getting-started/#support-ie10-width
         'ie10-viewport-bug-workaround.js',
 
@@ -47,7 +41,21 @@ elixir(function(mix) {
 
         'bower_components/remarkable-bootstrap-notify/dist/bootstrap-notify.js',
 
-    ], './public/assets/js/admin/vendor.js', vendor_path);
+    ], './public/assets/js/admin/bootstrap-pkg.js', vendor_path);
+
+    /**
+     * CSS bootstrap set.
+     */
+    mix.styles([
+        // http://getbootstrap.com/getting-started/#support-ie10-width
+        'ie10-viewport-bug-workaround.css',
+
+        'bower_components/bootstrap/dist/css/bootstrap.css',
+
+        'bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.css',
+        'bower_components/bootstrap-material-design/dist/css/ripples.css',
+
+    ], './public/assets/css/admin/bootstrap-pkg.css', vendor_path);
 });
 
 /**

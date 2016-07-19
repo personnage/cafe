@@ -1,0 +1,40 @@
+.grid
+  background transparent
+  &:after
+    content ''
+    display block
+    clear both
+  .grid-item
+    float left
+    width 222px
+    height 100px
+    margin 5px
+    padding 8px
+    cursor pointer
+    transition all .2s ease-in-out
+    border-bottom 5px solid #ff0040
+    text-align left
+    color #333
+    font-size 14px
+
+.grid-item
+  h4
+    overflow hidden
+    text-overflow ellipsis
+    white-space nowrap
+  p
+    overflow hidden
+    display -webkit-box
+    -webkit-line-clamp 2
+    -webkit-box-orient vertical
+  &:hover
+    transform scale(1.1)
+    z-index 1
+
+.grid-toggle
+  input[type=checkbox]
+    position absolute
+    left -9999px
+  input[type=checkbox]:checked
+    & + label
+      border-bottom 5px solid #00ff40

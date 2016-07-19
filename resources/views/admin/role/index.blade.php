@@ -4,5 +4,5 @@
 @section('description', 'Roles')
 
 @section('content')
-    @include('admin.roles._list')
+    @include('admin.role._list')
 @endsection

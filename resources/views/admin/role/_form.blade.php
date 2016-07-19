@@ -31,6 +31,26 @@
         @endif
       </div>
     </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Permissions</label>
+      <div class="col-sm-10">
+        <div class="grid grid-toggle">
+          @foreach($permissions as $permission)
+            <input type="checkbox" name="permissions[{{ $permission->id }}]" id="{{ $permission->name }}"
+              @if(old('permissions.'.$permission->id) or $role->hasPermission($permission->name))
+                checked
+              @endif
+            >
+            <label for="{{ $permission->name }}" class="grid-item grid-colorize">
+              <h4 class="text-muted">{{ $permission->name }}</h4>
+              <p data-toggle="tooltip" data-placement="left" title="{{ $permission->label }}">{{ $permission->label }}</p>
+            </label>
+          @endforeach
+        </div>
+      </div>
+    </div>
+
   </fieldset>
 
   <div class="form-group">

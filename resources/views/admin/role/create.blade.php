@@ -5,5 +5,5 @@
 
 @section('content')
     <h2 class="page-header">New role</h2>
-    @include('admin.roles._form')
+    @include('admin.role._form')
 @endsection

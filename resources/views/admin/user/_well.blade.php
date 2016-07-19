@@ -26,7 +26,7 @@
             Sort <span class="caret"></span>
             <div class="ripple-container"></div>
           </a>
-          @include('admin.users._sort')
+          @include('admin.user._sort')
         </div>
         <a href="{{ url('admin/user/create') }}" class="btn btn-raised">New User<div class="ripple-container"></div></a>
       </div>

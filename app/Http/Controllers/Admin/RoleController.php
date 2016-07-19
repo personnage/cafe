@@ -25,7 +25,7 @@ class RoleController extends Controller
         $roles = $roles->sort($request->input('sort'));
         $roles = $roles->simplePaginate($request->input('per_page') ?? 15);
 
-        return view('admin.roles.index', compact('roles'))
+        return view('admin.role.index', compact('roles'))
             ->with('active', Role::count())
             ->with('deleted', Role::onlyTrashed()->count())
         ;
@@ -38,10 +38,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $role = new Role;
-        $permissions = Permission::all();
+        list($role, $permissions) = [new Role, Permission::all()];
 
-        return view('admin.roles.create', compact('role', 'permissions'));
+        return view('admin.role.create', compact('role', 'permissions'));
     }
 
     /**
@@ -52,7 +51,13 @@ class RoleController extends Controller
      */
     public function store(CreateRoleRequest $request)
     {
-        if (Role::create($request->all())->wasRecentlyCreated) {
+        $role = Role::create($request->all());
+
+        if ($role->wasRecentlyCreated) {
+            foreach (array_keys((array) $request->input('permissions')) as $permission_id) {
+                $role->givePermissionTo(Permission::findOrFail($permission_id));
+            }
+
             return back()->with('notice', 'Role was successfully created.');
         }
 
@@ -67,7 +72,9 @@ class RoleController extends Controller
      */
     public function show(int $role_id)
     {
-        return $role_id;
+        $role = Role::withTrashed()->with('permissions')->findOrFail($role_id);
+
+        return view('admin.role.show', compact('role'));
     }
 
     /**
@@ -78,7 +85,9 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        return view('admin.roles.edit', compact('role'));
+        $permissions = Permission::all();
+
+        return view('admin.role.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -91,6 +100,8 @@ class RoleController extends Controller
     public function update(EditRoleRequest $request, Role $role)
     {
         $role->fill($request->all())->save();
+
+        $role->permissions()->sync(array_keys((array) $request->input('permissions')));
 
         return back()->with('notice', 'Role was successfully updated.');
     }

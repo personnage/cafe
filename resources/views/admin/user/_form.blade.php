@@ -66,8 +66,7 @@
         <label for="user-name" class="col-sm-2 control-label">Password</label>
         <div class="col-sm-10">
           <p class="lead">
-            Reset link will be generated and sent to the user.
-            <br>
+            Reset link will be generated and sent to the user. <br>
             User will be forced to set the password on first sign in.
           </p>
         </div>
@@ -77,21 +76,44 @@
 
   <fieldset>
     <h3>Access</h3>
-    <label for="admin" class="col-sm-2 control-label">Admin</label>
-    <div class="col-sm-10">
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" name="admin" id="admin"
-            @if(old('admin', $user->admin)) checked @endif
-            @if(Auth::id()===$user->id) disabled @endif
-          >
 
-          @if(Auth::id()===$user->id)
-          You cannot remove your own admin rights.
-          @else
-          Ok
-          @endif
-        </label>
+    <div class="form-group">
+      <label for="admin" class="col-sm-2 control-label">Admin</label>
+      <div class="col-sm-10">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="admin" id="admin"
+              @if(old('admin', $user->admin)) checked @endif
+              @if(Auth::id()===$user->id) disabled @endif
+            >
+
+            @if(Auth::id()===$user->id)
+              You cannot remove your own admin rights.
+            @else
+              Ok
+            @endif
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Roles</label>
+      <div class="col-sm-10">
+        <div class="grid grid-toggle">
+          @foreach($roles as $role)
+            <input type="checkbox" name="roles[{{ $role->id }}]" id="{{ $role->name }}"
+              @if(old('roles.'.$role->id) or $user->hasRole($role->name))
+                checked
+              @endif
+            >
+
+            <label for="{{ $role->name }}" class="grid-item grid-colorize">
+              <h4 class="text-muted">{{ $role->name }}</h4>
+              <p data-toggle="tooltip" data-placement="left" title="{{ $role->label }}">{{ $role->label }}</p>
+            </label>
+          @endforeach
+        </div>
       </div>
     </div>
   </fieldset>

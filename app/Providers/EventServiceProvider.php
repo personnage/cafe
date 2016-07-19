@@ -16,15 +16,15 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Events\User\WasCreated::class => [
+        Events\User\Created::class => [
             //
         ],
 
-        Events\User\WasDeleted::class => [
+        Events\User\Deleted::class => [
             //
         ],
 
-        Events\User\WasRestored::class => [
+        Events\User\Restored::class => [
             //
         ],
 
@@ -32,11 +32,11 @@ class EventServiceProvider extends ServiceProvider
             //
         ],
 
-        Events\User\WasRegistered::class => [
+        Events\User\Registered::class => [
             Listeners\HandleUserWasRegistered::class,
         ],
 
-        Events\User\WasConfirmed::class => [
+        Events\User\Confirmed::class => [
             //
         ],
 

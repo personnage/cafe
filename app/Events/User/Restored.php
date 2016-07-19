@@ -4,7 +4,7 @@ namespace App\Events\User;
 
 use App\Models\User;
 
-class WasDeleted extends Event
+class Restored extends Event
 {
     /**
      * @var User

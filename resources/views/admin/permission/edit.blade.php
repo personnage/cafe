@@ -4,6 +4,6 @@
 @section('description', sprintf('Edit %s permission', $permission->name))
 
 @section('content')
-    <h2 class="page-header">Edit permission: {{ $permission->name }}</h2>
+    <h2 class="page-header">Edit permission: <small>{{ $permission->name }}</small></h2>
     @include('admin.permission._form')
 @endsection

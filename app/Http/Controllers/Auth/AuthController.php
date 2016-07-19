@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\User\WasRegistered;
-use App\Http\Requests\RegisteredUserRequest;
-use App\Jobs\SendConfirmationToEmail;
 use App\Models\User;
+use App\Events\User\Registered;
+use App\Http\Requests\RegisteredUserRequest;
+
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
@@ -65,7 +65,7 @@ class AuthController extends Controller
         if ($user->wasRecentlyCreated) {
             $user->resetAuthenticationToken()->save();
 
-            event(new WasRegistered($user));
+            event(new Registered($user));
         }
 
         return redirect($this->redirectAlmost);

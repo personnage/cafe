@@ -7,7 +7,7 @@
 <h2 class="page-header">
   {{ $user->name }}
   @if($user->admin)
-    <span class="text-danger">(Admin)</span>
+    <span class="label label-danger">Admin</span>
   @endif
 </h2>
 
@@ -128,7 +128,7 @@
 
   <div class="col-md-6 col-sm-12">
     @unless(Auth::id()===$user->id)
-      @include('admin.users._remove_or_restore_panels')
+      @include('admin.user._remove_or_restore_panels')
     @endunless
   </div>
 </div>

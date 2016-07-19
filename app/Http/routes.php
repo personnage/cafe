@@ -15,7 +15,7 @@ Route::auth();
 
 Route::get('/', function (\Illuminate\Http\Request $request) {
     // auth()->logout();
-    // auth()->loginUsingId(1);
+    // auth()->loginUsingId(2);
 
     $posts = App\Models\Post::all();
 

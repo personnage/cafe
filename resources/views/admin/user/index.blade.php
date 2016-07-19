@@ -4,5 +4,5 @@
 @section('description', 'Users')
 
 @section('content')
-    @include('admin.users._list')
+    @include('admin.user._list')
 @endsection

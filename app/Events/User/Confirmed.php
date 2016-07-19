@@ -4,7 +4,7 @@ namespace App\Events\User;
 
 use App\Models\User;
 
-class WasCreated extends Event
+class Confirmed extends Event
 {
     /**
      * @var User
@@ -12,13 +12,15 @@ class WasCreated extends Event
     public $user;
 
     /**
+     * Users who confirmed.
+     *
      * @var User
      */
-    public $creator;
+    public $by;
 
-    public function __construct(User $user, User $creator)
+    public function __construct(User $user, User $by)
     {
         $this->user = $user;
-        $this->creator = $creator;
+        $this->by = $by;
     }
 }

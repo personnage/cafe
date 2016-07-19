@@ -18,7 +18,7 @@
   <link href='https://fonts.googleapis.com/css?family=Scada:400,700,400italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <link rel="stylesheet" href="{{ elixir('assets/css/admin/vendor.css') }}">
+  <link rel="stylesheet" href="{{ elixir('assets/css/admin/bootstrap-pkg.css') }}">
   <link rel="stylesheet" href="{{ elixir('assets/css/admin/app.css') }}">
 
   @stack('styles')

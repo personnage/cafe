@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use App\Events\User\WasConfirmed as UserWasConfirmed;
+use App\Events\User\Confirmed;
+
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements Contracts\Confirmable
 {
-    use SoftDeletes, HasRoles;
+    use SoftDeletes, Traits\UserScopes, Traits\HasRoles;
 
     /**
      * The attributes that should be mutated to dates.
@@ -51,91 +52,6 @@ class User extends Authenticatable implements Contracts\Confirmable
         'admin' => 'boolean',
     ];
 
-    # Scopes
-
-    /**
-     * Scope a query to only include root users.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeAdmins($query)
-    {
-        return $query->whereAdmin(true);
-    }
-
-    public function scopeOrderNameAsc($query)
-    {
-        return $query->orderBy('name', 'asc');
-    }
-
-    public function scopeOrderNameDesc($query)
-    {
-        return $query->orderBy('name', 'desc');
-    }
-
-    public function scopeOrderIdAsc($query)
-    {
-        return $query->orderBy('id', 'asc');
-    }
-
-    public function scopeOrderIdDesc($query)
-    {
-        return $query->orderBy('id', 'desc');
-    }
-
-    public function scopeOrderUpdatedAtAsc($query)
-    {
-        return $query->orderBy('updated_at', 'asc');
-    }
-
-    public function scopeOrderUpdatedAtDesc($query)
-    {
-        return $query->orderBy('updated_at', 'desc');
-    }
-
-    public function scopeFilter($query, $filterName)
-    {
-        switch ($filterName) {
-            case 'admins':
-                return $query->admins();
-            case 'deleted':
-                return $query->onlyTrashed();
-            default:
-                return $query;
-        }
-    }
-
-    public function scopeSearch($query, $name)
-    {
-        $pattern = "%$name%";
-
-        return $query->where('name', 'ILIKE', $pattern)
-                  ->orWhere('email', 'ILIKE', $pattern)
-       ;
-    }
-
-    public function scopeSort($query, $sortName)
-    {
-        switch ($sortName) {
-            case 'name_asc':
-                return $query->orderNameAsc();
-            case 'recent_sign_in':
-                return $query->orderBy('last_sign_in_at', 'desc');
-            case 'oldest_sign_in':
-                return $query->orderBy('last_sign_in_at', 'asc');
-            case 'id_desc':
-                return $query->orderIdDesc();
-            case 'id_asc':
-                return $query->orderIdAsc();
-            case 'updated_desc':
-                return $query->orderUpdatedAtDesc();
-            case 'updated_asc':
-                return $query->orderUpdatedAtAsc();
-            default:
-                return $query;
-        }
-    }
-
     # Accessors
 
     /**
@@ -163,7 +79,7 @@ class User extends Authenticatable implements Contracts\Confirmable
             $this->confirmed_at = Carbon::now();
 
             if ($this->save()) {
-                event(new UserWasConfirmed($this, auth()->user() ?? $this));
+                event(new Confirmed($this, auth()->user() ?? $this));
 
                 return true;
             }

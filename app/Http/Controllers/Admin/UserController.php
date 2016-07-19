@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Role;
+use App\Models\User;
 use App\Events\User\Impersonated;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\EditUserRequest;
-use App\Models\User;
 use App\Repositories\UserRepository;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -51,7 +52,7 @@ class UserController extends Controller
         $users = $users->sort($request->input('sort'));
         $users = $users->simplePaginate($request->input('per_page') ?? 15);
 
-        return view('admin.users.index', compact('users'))
+        return view('admin.user.index', compact('users'))
             ->with('activeCount', $this->users->totalUsers())
             ->with('adminsCount', $this->users->totalAdmins())
             ->with('deletedCount', User::onlyTrashed()->count())
@@ -65,9 +66,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        $user = new User;
+        list($user, $roles) = [new User, Role::all()];
 
-        return view('admin.users.create', compact('user'));
+        return view('admin.user.create', compact('user', 'roles'));
     }
 
     /**
@@ -79,20 +80,27 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        $user = User::forceCreate(array_merge($request->except('_token'), [
-            'password' => bcrypt(str_random(10)),
-            'notification_email' => $request->input('email'),
+        $user = new User($request->only('name', 'email'));
 
-            'admin' => !! $request->input('admin'),
+        $user->forceFill([
+            'password' => bcrypt(str_random(10)),
+            'notification_email' => $user->email,
+
+            'admin' => $request->input('admin'),
             'confirmed_at' => Carbon::now(),
             'created_by_id' => auth()->id(),
-        ]));
+        ]);
+
+        $user->resetAuthenticationToken();
+        $user->save();
 
         if ($user->wasRecentlyCreated) {
-            $user->resetAuthenticationToken();
-            $user->save();
-
             $this->sendResetLinkEmail($request);
+
+            // assign role(s) (force null to array)
+            foreach (array_keys((array) $request->input('roles')) as $role_id) {
+                $user->assignRole(Role::findOrFail($role_id));
+            }
 
             return back()->with('notice', 'User was successfully created.');
         }
@@ -110,7 +118,7 @@ class UserController extends Controller
     {
         $user = User::withTrashed()->findOrFail($user_id);
 
-        return view('admin.users.show', compact('user'));
+        return view('admin.user.show', compact('user'));
     }
 
     /**
@@ -121,7 +129,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        $roles = Role::all();
+
+        return view('admin.user.edit', compact('user', 'roles'));
     }
 
     /**
@@ -136,14 +146,16 @@ class UserController extends Controller
     {
         // The administrator cannot absolve themselves of responsibility.
         if (auth()->id() !== $user->id) {
-            $user->admin = !! $request->input('admin');
+            $user->admin = $request->input('admin');
         }
 
-        if (strlen($request->input('password')) > 1) {
+        if (mb_strlen($request->input('password')) > 1) {
             $user->password = bcrypt($request->input('password'));
         }
 
         $user->fill($request->except('password'))->save();
+
+        $user->roles()->sync(array_keys((array) $request->input('roles')));
 
         return back()->with('notice', 'User was successfully updated.');
     }
@@ -151,7 +163,7 @@ class UserController extends Controller
     /**
      * Force a confirmation.
      *
-     * @event  \App\Events\User\WasConfirmed
+     * @event  \App\Events\User\Confirmed
      * @param  \App\Models\User               $user
      * @return \Illuminate\Http\Response
      */
@@ -162,6 +174,43 @@ class UserController extends Controller
         }
 
         return back()->with('alert', 'Error occurred. User was not confirmed');
+    }
+
+    /**
+     * Delete user forever.
+     *
+     * @event  \App\Events\User\WasDeleted
+     * @param  \App\Models\User             $user_id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(int $user_id)
+    {
+        $user = User::withTrashed()->findOrFail($user_id);
+
+        if ($user->forceDelete()) {
+            return redirect()
+                ->route('admin.user.index', ['filter' => 'deleted'])
+                ->with('notice', 'The user is being deleted.')
+            ;
+        }
+
+        return back()->with('alert', 'Error occurred. User was not deleted.');
+    }
+
+    /**
+     * Mark up as deleted.
+     *
+     * @event  \App\Events\User\WasDeleted
+     * @param  \App\Models\User          $user
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(User $user)
+    {
+        if ($user->delete()) {
+            return back()->with('notice', 'The user is being deleted.');
+        }
+
+        return back()->with('alert', 'Error occurred. User was not deleted.');
     }
 
     /**
@@ -182,41 +231,6 @@ class UserController extends Controller
         }
 
         return back()->with('alert', 'Error occurred. User was not restored.');
-    }
-
-    /**
-     * Mark up as deleted.
-     *
-     * @event  \App\Events\User\WasDeleted
-     * @param  \App\Models\User          $user
-     * @return \Illuminate\Http\Response
-     */
-    public function delete(User $user)
-    {
-        if ($user->delete()) {
-            return back()->with('notice', 'The user is being deleted.');
-        }
-
-        return back()->with('alert', 'Error occurred. User was not deleted.');
-    }
-
-    /**
-     * Delete user forever.
-     *
-     * @event  \App\Events\User\WasDeleted
-     * @param  \App\Models\User             $user_id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(int $user_id)
-    {
-        $user = User::withTrashed()->findOrFail($user_id);
-
-        if ($user->forceDelete()) {
-            return redirect()->route('admin.user.index', ['filter' => 'deleted'])
-                ->with('notice', 'The user is being deleted.');
-        }
-
-        return back()->with('alert', 'Error occurred. User was not deleted.');
     }
 
     /**

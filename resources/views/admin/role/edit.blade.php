@@ -4,6 +4,6 @@
 @section('description', sprintf('Edit %s role', $role->name))
 
 @section('content')
-    <h2 class="page-header">Edit role: {{ $role->name }}</h2>
-    @include('admin.roles._form')
+    <h2 class="page-header">Edit role: <small>{{ $role->name }}</small></h2>
+    @include('admin.role._form')
 @endsection

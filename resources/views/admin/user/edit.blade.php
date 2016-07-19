@@ -5,5 +5,5 @@
 
 @section('content')
     <h2 class="page-header">Edit user: {{ $user->name }}</h2>
-    @include('admin.users._form')
+    @include('admin.user._form')
 @endsection
