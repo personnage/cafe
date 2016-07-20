@@ -18,3 +18,5 @@ ENV bower_allow_root 1
 
 RUN mkdir -p /var/www/html
 WORKDIR /var/www/html
+
+CMD ["/bin/true"]
