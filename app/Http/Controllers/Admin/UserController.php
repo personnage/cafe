@@ -86,7 +86,7 @@ class UserController extends Controller
             'password' => bcrypt(str_random(10)),
             'notification_email' => $user->email,
 
-            'admin' => $request->input('admin'),
+            'admin' => (bool) $request->input('admin'),
             'confirmed_at' => Carbon::now(),
             'created_by_id' => auth()->id(),
         ]);
@@ -145,8 +145,8 @@ class UserController extends Controller
     public function update(EditUserRequest $request, User $user)
     {
         // The administrator cannot absolve themselves of responsibility.
-        if (auth()->id() !== $user->id) {
-            $user->admin = $request->input('admin');
+        if ($request->has('admin') && auth()->id() !== $user->id) {
+            $user->admin = (bool) $request->input('admin');
         }
 
         if (mb_strlen($request->input('password')) > 1) {
