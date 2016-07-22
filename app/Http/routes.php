@@ -1,20 +1,22 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+// GET  :almost_there            - check your email to confirm your account
+// GET  :confirmation/{token?}   - accept confirmation or show confirmation form
+// POST :confirmation            - create new confirmation and send
 
+// auth()->login(\App\Models\User::find(1));
+
+Route::get('almost_there', 'Auth\ConfirmationsController@index');
+Route::get('confirmation/{token?}', 'Auth\ConfirmationsController@showEmailForm');
+Route::post('confirmation', 'Auth\ConfirmationsController@sendConfirmationLinkEmail');
 Route::auth();
 
-Route::get('/', function (\Illuminate\Http\Request $request) {
-    return view('app.home.main');
+Route::group(['domain' => 'allcafe.app'], function () {
+    Route::get('/', 'HomeController@index');
+});
+
+Route::group(['domain' => '{city}.allcafe.app'], function () {
+    Route::get('/', 'HomeController@home')->name('home');
 });
 
 /**
@@ -52,16 +54,6 @@ Route::group([
 Route::group(['prefix' => 'community', 'middleware' => 'auth', 'namespace' => 'Community'], function () {
     // Route::get('profile', 'ProfileControlller@show');
 });
-
-Route::get('/home', 'HomeController@index');
-
-
-// GET  :almost_there            - check your email to confirm your account
-// GET  :confirmation/{token?}   - accept confirmation or show confirmation form
-// POST :confirmation            - create new confirmation and send
-Route::get('almost_there', 'Auth\ConfirmationsController@index');
-Route::get('confirmation/{token?}', 'Auth\ConfirmationsController@showEmailForm');
-Route::post('confirmation', 'Auth\ConfirmationsController@sendConfirmationLinkEmail');
 
 // Authentication With Socialite
 Route::group(['prefix' => 'auth/{provider}', 'namespace' => 'Auth'], function () {

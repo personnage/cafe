@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Route;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -27,6 +28,10 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot($router);
+
+        Route::bind('city', function($value) {
+           return \App\Models\City::whereDomain($value)->first();
+        });
     }
 
     /**

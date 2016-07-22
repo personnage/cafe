@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
@@ -14,20 +15,29 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth');
+        //
     }
 
     /**
-     * Show the application dashboard.
+     * Show the index page.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        return $this->redirectBackOrDefault();
+        $city = new City;
 
-        $user = auth()->user();
+        return view('app.home.index', compact('city'));
+    }
 
-        return view('home', compact('user'));
+    /**
+     * Show the index page current region.
+     *
+     * @param  City   $city
+     * @return \Illuminate\Http\Response
+     */
+    public function home(City $city)
+    {
+        dd($city);
     }
 }
