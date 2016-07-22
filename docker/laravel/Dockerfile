@@ -35,9 +35,10 @@ ENV COMPOSER_NO_INTERACTION 1
 ENV COMPOSER_DISABLE_XDEBUG_WARN 1
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-RUN composer global require "laravel/installer" --prefer-source
 # https://github.com/laravel/framework/issues/11192#issuecomment-161934620
 RUN composer global require "phpunit/phpunit:~4.0" --prefer-source
+RUN composer global require "friendsofphp/php-cs-fixer" --prefer-source
+# RUN composer global require "laravel/installer" --prefer-source
 
 ENV PATH "/composer/vendor/bin:$PATH"
 
