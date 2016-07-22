@@ -15,7 +15,8 @@ class CreateContentCategoriesTable extends Migration
         Schema::create('content_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->index();
-            $table->string('label');
+            $table->string('title');
+            $table->text('description')->nullable();
             $table->unsignedInteger('content_category_type_id');
             $table->unsignedInteger('parent_id')->nullable();
 

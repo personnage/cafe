@@ -15,7 +15,7 @@ class CreateContentCategoryTypesTable extends Migration
         Schema::create('content_category_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->string('label');
+            $table->string('title');
         });
     }
 
