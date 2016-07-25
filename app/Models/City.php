@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
 class City extends Model
 {
+    use Traits\CityScopes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -13,25 +13,13 @@ class City extends Model
      */
     protected $fillable = ['name', 'domain'];
 
-    # Scopes
-
-    public function scopeMainCities($query)
+    /**
+     * Get the users for the cities.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function users()
     {
-        return $query->whereIn('domain', ['msk', 'spb'])->get();
-    }
-
-    public function scopeBigCities($query)
-    {
-        return $query->whereIn('domain', ['ekburg', 'kazan', 'krasnodar', 'nnov', 'rnd', 'vrn'])->get();
-    }
-
-    public function scopeLittleCities($query)
-    {
-        return $query->whereNotIn('domain', ['msk', 'spb', 'eesti', 'fin', 'ekburg', 'kazan', 'krasnodar', 'nnov', 'rnd', 'vrn'])->get();
-    }
-
-    public function scopeEuropeCities($query)
-    {
-        return $query->whereIn('domain', ['eesti', 'fin'])->get();
+        return $this->hasMany(User::class);
     }
 }
