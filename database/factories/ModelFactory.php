@@ -35,6 +35,13 @@ $factory->define(App\Models\Permission::class, function (Faker\Generator $faker)
     ];
 });
 
+$factory->define(App\Models\City::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->city,
+        'domain' => $faker->domainWord,
+    ];
+});
+
 $factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
     return [
         'user_id' => factory(App\Models\User::class)->create()->id,
@@ -53,7 +60,7 @@ $factory->define(App\Models\ContentCategoryType::class, function (Faker\Generato
 $factory->define(App\Models\ContentCategory::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->unique()->word,
-        'title' => $faker->words(random_int(1, 4), true),
+        'title' => $faker->words(mt_rand(1, 4), true),
         'description' => $faker->sentence,
         'content_category_type_id' => factory(App\Models\ContentCategoryType::class)->create()->id,
     ];
@@ -61,7 +68,7 @@ $factory->define(App\Models\ContentCategory::class, function (Faker\Generator $f
 
 $factory->define(App\Models\ContentCategoryImage::class, function (Faker\Generator $faker) {
     return [
-        'name' => "{$faker->word}.jpg",
+        'name' => $faker->image('/', 800, 600, 'cats', false),
         'content_category_id' => factory(App\Models\ContentCategory::class)->create()->id,
     ];
 });
