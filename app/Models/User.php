@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Auth;
 use Carbon\Carbon;
-use App\Events\User\Confirmed;
-
+use App\Events\User as Events;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -34,6 +34,7 @@ class User extends Authenticatable implements Contracts\Confirmable
         'email',
         'password',
         'notification_email',
+        'city_id',
     ];
 
     /**
@@ -51,6 +52,23 @@ class User extends Authenticatable implements Contracts\Confirmable
     protected $casts = [
         'admin' => 'boolean',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($user) {
+            event(new Events\Created($user, Auth::user() ?? $user));
+        });
+
+        static::deleted(function ($user) {
+            event(new Events\Deleted($user, Auth::user()));
+        });
+
+        static::restored(function ($user) {
+           event(new Events\Restored($user, Auth::user()));
+        });
+    }
 
     # Accessors
 
@@ -79,7 +97,7 @@ class User extends Authenticatable implements Contracts\Confirmable
             $this->confirmed_at = Carbon::now();
 
             if ($this->save()) {
-                event(new Confirmed($this, auth()->user() ?? $this));
+                event(new Events\Confirmed($this, Auth::user() ?? $this));
 
                 return true;
             }
