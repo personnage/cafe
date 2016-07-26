@@ -16,41 +16,42 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Events\User\Created::class => [
+        Events\Creation\UserCreated::class => [
             //
         ],
 
-        Events\User\Deleted::class => [
+        Events\Deletion\UserDeleted::class => [
             //
         ],
 
-        Events\User\Restored::class => [
+        Events\Restoration\UserRestored::class => [
             //
         ],
 
-        Events\User\Impersonated::class => [
+        Events\Registration\UserRegistered::class => [
+            Listeners\Registration\SendNotificationToAdminEmailMayBe::class,
+            Listeners\SendConfirmationToEmail::class,
+        ],
+
+        Events\Confirmation\UserConfirmRegistration::class => [
+            Listeners\Confirmation\SendWelcomeToEmail::class,
+        ],
+
+        Events\Impersonation\UserImpersonated::class => [
             //
         ],
-
-        Events\User\Registered::class => [
-            Listeners\HandleUserWasRegistered::class,
-        ],
-
-        Events\User\Confirmed::class => [
-            //
-        ],
-
-        \Illuminate\Auth\Events\Login::class => [
-            Listeners\HandleUserWasLogin::class,
-        ],
-
-        \Illuminate\Auth\Events\Failed::class => [
-            Listeners\HandleUserWasFailed::class,
-        ],
-
 
         //
 
+    ];
+
+    /**
+     * The subscriber classes to register.
+     *
+     * @var array
+     */
+    protected $subscribe = [
+        Listeners\UserEventListener::class,
     ];
 
     /**
