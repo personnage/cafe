@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Permission extends Model
 {
-    use SoftDeletes, Traits\PermissionScopes;
+    use SoftDeletes, Scopes\Permission;
 
     /**
      * The attributes that should be mutated to dates.

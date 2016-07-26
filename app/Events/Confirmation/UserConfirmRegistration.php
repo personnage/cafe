@@ -2,8 +2,8 @@
 
 namespace App\Events\Confirmation;
 
-use App\Events\Event;
 use App\Models\User;
+use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 

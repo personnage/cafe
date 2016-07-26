@@ -2,6 +2,7 @@
 
 namespace App\Events\Creation;
 
+use App\Models\User;
 use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -10,23 +11,17 @@ class UserCreated extends Event
 {
     use SerializesModels;
 
+    public $user;
+    public $byUser;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $user, User $byUser)
     {
-        //
-    }
-
-    /**
-     * Get the channels the event should be broadcast on.
-     *
-     * @return array
-     */
-    public function broadcastOn()
-    {
-        return [];
+        $this->user = $user;
+        $this->byUser = $byUser;
     }
 }

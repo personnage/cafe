@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Traits;
+namespace App\Models\Scopes;
 
-trait CityScopes
+trait City
 {
     /**
      * Scope a query to only include main cities.

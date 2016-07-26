@@ -4,6 +4,11 @@ namespace App\Models;
 
 use Auth;
 use Carbon\Carbon;
+
+use App\Events\Creation\UserCreated;
+use App\Events\Deletion\UserDeleted;
+use App\Events\Restoration\UserRestored;
+
 use App\Events\User as Events;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -48,22 +53,17 @@ class User extends Authenticatable implements Contracts\Confirmable
         parent::boot();
 
         static::created(function ($user) {
-            event(new Events\Created($user, Auth::user() ?? $user));
+            event(new UserCreated($user, Auth::user() ?? $user));
         });
 
         static::deleted(function ($user) {
-            event(new Events\Deleted($user, Auth::user()));
+            event(new UserDeleted($user, Auth::user() ?? $user));
         });
 
         static::restored(function ($user) {
-           event(new Events\Restored($user, Auth::user()));
+           event(new UserRestored($user, Auth::user()));
         });
     }
-
-
-
-
-
 
     # Accessors
 
