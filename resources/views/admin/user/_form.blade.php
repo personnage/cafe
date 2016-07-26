@@ -118,24 +118,6 @@
     </div>
   </fieldset>
 
-  <fieldset>
-    <h3>Profile</h3>
-    <div class="form-group">
-      <label for="user-city" class="col-sm-2 control-label">City</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="user-city" placeholder="City">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="avatar" class="col-sm-2 control-label">Avatar</label>
-      <div class="col-sm-10">
-        <input type="text" readonly class="form-control" placeholder="Browse...">
-        <input type="file" class="form-control" id="avatar">
-      </div>
-    </div>
-  </fieldset>
-
   <div class="form-group">
     @if($user->exists)
       <div class="col-sm-offset-2 col-sm-4">
