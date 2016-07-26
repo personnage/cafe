@@ -65,9 +65,7 @@ Route::group(['prefix' => 'auth/{provider}', 'namespace' => 'Auth'], function ()
 
 
 
-Route::get('/news', function () {
-    return view('app.content.type');
-});
+Route::get('/news', 'ContentController@newsCategoriesIndex');
 
 // news template
 Route::get('/news/total', function () {
