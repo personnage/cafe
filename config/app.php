@@ -157,12 +157,15 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\ComposerServiceProvider::class,
+        App\Providers\GeoBaseServiceProvider::class,
 
         /*
          * Third-Party Service Providers...
          */
         Laravel\Socialite\SocialiteServiceProvider::class,
         Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
+
 
         // раскомментировать -> запустить artisan ide-helper:generate -> закомментировать обратно
         // Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,

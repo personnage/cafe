@@ -16,6 +16,8 @@
 
     <script src="{{ elixir('assets/js/admin/lib.js') }}"></script>
     <script src="{{ elixir('assets/js/admin/bootstrap-pkg.js') }}"></script>
+    <script src="{{ elixir('assets/js/admin/selectize.js') }}"></script>
+
     <script src="{{ elixir('assets/js/admin/app.js') }}"></script>
 
     @if(config('app.env') === 'local')

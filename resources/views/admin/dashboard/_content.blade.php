@@ -6,7 +6,7 @@
   <div class="col-xs-12 col-sm-4">
     <h3>Latest users</h3>
     <hr>
-    @foreach ($users as $user)
+    @foreach ($stats->latestUser() as $user)
         <p>
           <a href="{{ url('admin/user', $user->id) }}" class="str-truncated">{{ $user->name }}</a>
           <span class="pull-right">
