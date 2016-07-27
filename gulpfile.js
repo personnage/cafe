@@ -125,12 +125,12 @@ elixir(function(mix) {
  * Copying images
  */
 elixir(function(mix) {
-    mix.copy('resources/assets/images', './public/assets/img');
+    mix.copy('resources/assets/images', 'public/assets/img');
 });
 
 /**
  * Copying fonts
  */
 elixir(function(mix) {
-    mix.copy('resources/assets/fonts', './public/assets/fonts');
+    mix.copy('resources/assets/fonts', 'public/assets/fonts');
 });

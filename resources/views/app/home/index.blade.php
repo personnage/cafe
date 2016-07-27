@@ -41,10 +41,10 @@
         </a>
       @endforeach
 
-      <div class="pull-right hidden-xs">
-        <a target="_blank" href="https://itunes.apple.com/ru/app/allcafe/id470035370?mt=8" id="appStore"></a>
-        <a target="_blank" href="https://play.google.com/store/apps/details?id=com.komandor.allcafe" id="googlePlay"></a>
-      </div>
+      {{--<div class="pull-right hidden-xs">--}}
+        {{--<a target="_blank" href="https://itunes.apple.com/ru/app/allcafe/id470035370?mt=8" id="appStore"></a>--}}
+        {{--<a target="_blank" href="https://play.google.com/store/apps/details?id=com.komandor.allcafe" id="googlePlay"></a>--}}
+      {{--</div>--}}
     </div>
   </div>
 </div>

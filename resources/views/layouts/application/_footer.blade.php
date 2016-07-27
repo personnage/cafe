@@ -89,11 +89,11 @@
                     <li><a href="http://spb.allcafe.ru/advert" rel="nofollow">Реклама на сайте</a></li>
                     <li><a href="http://spb.allcafe.ru/contacts" rel="nofollow">Контакты</a></li>
                 </ul>
-                <span><br><a href="/">AllCafe</a> для iPhone и Android</span>
-                <div class="downloads">
-                    <a target="_blank" rel="nofollow" href="https://itunes.apple.com/ru/app/allcafe/id470035370?mt=8"><img src="/assets/img/app/main/appstore.png" alt=""></a>
-                    <a target="_blank" rel="nofollow" href="https://play.google.com/store/apps/details?id=com.komandor.allcafe"><img src="/assets/img/app/main/gplay.png" alt=""></a>
-                </div>
+                {{--<span><br><a href="/">AllCafe</a> для iPhone и Android</span>--}}
+                {{--<div class="downloads">--}}
+                    {{--<a target="_blank" rel="nofollow" href="https://itunes.apple.com/ru/app/allcafe/id470035370?mt=8"><img src="/assets/img/app/main/appstore.png" alt=""></a>--}}
+                    {{--<a target="_blank" rel="nofollow" href="https://play.google.com/store/apps/details?id=com.komandor.allcafe"><img src="/assets/img/app/main/gplay.png" alt=""></a>--}}
+                {{--</div>--}}
                 <div class="social">
                     <a target="_blank" rel="nofollow" href="https://vk.com/allcaferu"><img src="/assets/img/app/main/vk.png" alt=""></a>
                     <a target="_blank" rel="nofollow" href="https://www.facebook.com/pages/allcaferu/351570254912137"><img src="/assets/img/app/main/fb.png" alt=""></a>
