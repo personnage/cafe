@@ -6,10 +6,16 @@
 
 // auth()->login(\App\Models\User::find(1));
 
+Route::auth();
+// Authentication With Socialite
+Route::group(['prefix' => 'auth/{provider}', 'namespace' => 'Auth'], function () {
+    Route::get('/', 'AuthController@redirectToProvider');
+    Route::get('callback', 'AuthController@handleProviderCallback');
+});
+
 Route::get('almost_there', 'Auth\ConfirmationsController@index');
 Route::get('confirmation/{token?}', 'Auth\ConfirmationsController@showEmailForm');
 Route::post('confirmation', 'Auth\ConfirmationsController@sendConfirmationLinkEmail');
-Route::auth();
 
 Route::group(['domain' => 'allcafe.app'], function () {
     Route::get('/', 'HomeController@index');
@@ -53,12 +59,6 @@ Route::group([
 // Личный кабинет для зарегистрированного пользователя.
 Route::group(['prefix' => 'community', 'middleware' => 'auth', 'namespace' => 'Community'], function () {
     // Route::get('profile', 'ProfileControlller@show');
-});
-
-// Authentication With Socialite
-Route::group(['prefix' => 'auth/{provider}', 'namespace' => 'Auth'], function () {
-    Route::get('/', 'AuthController@redirectToProvider');
-    Route::get('login', 'AuthController@handleProviderCallback');
 });
 
 

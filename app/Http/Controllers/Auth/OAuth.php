@@ -54,6 +54,7 @@ trait OAuth
     protected function findOrCreateProviderUser(string $providerName, $providerUser)
     {
         $user = User::firstOrNew([
+            // example: githab_id => 12345
             sprintf('%s_id', $providerName) => $providerUser->id
         ]);
 
@@ -61,6 +62,8 @@ trait OAuth
             return $user;
         }
 
+        // Find the user in the table "users" if he has
+        // passed the stage of registration.
         if ($userByEmail = User::whereEmail($providerUser->email)->first()) {
             // - Bind account with provider id.
             $userByEmail->forceFill([
@@ -73,24 +76,26 @@ trait OAuth
             return $userByEmail;
         }
 
-        $user->fill([
-            'name' => $providerUser->name,
-            'email' => $providerUser->email,
-            'username' => $providerUser->nickname,
+        // Create new user.
+        $user->forceFill([
+            'name'     => $providerUser->name,
+            'email'    => $providerUser->email,
             // We will be generated password to user for safety account.
             // Reset password may be later.
             'password' => bcrypt(str_random(10)),
             'notification_email' => $providerUser->email,
-        ]);
 
-        $user->forceFill([
             // We trust "Socialite" and user will be a confirmed automatic.
             'confirmed_at' => Carbon::now(),
 
             sprintf('%s_id', $providerName) => $providerUser->id,
         ]);
 
+        $user->resetAuthenticationToken();
         $user->save();
+
+        // send confirm???
+        // event(new UserRegistered($user));
 
         return $user;
     }
