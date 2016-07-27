@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Events\User\Impersonated;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\EditUserRequest;
-use App\Repositories\UserRepository;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
@@ -17,22 +16,12 @@ class UserController extends Controller
     use ResetsPasswords;
 
     /**
-     * The user repository instance.
-     *
-     * @var UserRepository
-     */
-    protected $users;
-
-    /**
      * Create a new controller instance.
      *
-     * @param \App\Repositories\UserRepository  $users
      * @return void
      */
-    public function __construct(UserRepository $users)
+    public function __construct()
     {
-        $this->users = $users;
-
         $this->middleware('admin', ['except' => ['index']]);
     }
 
@@ -53,8 +42,8 @@ class UserController extends Controller
         $users = $users->simplePaginate($request->input('per_page') ?? 15);
 
         return view('admin.user.index', compact('users'))
-            ->with('activeCount', $this->users->totalUsers())
-            ->with('adminsCount', $this->users->totalAdmins())
+            ->with('activeCount', User::count())
+            ->with('adminsCount', User::admins()->count())
             ->with('deletedCount', User::onlyTrashed()->count())
         ;
     }
@@ -80,13 +69,14 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        $user = new User($request->only('name', 'email'));
-
+        $user = new User;
         $user->forceFill([
+            'name' => $request->name,
+            'email' => $request->email,
             'password' => bcrypt(str_random(10)),
-            'notification_email' => $user->email,
+            'notification_email' => $request->email,
 
-            'admin' => (bool) $request->input('admin'),
+            'admin' => (bool) $request->admin,
             'confirmed_at' => Carbon::now(),
             'created_by_id' => auth()->id(),
         ]);
@@ -98,7 +88,7 @@ class UserController extends Controller
             $this->sendResetLinkEmail($request);
 
             // assign role(s) (force null to array)
-            foreach (array_keys((array) $request->input('roles')) as $role_id) {
+            foreach ((array) $request->input('roles') as $role_id) {
                 $user->assignRole(Role::findOrFail($role_id));
             }
 
@@ -155,7 +145,7 @@ class UserController extends Controller
 
         $user->fill($request->except('password'))->save();
 
-        $user->roles()->sync(array_keys((array) $request->input('roles')));
+        $user->roles()->sync((array) $request->input('roles'));
 
         return back()->with('notice', 'User was successfully updated.');
     }

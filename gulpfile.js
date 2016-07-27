@@ -14,8 +14,6 @@ elixir(function(mix) {
      */
     mix.scripts([
         'bower_components/jquery/dist/jquery.js',
-        'bower_components/randomcolor/randomColor.js',
-        'bower_components/isotope/dist/isotope.pkgd.js',
 
     ], './public/assets/js/admin/lib.js', vendor_path);
 
@@ -34,6 +32,11 @@ elixir(function(mix) {
         'bower_components/remarkable-bootstrap-notify/dist/bootstrap-notify.js',
 
     ], './public/assets/js/admin/bootstrap-pkg.js', vendor_path);
+
+    mix.scripts([
+        'bower_components/selectize/dist/js/standalone/selectize.js',
+
+    ], './public/assets/js/admin/selectize.js', vendor_path);
 
     /**
      * CSS bootstrap set.

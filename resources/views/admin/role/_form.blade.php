@@ -35,19 +35,15 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">Permissions</label>
       <div class="col-sm-10">
-        <div class="grid grid-toggle">
+        <select id="select-permissions-to-roles" name="permissions[]" class="form-control" multiple placeholder="Select a permissions...">
+          <option value="">Select a permissions...</option>
           @foreach($permissions as $permission)
-            <input type="checkbox" name="permissions[{{ $permission->id }}]" id="{{ $permission->name }}"
-              @if(old('permissions.'.$permission->id) or $role->hasPermission($permission->name))
-                checked
-              @endif
-            >
-            <label for="{{ $permission->name }}" class="grid-item grid-colorize">
-              <h4 class="text-muted">{{ $permission->name }}</h4>
-              <p data-toggle="tooltip" data-placement="left" title="{{ $permission->label }}">{{ $permission->label }}</p>
-            </label>
+          <option
+            @if(false !== array_search($permission->id, (array) old('permissions')) or $role->hasPermission($permission->name))
+              selected
+            @endif value="{{ $permission->id }}">{{ $permission->name }}</option>
           @endforeach
-        </div>
+        </select>
       </div>
     </div>
 
