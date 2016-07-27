@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\Confirmation\UserConfirmRegistration;
 use App\Jobs\SendConfirmationToEmail;
 use App\Repositories\UserRepository;
-use Carbon\Carbon;
+
 use Illuminate\Http\Request;
 
 class ConfirmationsController extends Controller
@@ -131,6 +132,8 @@ class ConfirmationsController extends Controller
     protected function confirmationTo($user)
     {
         if ($user->confirm()) {
+            event(new UserConfirmRegistration($user));
+
             auth()->login($user);
         }
     }

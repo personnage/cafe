@@ -2,111 +2,38 @@
 
 namespace App\Repositories;
 
-use Cache;
 use App\Models\User;
 
 class UserRepository
 {
     /**
-     * Find user by email.
+     * Get only admins users.
      *
-     * @param  string $email
-     * @return \App\Models\User|null
+     * @return [type] [description]
      */
-    public function byEmail(string $email)
+    public function admins()
     {
-        return User::whereEmail($email)->first();
+        return User::admins()->get();
     }
 
     /**
      * Get latest users.
      *
-     * @return
+     * @return [type] [description]
      */
     public function latest()
     {
-        return User::orderIdDesc()->take(10)->get();
+        return User::latest()->get();
     }
 
     /**
-     * Get total count users without trashed users.
+     * Fetch user by email address.
      *
-     * This is method usage cache store.
-     *
-     * @param  bool  $stale  Cache will be reset, if $stale is False.
-     * @return int
+     * @param  string $email
+     * @return [type]        [description]
      */
-    public function totalUsers(bool $stale = true)
+    public function byEmail(string $email)
     {
-        if (! $stale) {
-            Cache::forget('users:total');
-        }
-
-        return Cache::remember('users:total', 60, function () {
-            return User::count();
-        });
-    }
-
-    /**
-     * Increment the value of an item in the cache.
-     *
-     * @param  mixed  $value
-     * @return int|null
-     */
-    public function incrementTotalUsers($value = 1)
-    {
-        if (Cache::has('users:total')) {
-            return Cache::increment('users:total', $value);
-        }
-    }
-
-    /**
-     * Decrement the value of an item in the cache.
-     *
-     * @param  mixed   $value
-     * @return int|null
-     */
-    public function decrementTotalUsers($value = 1)
-    {
-        if (Cache::has('users:total')) {
-            return Cache::decrement('users:total', $value);
-        }
-    }
-
-    public function totalAdmins(bool $stale = true)
-    {
-        if (! $stale) {
-            Cache::forget('admins:total');
-        }
-
-        return Cache::remember('admins:total', 60, function () {
-            return User::admins()->count();
-        });
-    }
-
-    /**
-     * Increment the value of an item in the cache.
-     *
-     * @param  mixed  $value
-     * @return int|null
-     */
-    public function incrementAdminsUsers($value = 1)
-    {
-        if (Cache::has('admins:total')) {
-            return Cache::increment('admins:total');
-        }
-    }
-
-    /**
-     * Decrement the value of an item in the cache.
-     *
-     * @param  mixed   $value
-     * @return int|null
-     */
-    public function decrementAdminsUsers($value = 1)
-    {
-        if (Cache::has('admins:total')) {
-            return Cache::decrement('admins:total');
-        }
+        return User::where('email', $email)->first();
     }
 }

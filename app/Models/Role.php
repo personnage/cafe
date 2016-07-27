@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model
 {
-    use SoftDeletes, Traits\RoleScopes;
+    use SoftDeletes, Scopes\Role;
 
     /**
      * The attributes that should be mutated to dates.

@@ -4,69 +4,64 @@ namespace App\Models;
 
 use Auth;
 use Carbon\Carbon;
+
+use App\Events\Creation\UserCreated;
+use App\Events\Deletion\UserDeleted;
+use App\Events\Restoration\UserRestored;
+
 use App\Events\User as Events;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements Contracts\Confirmable
 {
-    use SoftDeletes, Traits\UserScopes, Traits\HasRoles;
+    use SoftDeletes, HasRoles, Scopes\User;
 
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = [
-        'confirmed_at',
-        'current_sign_in_at',
-        'deleted_at',
-        'last_sign_in_at',
-    ];
+    protected $dates = ['confirmed_at', 'current_sign_in_at', 'deleted_at', 'last_sign_in_at'];
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'notification_email',
-        'city_id',
-    ];
+    protected $fillable = ['name', 'email', 'password', 'notification_email', 'city_id'];
 
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'api_token',
-        'confirmation_token',
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['api_token', 'confirmation_token', 'password', 'remember_token'];
 
-    protected $casts = [
-        'admin' => 'boolean',
-    ];
+    /**
+     * The casts attributes.
+     *
+     * @var array
+     */
+    protected $casts = ['admin' => 'boolean'];
 
+    /**
+     * @inheritdoc
+     */
     protected static function boot()
     {
         parent::boot();
 
         static::created(function ($user) {
-            event(new Events\Created($user, Auth::user() ?? $user));
+            event(new UserCreated($user, Auth::user() ?? $user));
         });
 
         static::deleted(function ($user) {
-            event(new Events\Deleted($user, Auth::user()));
+            event(new UserDeleted($user, Auth::user() ?? $user));
         });
 
         static::restored(function ($user) {
-           event(new Events\Restored($user, Auth::user()));
+           event(new UserRestored($user, Auth::user()));
         });
     }
 
@@ -86,48 +81,6 @@ class User extends Authenticatable implements Contracts\Confirmable
     }
 
     /**
-     * Confirm user.
-     *
-     * @event \App\Events\User\WasConfirmed
-     * @return bool
-     */
-    public function confirm()
-    {
-        if (! $this->isConfirmed()) {
-            $this->confirmed_at = Carbon::now();
-
-            if ($this->save()) {
-                event(new Events\Confirmed($this, Auth::user() ?? $this));
-
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public function resetAuthenticationToken()
-    {
-        $this->api_token = $this->genRandomToken();
-
-        return $this;
-    }
-
-    public function resetConfirmationToken()
-    {
-        $this->confirmation_token = $this->confirmation_token ?? $this->genRandomToken();
-
-        return $this;
-    }
-
-    protected function genRandomToken()
-    {
-        return str_random(
-            config('app.cipher') == 'AES-128-CBC' ? 16 : 32
-        );
-    }
-
-    /**
      * Check if current user is confirmed.
      *
      * @return boolean
@@ -135,6 +88,75 @@ class User extends Authenticatable implements Contracts\Confirmable
     public function isConfirmed()
     {
         return (bool) $this->confirmed_at;
+    }
+
+    /**
+     * Confirm user.
+     *
+     * @event \App\Events\User\WasConfirmed
+     * @return bool
+     */
+    public function confirm()
+    {
+        if ($this->isConfirmed()) {
+            return false;
+        }
+
+        $this->confirmed_at = Carbon::now();
+
+        return $this->save();
+    }
+
+    public function updateSignInCount($ipAddress)
+    {
+        $this->last_sign_in_at = $this->current_sign_in_at ?? Carbon::now();
+        $this->last_sign_in_ip = $this->current_sign_in_ip ?? $ipAddress;
+
+        $this->current_sign_in_at = Carbon::now();
+        $this->current_sign_in_ip = $ipAddress;
+
+        return $this->save() && $this->increment('sign_in_count');
+    }
+
+    public function updateFailedAttempts()
+    {
+        return $this->increment('failed_attempts');
+    }
+
+    /**
+     * Reset api_token.
+     *
+     * @return User
+     */
+    public function resetAuthenticationToken()
+    {
+        $this->api_token = $this->genRandomToken();
+
+        return $this;
+    }
+
+    /**
+     * Reset a confirmation token.
+     *
+     * @return User
+     */
+    public function resetConfirmationToken()
+    {
+        $this->confirmation_token = $this->confirmation_token ?? $this->genRandomToken();
+
+        return $this;
+    }
+
+    /**
+     * Generate random token.
+     *
+     * @return string
+     */
+    protected function genRandomToken()
+    {
+        return str_random(
+            config('app.cipher') == 'AES-128-CBC' ? 16 : 32
+        );
     }
 
     /**
@@ -158,6 +180,8 @@ class User extends Authenticatable implements Contracts\Confirmable
     }
 
     /**
+     * Check related.
+     *
      * @param  \Illuminate\Database\Eloquent\Model $related
      * @return boolean
      */

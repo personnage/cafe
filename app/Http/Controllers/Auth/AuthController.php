@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
-use App\Events\User\Registered;
+use App\Events\Registration\UserRegistered;
 use App\Http\Requests\RegisteredUserRequest;
 
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -57,16 +57,14 @@ class AuthController extends Controller
      */
     public function register(RegisteredUserRequest $request)
     {
-        $user = User::create(array_merge($request->except('password'), [
-            'password' => bcrypt($request->input('password')),
-            'notification_email' => $request->input('email'),
+        $user = new User(array_merge($request->all(), [
+            'password' => bcrypt($request->password),
+            'notification_email' => $request->email,
         ]));
+        $user->resetAuthenticationToken();
+        $user->save();
 
-        if ($user->wasRecentlyCreated) {
-            $user->resetAuthenticationToken()->save();
-
-            event(new Registered($user));
-        }
+        event(new UserRegistered($user));
 
         return redirect($this->redirectAlmost);
     }
