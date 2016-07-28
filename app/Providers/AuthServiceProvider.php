@@ -30,12 +30,12 @@ class AuthServiceProvider extends ServiceProvider
 
         // Register a callback to run before all Gate checks.
         // Check will be stopped if return non-null value.
-        $gate->before(function($user) {
+        $gate->before(function ($user) {
             return $user->admin ?: null;
         });
 
         foreach ($this->getPermissions() as $permission) {
-            $gate->define($permission->name, function($user) use ($permission) {
+            $gate->define($permission->name, function ($user) use ($permission) {
                 return $user->hasRole($permission->roles);
             });
         }

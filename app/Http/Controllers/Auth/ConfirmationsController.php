@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Events\Confirmation\UserConfirmRegistration;
 use App\Jobs\SendConfirmationToEmail;
 use App\Repositories\UserRepository;
-
 use Illuminate\Http\Request;
 
 class ConfirmationsController extends Controller

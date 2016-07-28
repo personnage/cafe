@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Events;
 use App\Listeners;
-
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 

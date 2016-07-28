@@ -28,7 +28,7 @@ class SendWelcomeToEmail implements ShouldQueue
      */
     protected function sendMessage($user)
     {
-        Mail::send('auth.emails.welcome', compact('user'), function($message) use ($user) {
+        Mail::send('auth.emails.welcome', compact('user'), function ($message) use ($user) {
             $message
                 ->from('noreply@allcafe.ru', 'AllCafe Application')
                 ->to($user->getEmailForConfirmation(), $user->name)

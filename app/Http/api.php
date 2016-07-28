@@ -2,7 +2,7 @@
 
 // http://www.programmableweb.com/api/gitlab
 
-Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'middleware' => 'admin:api'], function() {
+Route::group(['prefix' => 'api/v1', 'as' => 'api.', 'middleware' => 'admin:api'], function () {
     Route::get('/', ['as' => 'welcome', function () {
         return auth('api')->user();
     }]);

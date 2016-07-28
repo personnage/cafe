@@ -28,7 +28,7 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot($router);
 
         // Bind city domain to City model.
-        Route::bind('city', function($value) {
+        Route::bind('city', function ($value) {
            return \App\Models\City::where('domain', $value)->first();
         });
     }
