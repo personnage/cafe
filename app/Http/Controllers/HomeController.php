@@ -3,19 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Repositories\CityRepository;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     /**
+     * @var CityRepository
+     */
+    protected $cityRepo;
+
+    /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(CityRepository $cityRepo)
     {
-        //
+        $this->cityRepo = $cityRepo;
     }
 
     /**
@@ -25,7 +31,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $city = new City;
+        $city = $this->cityRepo;
 
         return view('app.home.index', compact('city'));
     }
@@ -33,11 +39,11 @@ class HomeController extends Controller
     /**
      * Show the index page current region.
      *
-     * @param  City   $city
+     * @param  City  $city
      * @return \Illuminate\Http\Response
      */
     public function home(City $city)
     {
-        dd($city);
+        return view('app.home.index', compact('city'));
     }
 }

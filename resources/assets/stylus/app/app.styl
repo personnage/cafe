@@ -270,7 +270,7 @@ time
   p
     font 14px/19px 'PT Serif', Georgia, serif
     color #212224
-  
+
 .header
   padding 10px 0 15px 0
   font-family "ProximaNova-Reg", Arial, sans-serif
@@ -280,10 +280,11 @@ time
 
 .logo
   background url(/assets/img/app/logo.png) no-repeat 0 0
-  height 43px
-  width 183px
-  margin-top 10px
   border none
+  height 43px
+  margin-top 10px
+  text-indent -9999px
+  width 183px
 
 .selector__hidden
   display none
@@ -354,7 +355,6 @@ time
     width 50px
     height 50px
     margin 15px 0 0 10px
-    border-radius 50%
     padding 0
   .info
     padding 15px 0
@@ -380,34 +380,26 @@ time
     border 0
   .icons
     margin 30px 10px 0 0
-    line-height 20px
     padding 0
     a
-      height 20px
-      background-repeat no-repeat
-      background-position 50% 0
       border 0
-      span
-        position absolute
-        left 20px
-        top -3px
-        height 16px
-        padding 0 4px
-        font-size 8px
-        line-height 14px
-        color #fff
-        background #f25916
-        border 2px solid #fff
-        border-radius 8px
-        text-decoration none
-  .icons__notification
-    background-image url('/assets/img/app/main/icons/notification.png')
-  .icons__comment
-    background-image url('/assets/img/app/main/icons/comment.png')
-  .icons__mail
-    background-image url('/assets/img/app/main/icons/mail.png')
-  .icons__admin
-    background-image url('/assets/img/app/main/icons/mail.png')
+      color: #f25916;
+      font-size: 25px;
+      line-height: 1;
+      margin-left: 15px;
+      // span
+      //   position absolute
+      //   left 20px
+      //   top -3px
+      //   height 16px
+      //   padding 0 4px
+      //   font-size 8px
+      //   line-height 14px
+      //   color #fff
+      //   background #f25916
+      //   border 2px solid #fff
+      //   border-radius 8px
+      //   text-decoration none
 .header__userBlock
   margin-top 10px
   text-align right

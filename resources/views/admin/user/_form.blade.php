@@ -100,20 +100,15 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">Roles</label>
       <div class="col-sm-10">
-        <div class="grid grid-toggle">
+        <select id="select-roles-to-users" name="roles[]" class="form-control" multiple placeholder="Select a roles...">
+          <option value="">Select a roles...</option>
           @foreach($roles as $role)
-            <input type="checkbox" name="roles[{{ $role->id }}]" id="{{ $role->name }}"
-              @if(old('roles.'.$role->id) or $user->hasRole($role->name))
-                checked
-              @endif
-            >
-
-            <label for="{{ $role->name }}" class="grid-item grid-colorize">
-              <h4 class="text-muted">{{ $role->name }}</h4>
-              <p data-toggle="tooltip" data-placement="left" title="{{ $role->label }}">{{ $role->label }}</p>
-            </label>
+          <option
+            @if(false !== array_search($role->id, (array) old('roles')) or $user->hasRole($role->name))
+              selected
+            @endif value="{{ $role->id }}">{{ $role->name }}</option>
           @endforeach
-        </div>
+        </select>
       </div>
     </div>
   </fieldset>

@@ -60,15 +60,29 @@
           </form>
 
           <hr>
-          <div class="col-md-9 col-md-offset-3">
+          <div class="col-md-9 col-md-offset-2">
 
-            <div class="btn-group btn-group-sm loginBlock__social" role="group" aria-label="Socialite">
-              {{--<a class="btn btn-default" href="{{ url('auth/github') }}">GitHub</a>--}}
-              <a class="btn btn-default vk" disabled href="">ВКонтакте</a>
-              <a class="btn btn-default fb" disabled href="{{ url('auth/facebook') }}">Facebook</a>
+            <div class="btn-group btn-group" role="group" aria-label="Socialite">
 
-              <a class="btn btn-default ya" disabled href="">Яндекс</a>
-              <a class="btn btn-default mru" disabled href="">MailRu</a>
+              <a class="btn btn-default" href="{{ url('auth/vk') }}">
+                <i class="fa fa-vk" aria-hidden="true"></i> ВКонтакте
+              </a>
+
+              <a class="btn btn-default" href="{{ url('auth/github') }}">
+                <i class="fa fa-github" aria-hidden="true"></i> GitHub
+              </a>
+
+              <a class="btn btn-default" href="{{ url('auth/facebook') }}">
+                <i class="fa fa-facebook" aria-hidden="true"></i> Facebook
+              </a>
+
+              <a class="btn btn-default" href="{{ url('auth/yandex') }}">
+                <i class="fa fa-yahoo" aria-hidden="true"></i> Яндекс
+              </a>
+
+              <a class="btn btn-default" href="{{ url('auth/mail') }}">
+                <i class="fa fa-at" aria-hidden="true"></i> Mail.RU
+              </a>
 
             </div>
           </div>

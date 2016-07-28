@@ -54,7 +54,7 @@ class RoleController extends Controller
         $role = Role::create($request->all());
 
         if ($role->wasRecentlyCreated) {
-            foreach (array_keys((array) $request->input('permissions')) as $permission_id) {
+            foreach ((array) $request->input('permissions') as $permission_id) {
                 $role->givePermissionTo(Permission::findOrFail($permission_id));
             }
 
@@ -101,7 +101,7 @@ class RoleController extends Controller
     {
         $role->fill($request->all())->save();
 
-        $role->permissions()->sync(array_keys((array) $request->input('permissions')));
+        $role->permissions()->sync((array) $request->input('permissions'));
 
         return back()->with('notice', 'Role was successfully updated.');
     }

@@ -15,6 +15,8 @@
 
   @stack('meta-tags')
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+
   <link rel="stylesheet" href="{{ elixir('assets/css/app/bootstrap-pkg.css') }}">
   <link rel="stylesheet" href="{{ elixir('assets/css/app/app.css') }}">
 
