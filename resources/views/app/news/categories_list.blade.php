@@ -4,7 +4,7 @@
     <div class="col-sm-9">
         <div class="row">
             <div class="typeHeader std-block col-lg-12">
-                <h1>{{ $typeTitle }}</h1>
+                <h1>Новости и открытия, обзоры, интервью</h1>
             </div>
         </div>
 
@@ -12,13 +12,13 @@
             <div class="row">
                 <div class="col-lg-12 typeBlock std-block">
                     <div class="typeImage pull-left">
-                        <a href="{{ url("news/{$category->name}") }}">
+                        <a href="{!! route('news.items.list', ['categoryName' => $category->name]) !!}">
+                            <img src="http://placekitten.com/100/100" alt="{{ $category->title }}" />
                             {{--<img src="http://assets.allcafe.ru/{{ $category->image->name }}" alt="{{ $category->title }}" />--}}
-                            <img src="http://placekitten.com/100/100" />
                         </a>
                     </div>
                     <div class="info">
-                        <a href="{{ url("news/{$category->name}") }}">
+                        <a href="{!! route('news.items.list', ['categoryName' => $category->name]) !!}">
                             <h2>{{ $category->title }}</h2>
                         </a>
                         <p>{{ $category->description }}</p>

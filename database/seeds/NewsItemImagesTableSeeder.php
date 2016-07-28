@@ -1,10 +1,10 @@
 <?php
 
-use App\Models\Content;
-use App\Models\ContentImage;
+use App\Models\NewsItem;
+use App\Models\NewsItemImage;
 use Illuminate\Database\Seeder;
 
-class ContentImagesTableSeeder extends Seeder
+class NewsItemImagesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,13 +13,13 @@ class ContentImagesTableSeeder extends Seeder
      */
     public function run()
     {
-        $contentIds = Content::select('id')->get()->pluck('id');
+        $contentIds = NewsItem::select('id')->get()->pluck('id');
         $faker = \Faker\Factory::create();
 
         foreach ($contentIds as $contentId) {
-            ContentImage::create([
+            NewsItemImage::create([
                 'name' => "{$faker->word}.jpg",
-                'content_id' => $contentId,
+                'news_item_id' => $contentId,
             ]);
         }
     }

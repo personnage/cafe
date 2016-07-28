@@ -22,10 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(PermissionsTableSeeder::class);
-        $this->call(ContentCategoryTypesTableSeeder::class);
-        $this->call(ContentCategoriesTableSeeder::class);
-        $this->call(ContentCategoryImagesTableSeeder::class);
-        $this->call(ContentTableSeeder::class);
-        $this->call(ContentImagesTableSeeder::class);
+        $this->call(NewsCategoriesTableSeeder::class);
+        $this->call(NewsCategoryImagesTableSeeder::class);
+        $this->call(NewsItemsTableSeeder::class);
+        $this->call(NewsItemImagesTableSeeder::class);
     }
 }

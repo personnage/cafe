@@ -4,9 +4,7 @@
   <div class="col-sm-9">
       <div class="row">
           <div class="typeHeader std-block col-xs-12">
-              <h1 class="col-lg-8 col-sm-12">
-                  Новости ресторанов Санкт-Петербурга
-              </h1>
+              <h1 class="col-lg-8 col-sm-12">{{ $categoryTitle }}</h1>
               <div class="col-lg-4 col-xs-12 subscribeBlock no-padding">
                   <span class="col-xs-3 no-padding">Подписка:</span>
                   <div class="subscribeBlock__buttons col-xs-3 no-padding">

@@ -65,9 +65,19 @@ Route::group(['prefix' => 'community', 'middleware' => 'auth', 'namespace' => 'C
 
 
 
+// Раздел "Новости и открытия, обзоры, интервью"
+Route::get('/news', [
+    'as' => 'news.categories.list',
+    'uses' => 'NewsController@categoriesList',
+]);
 
-Route::get('/news', 'ContentController@newsCategoriesIndex');
+// Список статей одной категории раздела "Новости и открытия, обзоры, интервью"
+Route::get('/news/{categoryName}', [
+    'as' => 'news.items.list',
+    'uses' => 'NewsController@itemsList',
+]);
 
+/*
 // news template
 Route::get('/news/total', function () {
     return view('app.content.news.category');
@@ -98,3 +108,4 @@ Route::get('restaurants/specials/{id}', function() {
 Route::get('restaurants/specials/{id}/{name}', function() {
     return view('app.content.bankets.item');
 });
+*/
