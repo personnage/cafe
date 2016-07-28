@@ -64,4 +64,9 @@ return [
     'twitter' => [
         // pass
     ],
+    'vk' => [
+        'client_id' => env('VK_CLIENT_ID'),
+        'client_secret' => env('VK_CLIENT_SECRET'),
+        'redirect' => env('APP_URL') . '/auth/vk/callback',
+    ],
 ];
