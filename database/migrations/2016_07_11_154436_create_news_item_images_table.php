@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContentImagesTable extends Migration
+class CreateNewsItemImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,15 @@ class CreateContentImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('content_images', function (Blueprint $table) {
+        Schema::create('news_item_images', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->unsignedInteger('content_id')->index();
+            $table->unsignedInteger('news_item_id')->index();
             $table->timestamps();
 
-            $table->foreign('content_id')
+            $table->foreign('news_item_id')
                 ->references('id')
-                ->on('content')
+                ->on('news_items')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
@@ -33,6 +33,6 @@ class CreateContentImagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('content_images');
+        Schema::drop('news_item_images');
     }
 }

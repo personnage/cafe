@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-class Content extends Model
+class NewsItem extends Model
 {
     public function category()
     {
-        return $this->belongsTo(ContentCategory::class);
+        return $this->belongsTo(NewsCategory::class);
     }
 
     public function creator()

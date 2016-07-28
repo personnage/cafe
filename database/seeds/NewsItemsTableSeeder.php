@@ -1,11 +1,11 @@
 <?php
 
-use App\Models\ContentCategory;
+use App\Models\NewsCategory;
 use App\Models\User;
-use App\Models\Content;
+use App\Models\NewsItem;
 use Illuminate\Database\Seeder;
 
-class ContentTableSeeder extends Seeder
+class NewsItemsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,14 +14,14 @@ class ContentTableSeeder extends Seeder
      */
     public function run()
     {
-        $categoryIds = ContentCategory::select('id')->get()->pluck('id');
+        $categoryIds = NewsCategory::select('id')->get()->pluck('id');
         $userIds = User::select('id')->get()->pluck('id');
 
         foreach ($categoryIds as $categoryId) {
-            $articlesCount = random_int(5, 15);
+            $itemsCount = random_int(5, 15);
 
-            factory(Content::class, $articlesCount)->create([
-                'content_category_id' => $categoryId,
+            factory(NewsItem::class, $itemsCount)->create([
+                'news_category_id' => $categoryId,
                 'user_id' => $userIds->random(),
             ]);
         }

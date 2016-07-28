@@ -50,36 +50,31 @@ $factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Models\ContentCategoryType::class, function (Faker\Generator $faker) {
-    return [
-        'name' => $faker->unique()->word,
-        'title' => $faker->sentence,
-    ];
-});
-
-$factory->define(App\Models\ContentCategory::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\NewsCategory::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->unique()->word,
         'title' => $faker->words(mt_rand(1, 4), true),
         'description' => $faker->sentence,
-        'content_category_type_id' => factory(App\Models\ContentCategoryType::class)->create()->id,
     ];
 });
 
-$factory->define(App\Models\ContentCategoryImage::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\NewsCategoryImage::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->image('/', 800, 600, 'cats', false),
-        'content_category_id' => factory(App\Models\ContentCategory::class)->create()->id,
+        'news_category_id' => factory(App\Models\NewsCategory::class)->create()->id,
     ];
 });
 
-$factory->define(App\Models\Content::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\NewsItem::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->slug,
         'title' => $faker->sentence,
         'announcement' => $faker->paragraph,
         'body' => $faker->paragraphs(3, true),
-        'comments_allowed' => $faker->boolean(70),
+        'comments_allowed' => $faker->boolean(60),
+        'is_published' => $faker->boolean(80),
+        'published_since' => $faker->dateTimeBetween('-3 days', '+2 days'),
+        'published_until' => $faker->dateTimeBetween('+5 days', '+10 days'),
 //        'content_category_id' => factory(App\Models\ContentCategory::class)->create()->id,
 //        'user_id' => factory(App\Models\User::class)->create()->id,
     ];

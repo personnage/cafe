@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContentTable extends Migration
+class CreateNewsCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,22 +12,17 @@ class CreateContentTable extends Migration
      */
     public function up()
     {
-        Schema::create('content', function (Blueprint $table) {
+        Schema::create('news_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->index();
             $table->string('title');
-            $table->text('announcement');
-            $table->text('body');
-            $table->boolean('comments_allowed');
-            $table->unsignedInteger('content_category_id')->index();
-            $table->unsignedInteger('user_id');
+            $table->text('description')->nullable();
+            $table->integer('sort')->nullable();
+            $table->unsignedInteger('parent_id')->nullable()->index();
 
-            $table->timestamps();
-            $table->softDeletes();
-
-            $table->foreign('content_category_id')
+            $table->foreign('parent_id')
                 ->references('id')
-                ->on('content_categories')
+                ->on('news_categories')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
@@ -40,6 +35,6 @@ class CreateContentTable extends Migration
      */
     public function down()
     {
-        Schema::drop('content');
+        Schema::drop('news_categories');
     }
 }
