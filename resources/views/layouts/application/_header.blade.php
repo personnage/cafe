@@ -31,8 +31,8 @@
 
     @if(Auth::guest())
     <div class="header__userBlock col-lg-3 col-md-4 col-sm-3 hidden-xs pull-right no-padding">
-      <a href="{{ url("/register") }}" rel="nofollow" class="hidden-sm">Регистрация</a>
-      <a href="{{ url("/login") }}" rel="nofollow">Вход</a>
+      <a href="{{ sprintf('%s/%s', route('index'), 'register') }}" rel="nofollow" class="hidden-sm">Регистрация</a>
+      <a href="{{ sprintf('%s/%s', route('index'), 'login') }}" rel="nofollow">Вход</a>
     </div>
     @else
       @include('layouts.application._profile')

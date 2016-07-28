@@ -6,7 +6,7 @@
 
 // auth()->login(\App\Models\User::find(1));
 
-Route::auth();
+
 // Authentication With Socialite
 Route::group(['prefix' => 'auth/{provider}', 'namespace' => 'Auth'], function () {
     Route::get('/', 'AuthController@redirectToProvider');
@@ -18,7 +18,8 @@ Route::get('confirmation/{token?}', 'Auth\ConfirmationsController@showEmailForm'
 Route::post('confirmation', 'Auth\ConfirmationsController@sendConfirmationLinkEmail');
 
 Route::group(['domain' => 'allcafe.app'], function () {
-    Route::get('/', 'HomeController@index');
+    Route::auth();
+    Route::get('/', 'HomeController@index')->name('index');
 });
 
 Route::group(['domain' => '{city}.allcafe.app'], function () {
