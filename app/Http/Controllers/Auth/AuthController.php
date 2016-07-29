@@ -51,19 +51,19 @@ class AuthController extends Controller
     /**
      * Handle a registration request for the application.
      *
+     * @event  UserRegistered
      * @param  \App\Http\Requests\RegisteredUserRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function register(RegisteredUserRequest $request)
     {
-        $user = new User(array_merge($request->all(), [
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
             'password' => bcrypt($request->password),
-            'notification_email' => $request->email,
-        ]));
-        $user->resetAuthenticationToken();
-        $user->save();
+        ]);
 
-        event(new UserRegistered($user));
+        event(new UserRegistered($user, ! $user->isConfirmed()));
 
         return redirect($this->redirectAlmost);
     }

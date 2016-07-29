@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Auth;
 use Carbon\Carbon;
-
 use App\Events\Creation\UserCreated;
 use App\Events\Deletion\UserDeleted;
 use App\Events\Restoration\UserRestored;
-
+use App\Events\Confirmation\UserConfirmRegistration;
 use App\Events\User as Events;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -52,17 +51,23 @@ class User extends Authenticatable implements Contracts\Confirmable
     {
         parent::boot();
 
-        static::created(function ($user) {
-            event(new UserCreated($user, Auth::user() ?? $user));
+        // Update some attributes before creating.
+        static::creating(function ($user) {
+            $user->notification_email = $user->email;
+            $user->resetAuthenticationToken();
         });
 
-        static::deleted(function ($user) {
-            event(new UserDeleted($user, Auth::user() ?? $user));
-        });
+        // static::created(function ($user) {
+        //     event(new UserCreated($user, Auth::user() ?? $user));
+        // });
 
-        static::restored(function ($user) {
-           event(new UserRestored($user, Auth::user()));
-        });
+        // static::deleted(function ($user) {
+        //     event(new UserDeleted($user, Auth::user() ?? $user));
+        // });
+
+        // static::restored(function ($user) {
+        //    event(new UserRestored($user, Auth::user()));
+        // });
     }
 
     # Accessors
@@ -93,34 +98,19 @@ class User extends Authenticatable implements Contracts\Confirmable
     /**
      * Confirm user.
      *
-     * @event \App\Events\User\WasConfirmed
+     * @event  UserConfirmRegistration
      * @return bool
      */
     public function confirm()
     {
-        if ($this->isConfirmed()) {
-            return false;
+        if (! $this->isConfirmed()) {
+            $this->confirmed_at = Carbon::now();
+            $this->save();
+
+            event(new UserConfirmRegistration($this));
         }
 
-        $this->confirmed_at = Carbon::now();
-
-        return $this->save();
-    }
-
-    public function updateSignInCount($ipAddress)
-    {
-        $this->last_sign_in_at = $this->current_sign_in_at ?? Carbon::now();
-        $this->last_sign_in_ip = $this->current_sign_in_ip ?? $ipAddress;
-
-        $this->current_sign_in_at = Carbon::now();
-        $this->current_sign_in_ip = $ipAddress;
-
-        return $this->save() && $this->increment('sign_in_count');
-    }
-
-    public function updateFailedAttempts()
-    {
-        return $this->increment('failed_attempts');
+        return $this->isConfirmed();
     }
 
     /**

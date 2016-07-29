@@ -17,12 +17,22 @@ class UserRegistered extends Event
     public $user;
 
     /**
+     * Indicates if the user should be "confirmed".
+     *
+     * @var bool
+     */
+    public $confirm;
+
+    /**
      * Create a new event instance.
      *
+     * @param  User  $user
+     * @param  bool  $confirm
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, $confirm)
     {
         $this->user = $user;
+        $this->confirm = $confirm;
     }
 }

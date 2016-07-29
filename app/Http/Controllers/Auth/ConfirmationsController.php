@@ -2,20 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\Confirmation\UserConfirmRegistration;
+use App\Models\User;
 use App\Jobs\SendConfirmationToEmail;
-use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
 class ConfirmationsController extends Controller
 {
-    /**
-     * The user repository instance.
-     *
-     * @var UserRepository
-     */
-    protected $users;
-
     /**
      * Where to redirect users after confirmations.
      *
@@ -35,11 +27,9 @@ class ConfirmationsController extends Controller
      *
      * @return void
      */
-    public function __construct(UserRepository $users)
+    public function __construct()
     {
         $this->middleware('guest');
-
-        $this->users = $users;
     }
 
     /**
@@ -66,12 +56,11 @@ class ConfirmationsController extends Controller
             return $this->showLinkRequestForm();
         }
 
-        $user = $this->users->byEmail($request->input('email'));
+        $this->validateSendConfirmationLinkEmail($request);
 
-        if (! is_null($user) &&
-            ! $user->isConfirmed() &&
-            ! strcmp($user->confirmation_token, $token)
-        ) {
+        $user = User::whereEmail($request->email)->first();
+
+        if (! is_null($user) && ! $user->isConfirmed() && ! strcmp($user->confirmation_token, $token)) {
             $this->confirmationTo($user);
         }
 
@@ -99,7 +88,7 @@ class ConfirmationsController extends Controller
     {
         $this->validateSendConfirmationLinkEmail($request);
 
-        $user = $this->users->byEmail($request->input('email'));
+        $user = User::whereEmail($request->email)->first();
 
         if (! is_null($user) && ! $user->isConfirmed()) {
             $this->dispatch(new SendConfirmationToEmail($user));
@@ -131,8 +120,6 @@ class ConfirmationsController extends Controller
     protected function confirmationTo($user)
     {
         if ($user->confirm()) {
-            event(new UserConfirmRegistration($user));
-
             auth()->login($user);
         }
     }

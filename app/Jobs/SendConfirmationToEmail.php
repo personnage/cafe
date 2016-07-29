@@ -52,11 +52,11 @@ class SendConfirmationToEmail extends Job implements ShouldQueue
                 $user->save();
             }
 
-            $this->sendConfirmation($user);
+            $this->sendConfirmationToEmail($user);
         }
     }
 
-    protected function sendConfirmation(Confirmable $user)
+    protected function sendConfirmationToEmail($user)
     {
         $view = $this->view ?? 'auth.emails.confirmation';
 

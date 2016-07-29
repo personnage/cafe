@@ -69,20 +69,15 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        $user = new User;
-        $user->forceFill([
+        $user = User::forceCreate([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt(str_random(10)),
-            'notification_email' => $request->email,
 
             'admin' => (bool) $request->admin,
             'confirmed_at' => Carbon::now(),
             'created_by_id' => auth()->id(),
         ]);
-
-        $user->resetAuthenticationToken();
-        $user->save();
 
         if ($user->wasRecentlyCreated) {
             $this->sendResetLinkEmail($request);

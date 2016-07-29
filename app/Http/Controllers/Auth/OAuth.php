@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Carbon\Carbon;
+use Auth;
 use Socialite;
-
+use Carbon\Carbon;
 use App\Models\User;
+use App\Events\Registration\UserRegistered;
 
 trait OAuth
 {
@@ -33,7 +34,7 @@ trait OAuth
             Socialite::driver($provider)->user()
         );
 
-        auth()->login($user);
+        Auth::login($user);
 
         if (method_exists($this, 'redirectPath')) {
             return redirect()->to($this->redirectPath());
@@ -47,6 +48,7 @@ trait OAuth
      *
      * Only GitHub.
      *
+     * @event  UserRegistered
      * @param  stirng                      $providerName
      * @param  \Laravel\Socialite\Two\User $providerUser
      * @return \App\Models\User
@@ -78,24 +80,20 @@ trait OAuth
 
         // Create new user.
         $user->forceFill([
-            'name'     => $providerUser->name,
-            'email'    => $providerUser->email,
+            'name' => $providerUser->name,
+            'email' => $providerUser->email,
+
             // We will be generated password to user for safety account.
             // Reset password may be later.
             'password' => bcrypt(str_random(10)),
-            'notification_email' => $providerUser->email,
 
             // We trust "Socialite" and user will be a confirmed automatic.
             'confirmed_at' => Carbon::now(),
 
             sprintf('%s_id', $providerName) => $providerUser->id,
-        ]);
+        ])->save();
 
-        $user->resetAuthenticationToken();
-        $user->save();
-
-        // send confirm???
-        // event(new UserRegistered($user));
+        event(new UserRegistered($user, ! $user->isConfirmed()));
 
         return $user;
     }

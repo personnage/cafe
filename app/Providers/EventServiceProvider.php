@@ -15,30 +15,29 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Events\Creation\UserCreated::class => [
-            //
-        ],
+        // Events\Creation\UserCreated::class => [
+        //     //
+        // ],
 
-        Events\Deletion\UserDeleted::class => [
-            //
-        ],
+        // Events\Deletion\UserDeleted::class => [
+        //     //
+        // ],
 
-        Events\Restoration\UserRestored::class => [
-            //
-        ],
+        // Events\Restoration\UserRestored::class => [
+        //     //
+        // ],
 
         Events\Registration\UserRegistered::class => [
-            Listeners\Registration\SendNotificationToAdminEmailMayBe::class,
-            Listeners\SendConfirmationToEmail::class,
+            Listeners\Registration\SendWelcomeToEmail::class,
         ],
 
         Events\Confirmation\UserConfirmRegistration::class => [
-            Listeners\Confirmation\SendWelcomeToEmail::class,
-        ],
-
-        Events\Impersonation\UserImpersonated::class => [
             //
         ],
+
+        // Events\Impersonation\UserImpersonated::class => [
+        //     //
+        // ],
 
         //
 
