@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\Repositories\CachingCityRepository;
 use App\Repositories\CityRepository;
 use App\Repositories\EloquentCityRepository;
-
 use Illuminate\Support\ServiceProvider;
 
 class DatabaseServiceProvider extends ServiceProvider
