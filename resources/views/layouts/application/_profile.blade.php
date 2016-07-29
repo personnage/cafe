@@ -1,9 +1,9 @@
 <div class="header__loggedBlock col-lg-4 col-md-4 hidden-xs">
-  <img src="{{ Gravatar::src(auth()->user()->email, 100) }}" class="col-lg-3 col-md-3 pull-right img-circle">
+  <img src="{{ Gravatar::src($user->email, 100) }}" class="col-lg-3 col-md-3 pull-right img-circle">
 
   <div class="info col-lg-3 col-md-3 col-sm-6 pull-right">
     <a href="{{ url("community/feed") }}" class="info__profile">Мой AllCafe</a>
-    <span class="info__name">{{ auth()->user()->name }}</span>
+    <span class="info__name">{{ $user->name }}</span>
     <a href="{{ url("logout") }}" class="info__exit">выход</a>
   </div>
 

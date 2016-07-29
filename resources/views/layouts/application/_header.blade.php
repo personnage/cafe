@@ -35,7 +35,7 @@
       <a href="{{ sprintf('%s/%s', route('index'), 'login') }}" rel="nofollow">Вход</a>
     </div>
     @else
-      @include('layouts.application._profile')
+      @include('layouts.application._profile', ['user' => Auth::user()])
     @endif
   </div>
 </div>
