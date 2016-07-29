@@ -25,15 +25,4 @@ class UserRepository
     {
         return User::latest()->get();
     }
-
-    /**
-     * Fetch user by email address.
-     *
-     * @param  string $email
-     * @return [type]        [description]
-     */
-    public function byEmail(string $email)
-    {
-        return User::where('email', $email)->first();
-    }
 }
