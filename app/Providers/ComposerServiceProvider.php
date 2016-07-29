@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\City;
+use App\Repositories\CityRepository;
 use Illuminate\Support\ServiceProvider;
 
 class ComposerServiceProvider extends ServiceProvider
@@ -15,12 +15,14 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->compose();
+
+        //
     }
 
     protected function compose()
     {
         view()->composer('layouts.application._header', function ($view) {
-            $view->with('cities', City::all());
+            $view->with('cities', $this->app->make(CityRepository::class)->getAll());
         });
     }
 
