@@ -55,6 +55,8 @@ Route::group([
     Route::patch('permission/{permission}/delete', 'PermissionController@delete');
     Route::patch('permission/{permission}/restore', 'PermissionController@restore');
     Route::resource('permission', 'PermissionController');
+
+    Route::get('help', 'HelpController@index');
 });
 
 // Личный кабинет для зарегистрированного пользователя.
