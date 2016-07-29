@@ -144,9 +144,7 @@ class User extends Authenticatable implements Contracts\Confirmable
      */
     protected function genRandomToken()
     {
-        return str_random(
-            config('app.cipher') == 'AES-128-CBC' ? 16 : 32
-        );
+        return str_random(config('app.cipher') == 'AES-128-CBC' ? 16 : 32);
     }
 
     /**
