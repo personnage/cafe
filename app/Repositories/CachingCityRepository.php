@@ -19,8 +19,8 @@ class CachingCityRepository implements CityRepository
     /**
      * Create new instance.
      *
-     * @param CityRepository $repository [description]
-     * @param Cache          $cache      [description]
+     * @param CityRepository $repository
+     * @param Cache          $cache
      */
     public function __construct(CityRepository $repository, Cache $cache)
     {
