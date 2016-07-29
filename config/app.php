@@ -166,6 +166,7 @@ return [
          */
         Laravel\Socialite\SocialiteServiceProvider::class,
         Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
+        GrahamCampbell\Markdown\MarkdownServiceProvider::class,
 
 
         // раскомментировать -> запустить artisan ide-helper:generate -> закомментировать обратно
@@ -221,6 +222,7 @@ return [
          */
         'Gravatar' => Thomaswelton\LaravelGravatar\Facades\Gravatar::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
 
     ],
 
