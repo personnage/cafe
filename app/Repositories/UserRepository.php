@@ -9,7 +9,7 @@ class UserRepository
     /**
      * Get only admins users.
      *
-     * @return [type] [description]
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function admins()
     {
@@ -19,7 +19,7 @@ class UserRepository
     /**
      * Get latest users.
      *
-     * @return [type] [description]
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function latest()
     {
