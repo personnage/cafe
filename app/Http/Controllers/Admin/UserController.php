@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Role;
 use App\Models\User;
-use App\Events\User\Impersonated;
+use App\Events\Impersonation\UserImpersonated;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\EditUserRequest;
 use Carbon\Carbon;
@@ -231,7 +231,7 @@ class UserController extends Controller
 
         auth()->login($user);
 
-        event(new Impersonated($user, auth()->user()));
+        event(new UserImpersonated($user, auth()->user()));
 
         return redirect()->to($request->root());
     }
