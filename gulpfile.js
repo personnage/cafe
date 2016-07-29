@@ -95,11 +95,11 @@ elixir(function(mix) {
  */
 elixir(function(mix) {
     mix.stylus([
-        'admin/**/*.styl',
+        'admin/admin.styl',
     ], './public/assets/css/admin/app.css');
 
     mix.stylus([
-        'app/**/*.styl',
+        'app/app.styl',
     ], './public/assets/css/app/app.css');
 });
 
