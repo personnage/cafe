@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests;
 use App\Models\City;
 use App\Repositories\CityRepository;
-use App\Http\Requests;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -12,16 +12,16 @@ class HomeController extends Controller
     /**
      * @var CityRepository
      */
-    protected $cityRepo;
+    protected $cityRepository;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(CityRepository $cityRepo)
+    public function __construct(CityRepository $cityRepository)
     {
-        $this->cityRepo = $cityRepo;
+        $this->cityRepository = $cityRepository;
     }
 
     /**
@@ -31,9 +31,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $city = $this->cityRepo;
-
-        return view('app.home.index', compact('city'));
+        return view('app.home.index', [
+            'bigCities'    => $this->cityRepository->getBigCities(),
+            'europeCities' => $this->cityRepository->getEuropeCities(),
+            'littleCities' => $this->cityRepository->getOtherCities(),
+            'mainCities'   => $this->cityRepository->getMainCities(),
+        ]);
     }
 
     /**

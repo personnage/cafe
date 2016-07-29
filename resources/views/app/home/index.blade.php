@@ -7,19 +7,19 @@
       <p>Поиск ресторанов в вашем городе:</p>
 
       <div class="main-cities col-xs-12 no-padding">
-        @foreach($city->mainCities() as $item)
+        @foreach($mainCities as $item)
           <a href="{{ route('home', $item->domain) }}">{{ $item->name }}</a>
         @endforeach
       </div>
 
       <div class="big-cities col-xs-12 no-padding">
-        @foreach($city->bigCities() as $item)
+        @foreach($bigCities as $item)
           <a href="{{ route('home', $item->domain) }}">{{ $item->name }}</a>
         @endforeach
       </div>
 
       <div class="other-cities col-xs-12 no-padding">
-        @foreach($city->littleCities() as $item)
+        @foreach($littleCities as $item)
           <a href="{{ route('home', $item->domain) }}">{{ $item->name }}</a>
         @endforeach
       </div>
@@ -36,7 +36,7 @@
     <div class="other-countries row col-xs-12">
       <p>Другие страны:</p>
 
-      @foreach($city->europeCities() as $city)
+      @foreach($europeCities as $city)
         <a href="{{ route('home', $city->domain) }}">
           <img src="{{ asset(sprintf('assets/img/app/main/%s.png', $city->domain)) }}"> {{ $city->name }}
         </a>

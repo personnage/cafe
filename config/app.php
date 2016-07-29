@@ -159,6 +159,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
         App\Providers\GeoBaseServiceProvider::class,
+        App\Providers\DatabaseServiceProvider::class,
 
         /*
          * Third-Party Service Providers...
