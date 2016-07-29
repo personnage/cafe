@@ -10,14 +10,4 @@ class City extends Model
      * @var array
      */
     protected $fillable = ['name', 'domain'];
-
-    /**
-     * Get the users for the cities.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function users()
-    {
-        return $this->hasMany(User::class);
-    }
 }
