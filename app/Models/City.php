@@ -4,8 +4,6 @@ namespace App\Models;
 
 class City extends Model
 {
-    use Scopes\City;
-
     /**
      * The attributes that are mass assignable.
      *
