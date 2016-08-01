@@ -3,7 +3,7 @@
 namespace App\Models\Scopes;
 
 use Carbon\Carbon;
-use \Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 trait User
 {
