@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class NewsCategory extends Model
 {
-    public $timestamps = false;
+    use SoftDeletes;
 
     public function image()
     {

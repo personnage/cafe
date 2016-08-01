@@ -14,11 +14,14 @@ class CreateNewsCategoriesTable extends Migration
     {
         Schema::create('news_categories', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('parent_id')->nullable()->index();
+
             $table->string('name')->index();
             $table->string('title');
             $table->text('description')->nullable();
             $table->integer('sort')->nullable();
-            $table->unsignedInteger('parent_id')->nullable()->index();
+            $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('parent_id')
                 ->references('id')
