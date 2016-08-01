@@ -14,13 +14,14 @@ class CreateNewsItemsTable extends Migration
     {
         Schema::create('news_items', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('news_category_id')->index();
+            $table->unsignedInteger('user_id')->index();
+
             $table->string('name')->index();
             $table->string('title');
             $table->text('announcement');
             $table->text('body');
             $table->boolean('comments_allowed');
-            $table->unsignedInteger('news_category_id')->index();
-            $table->unsignedInteger('user_id');
 
             $table->boolean('is_published');
             $table->timestamp('published_since')->nullable();
@@ -32,6 +33,12 @@ class CreateNewsItemsTable extends Migration
             $table->foreign('news_category_id')
                 ->references('id')
                 ->on('news_categories')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });

@@ -14,6 +14,13 @@ class CreateRestaurantsTable extends Migration
     {
         Schema::create('restaurants', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('city_id')->index();
+            $table->unsignedInteger('resto_network_id')->nullable()->index();
+            $table->unsignedInteger('resto_group_id')->nullable()->index();
+            $table->unsignedInteger('replacement_id')->nullable()->index();
+            $table->unsignedInteger('status_id')->index();
+            $table->unsignedInteger('user_id')->index();
+
             $table->string('name')->index();
             $table->string('title');
 
@@ -49,17 +56,10 @@ class CreateRestaurantsTable extends Migration
 
             $table->date('check_date')->nullable();
 
-            $table->unsignedInteger('status_id')->index();
             $table->string('status_comment')->nullable();
 
             $table->unsignedInteger('advert_type_id')->nullable()->index();
             $table->timestamp('advert_end_at')->nullable();
-
-            $table->unsignedInteger('city_id')->index();
-            $table->unsignedInteger('resto_network_id')->nullable()->index();
-            $table->unsignedInteger('resto_group_id')->nullable()->index();
-            $table->unsignedInteger('replacement_id')->nullable();
-            $table->unsignedInteger('user_id');
 
             $table->timestamps();
             $table->softDeletes();
@@ -79,6 +79,19 @@ class CreateRestaurantsTable extends Migration
             $table->foreign('replacement_id')
                 ->references('id')
                 ->on('restaurants')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            // TODO раскомментировать, когда будет готова таблица statuses
+            // $table->foreign('status_id')
+            //     ->references('id')
+            //     ->on('statuses')
+            //     ->onUpdate('cascade')
+            //     ->onDelete('cascade');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });

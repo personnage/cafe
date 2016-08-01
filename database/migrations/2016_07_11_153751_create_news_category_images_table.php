@@ -14,9 +14,8 @@ class CreateNewsCategoryImagesTable extends Migration
     {
         Schema::create('news_category_images', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->unsignedInteger('news_category_id')->index();
-            $table->timestamps();
+            $table->string('name');
 
             $table->foreign('news_category_id')
                 ->references('id')

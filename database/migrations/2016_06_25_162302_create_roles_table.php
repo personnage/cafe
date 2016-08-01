@@ -36,8 +36,8 @@ class CreateRolesTable extends Migration
         Schema::getConnection()->statement(sprintf($statement, 'permissions', 'label'));
 
         Schema::create('permission_role', function (Blueprint $table) {
-            $table->unsignedInteger('permission_id');
-            $table->unsignedInteger('role_id');
+            $table->unsignedInteger('permission_id')->index();
+            $table->unsignedInteger('role_id')->index();
 
             $table->foreign('permission_id')
                 ->references('id')
@@ -53,8 +53,8 @@ class CreateRolesTable extends Migration
         });
 
         Schema::create('role_user', function (Blueprint $table) {
-            $table->unsignedInteger('role_id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('role_id')->index();
+            $table->unsignedInteger('user_id')->index();
 
             $table->foreign('role_id')
                 ->references('id')

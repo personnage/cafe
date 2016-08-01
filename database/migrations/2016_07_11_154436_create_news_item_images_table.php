@@ -14,9 +14,9 @@ class CreateNewsItemImagesTable extends Migration
     {
         Schema::create('news_item_images', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->unsignedInteger('news_item_id')->index();
-            $table->timestamps();
+
+            $table->string('name');
 
             $table->foreign('news_item_id')
                 ->references('id')

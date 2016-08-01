@@ -20,6 +20,7 @@ class CreateNewsCategoriesTable extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->integer('sort')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
 
@@ -29,6 +30,12 @@ class CreateNewsCategoriesTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
+
+        Schema::getConnection()->statement('
+            CREATE INDEX title_on_news_categories_trigram
+            ON news_categories
+            USING GIN (title gin_trgm_ops)
+        ');
     }
 
     /**
