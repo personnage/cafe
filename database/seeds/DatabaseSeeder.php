@@ -26,6 +26,6 @@ class DatabaseSeeder extends Seeder
         $this->call(NewsCategoryImagesTableSeeder::class);
         $this->call(NewsItemsTableSeeder::class);
         $this->call(NewsItemImagesTableSeeder::class);
-        $this->call(CitiesSeeder::class);
+        $this->call(CitiesTableSeeder::class);
     }
 }
