@@ -56,7 +56,7 @@ trait OAuth
     protected function findOrCreateProviderUser(string $providerName, $providerUser)
     {
         $user = User::firstOrNew([
-            // example: githab_id => 12345
+            // example: github_id => 12345
             sprintf('%s_id', $providerName) => $providerUser->id
         ]);
 
@@ -80,7 +80,7 @@ trait OAuth
 
         // Create new user.
         $user->forceFill([
-            'name' => $providerUser->name,
+            'name' => $providerUser->name ?? $providerUser->nickname,
             'email' => $providerUser->email,
 
             // We will be generated password to user for safety account.
