@@ -19,7 +19,6 @@ class CreateNewsCategoriesTable extends Migration
             $table->string('name')->index();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->integer('sort')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
