@@ -72,7 +72,6 @@ $factory->define(App\Models\NewsItem::class, function (Faker\Generator $faker) {
         'announcement' => $faker->paragraph,
         'body' => $faker->paragraphs(3, true),
         'comments_allowed' => $faker->boolean(60),
-        'is_published' => $faker->boolean(80),
         'published_since' => $faker->dateTimeBetween('-3 days', '+2 days'),
         'published_until' => $faker->dateTimeBetween('+5 days', '+10 days'),
 //        'content_category_id' => factory(App\Models\ContentCategory::class)->create()->id,
