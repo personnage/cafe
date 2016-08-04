@@ -13,23 +13,23 @@
       <ul class="nav navbar-nav navbar-right">
 
         <li>
-          <a href="{{ url('admin') }}"><i class="material-icons">dashboard</i></a>
+          <a href="{{ url('admin') }}"><i class="fa fa-tachometer" aria-hidden="true"></i></a>
         </li>
 
         <li>
-          <a href="#/settings"><i class="material-icons">settings</i></a>
+          <a href="#/settings"><i class="fa fa-wrench" aria-hidden="true"></i></a>
         </li>
 
         <li>
-          <a href="#/profile"><i class="material-icons">person_outline</i></a>
+          <a href="#/profile"><i class="fa fa-user" aria-hidden="true"></i></a>
         </li>
 
         <li>
-          <a href="#/help"><i class="material-icons">help_outline</i></a>
+          <a href="#/help"><i class="fa fa-question" aria-hidden="true"></i></a>
         </li>
 
         <li>
-          <a href="{{ url('logout') }}"><i class="material-icons">exit_to_app</i></a>
+          <a href="{{ url('logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
         </li>
 
       </ul>
