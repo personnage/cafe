@@ -23,8 +23,8 @@ class CreateNewsItemsTable extends Migration
             $table->text('body');
             $table->boolean('comments_allowed');
 
-            $table->timestamp('published_since')->nullable();
-            $table->timestamp('published_until')->nullable();
+            $table->boolean('published')->default(false);
+            $table->timestamp('published_since');
 
             $table->timestamps();
             $table->softDeletes();
