@@ -6,22 +6,39 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class NewsItem extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Published, Scopes\NewsItem;
 
     /**
      * The attributes that should be mutated to dates.
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'published_since'];
 
+    /**
+     * The casts attributes.
+     *
+     * @var array
+     */
+    protected $casts = ['published' => 'boolean'];
+
+    /**
+     * Get category to currently news.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function category()
     {
-        return $this->belongsTo(NewsCategory::class);
+        return $this->belongsTo(NewsCategory::class, 'news_category_id');
     }
 
-    public function creator()
+    /**
+     * Get author (user) to currently news.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function author()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
