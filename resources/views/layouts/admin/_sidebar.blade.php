@@ -14,6 +14,18 @@
   <hr>
 
   <ul class="nav nav-sidebar">
+    @foreach([
+      'admin/news'     => 'News',
+      'admin/specials' => 'Specials'] as $path => $name)
+    <li @if(url($path) === url()->current()) class="active" @endif>
+      <a href="{{ url($path) }}">{{ $name }}</a>
+    </li>
+    @endforeach
+  </ul>
+
+  <hr>
+
+  <ul class="nav nav-sidebar">
     @foreach(['admin/help' => 'Help'] as $path => $name)
     <li @if(url($path) === url()->current()) class="active" @endif>
       <a href="{{ url($path) }}">{{ $name }}</a>
