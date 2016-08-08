@@ -1,6 +1,15 @@
 <form method="post" enctype="multipart/form-data" action="">
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-3 hidden-xs">
+            <h4>
+                Аватар
+            </h4>
+            <p>
+                Вы можете загрузить аватар здесь
+                или изменить его на сайте <a href="http://gravatar.com">gravatar.com</a>
+            </p>
+        </div>
+        <div class="col-sm-9 col-xs-12">
             <div class="col-sm-3">
                 <img alt="" class="img-responsive img-circle" src="{{ Gravatar::src($user->email, 150) }}">
             </div>
@@ -22,7 +31,15 @@
     <hr>
 
     <div class="row">
-        <div class="col-lg-9">
+        <div class="col-sm-3 hidden-xs">
+            <h4 class="prepend-top-0">
+                Основные настройки
+            </h4>
+            <p>
+                Это информация будет отображена на странице вашего профиля.
+            </p>
+        </div>
+        <div class="col-sm-9 col-xs-12">
             <div class="form-group">
                 <label class="label-light" for="user_name">Имя</label>
                 <input class="form-control" required="required" type="text" value="{{ $user->name }}" name="name" id="user_name">
@@ -35,8 +52,8 @@
             </div>
             <div class="form-group">
                 <label class="label-light" for="user_public_email">Email для уведомлений</label>
-                <input class="form-control" id="user_public_email" name="public_email" value=""/>
-                <span class="help-block">Этот email смогут увидеть другие пользователи</span>
+                <input class="form-control" id="user_public_email" name="public_email" value="{{ $user->notification_email }}"/>
+                <span class="help-block">На этот email будут присылаться уведомления</span>
             </div>
             <div class="form-group">
                 <label class="label-light" for="city">Ваш город</label>

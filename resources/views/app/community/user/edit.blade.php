@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="col-md-9 col-xs-12">
+    <div class="col-xs-12">
 
         <div class="row">
             <div class="col-xs-12 std-block userInfo">
@@ -23,34 +23,17 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="reviews">
                         <div class="col-sm-12">
-                            <h4>Изменить пароль</h4>
                             @include('app.community.user._password_settings')
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="notifications">
                         <div class="col-sm-12">
-                            <form method="post" action="">
-                                <div class="row">
-                                    <div class="col-lg-9">
-                                        <div class="form-group">
-                                            <label class="label-light" for="notifications">
-                                            <input type="checkbox" value="" name="notifications" id="notifications">
-                                                Согласен(на) на получение уведомлений
-                                            </label>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </form>
+                            @include('app.community.user._notification')
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="hidden-sm hidden-xs">
-        @include('app.community.user._sidebar')
     </div>
 
 @endsection
