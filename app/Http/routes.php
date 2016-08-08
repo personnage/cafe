@@ -32,11 +32,7 @@ Route::group(['domain' => '{city}.allcafe.app'], function () {
  *
  * Note: This group have shared-base "auth" middleware across any request.
  */
-Route::group([
-    'prefix' => 'admin',
-    'namespace' => 'Admin',
-    'middleware' => 'auth',
-], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin'], function () {
     Route::get('/', 'DashboardController@index');
 
     // remove impersonate session
@@ -56,7 +52,30 @@ Route::group([
     Route::patch('permission/{permission}/restore', 'PermissionController@restore');
     Route::resource('permission', 'PermissionController');
 
+    // dev mode
     Route::get('help', 'HelpController@index');
+
+
+
+    // Content group.
+    Route::resource('news', 'NewsController');
+    Route::group(['prefix' => 'news'], function () {
+        Route::patch('{news}/up', 'NewsController@publish');
+        Route::patch('{news}/down', 'NewsController@revoke');
+
+        Route::patch('{news}/delete', 'NewsController@delete');
+        Route::patch('{news}/restore', 'NewsController@restore');
+
+        Route::resource('category', 'NewsCategoryController');
+    });
+
+    // Route::group(['prefix' => 'specials'], function () {
+    //     Route::resource('/', 'SpecialsController');
+    //     Route::resource('category', 'SpecialsCategoryController');
+    // });
+
+
+    //
 });
 
 // Личный кабинет для зарегистрированного пользователя.
