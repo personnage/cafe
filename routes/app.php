@@ -26,58 +26,6 @@ Route::group(['domain' => '{city}.allcafe.app'], function () {
     Route::get('/', 'HomeController@home')->name('home');
 });
 
-/**
- * This is group routes services admin dashboard.
- * Middleware "Employee" must be included to any a controller.
- *
- * Note: This group have shared-base "auth" middleware across any request.
- */
-Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin'], function () {
-    Route::get('/', 'DashboardController@index');
-
-    // remove impersonate session
-    Route::get('impersonation', 'ImpersonationsController@destroy');
-
-    Route::patch('user/{user}/delete', 'UserController@delete');
-    Route::patch('user/{user}/restore', 'UserController@restore');
-    Route::patch('user/{user}/confirm', 'UserController@confirm');
-    Route::get('user/{user}/impersonate', 'UserController@impersonate');
-    Route::resource('user', 'UserController');
-
-    Route::patch('role/{role}/delete', 'RoleController@delete');
-    Route::patch('role/{role}/restore', 'RoleController@restore');
-    Route::resource('role', 'RoleController');
-
-    Route::patch('permission/{permission}/delete', 'PermissionController@delete');
-    Route::patch('permission/{permission}/restore', 'PermissionController@restore');
-    Route::resource('permission', 'PermissionController');
-
-    // dev mode
-    Route::get('help', 'HelpController@index');
-
-
-
-    // Content group.
-    Route::resource('news', 'NewsController');
-    Route::group(['prefix' => 'news'], function () {
-        Route::patch('{news}/up', 'NewsController@publish');
-        Route::patch('{news}/down', 'NewsController@revoke');
-
-        Route::patch('{news}/delete', 'NewsController@delete');
-        Route::patch('{news}/restore', 'NewsController@restore');
-
-        Route::resource('category', 'NewsCategoryController');
-    });
-
-    // Route::group(['prefix' => 'specials'], function () {
-    //     Route::resource('/', 'SpecialsController');
-    //     Route::resource('category', 'SpecialsCategoryController');
-    // });
-
-
-    //
-});
-
 // Личный кабинет для зарегистрированного пользователя.
 Route::group(['prefix' => 'community', 'middleware' => 'auth', 'namespace' => 'Community'], function () {
     // Route::get('profile', 'ProfileControlller@show');

@@ -41,31 +41,68 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(Router $router)
     {
-        $this->mapWebRoutes($router);
+        $this->mapAppRoutes($router);
+
+        $this->mapApiRoutes($router);
+
+        $this->mapAdminRoutes($router);
 
         //
     }
 
     /**
-     * Define the "web" routes for the application.
+     * Define the "app" routes for the application.
      *
      * These routes all receive session state, CSRF protection, etc.
      *
      * @param  \Illuminate\Routing\Router  $router
      * @return void
      */
-    protected function mapWebRoutes(Router $router)
+    protected function mapAppRoutes(Router $router)
     {
         $router->group([
-            'namespace' => $this->namespace, 'middleware' => 'web',
+            'middleware' => 'web',
+            'namespace' => $this->namespace,
         ], function ($router) {
-            require app_path('Http/routes.php');
+            require base_path('routes/app.php');
         });
+    }
 
-        // $router->group([
-        //     'namespace' => $this->namespace, 'middleware' => 'api',
-        // ], function ($router) {
-        //     require app_path('Http/api_routes.php');
-        // });
+    /**
+     * Define the "admin" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @param  \Illuminate\Routing\Router  $router
+     * @return void
+     */
+    protected function mapAdminRoutes(Router $router)
+    {
+        $router->group([
+            'middleware' => ['web', 'auth'],
+            'namespace' => join('\\', [$this->namespace, 'Admin']),
+            'prefix' => 'admin',
+        ], function ($router) {
+            require base_path('routes/admin.php');
+        });
+    }
+
+    /**
+     * Define the "api" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @param  \Illuminate\Routing\Router  $router
+     * @return void
+     */
+    protected function mapApiRoutes(Router $router)
+    {
+        $router->group([
+            'middleware' => ['api', 'auth:api'],
+            'namespace' => $this->namespace,
+            'prefix' => 'api',
+        ], function ($router) {
+            require base_path('routes/api.php');
+        });
     }
 }
