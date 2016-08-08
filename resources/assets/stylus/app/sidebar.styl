@@ -2,13 +2,17 @@
   .sideBlock
     padding 24px 14px 29px
     background #fff
-    border 1px solid #d1d1d1
-    border-radius 1px
+    border 1px solid border-color
+    border-radius(1px)
     overflow hidden
     .sideBlock__header
       line-height 30px
       margin-bottom 20px
-      font 22px 'ProximaNova-Bold', Arial, sans-serif
+      font 22px font-bold
       font-weight bold
+    & + .sideBlock
+      margin-top 10px
   .sideBlock__news
     margin-top 20px
+  & + .aside
+    margin-top 10px

@@ -78,12 +78,12 @@ span
 
 .typeHeader
   margin-bottom 10px
-  padding 0 15px 5px 15px
+  padding 0 15px 5px 15px !important
   h1
     font-weight bold
 .typeBlock
   margin-bottom 20px
-  border-radius 1px
+  border-radius(1px)
   min-height 140px
   .typeImage
     margin-right 15px
@@ -99,7 +99,7 @@ span
     padding 0 19px
 .articleHeader__info
   padding 15px
-  border-top 1px solid #d1d1d1
+  border-top 1px solid border-color
   @media (max-width: 768px)
     padding 15px 25px
 
@@ -124,7 +124,7 @@ span
 .newsItem__tail
   color #777
   padding 15px 15px 10px 15px
-  border-top 1px solid #d1d1d1
+  border-top 1px solid border-color
   a
     color #777
     display inline-block
@@ -171,7 +171,7 @@ span
 .itemBlock__body
   padding 19px
   p
-    font-family 'PT Serif', serif
+    font-family font-content
     line-height 150%
 
 .lastNewsBlock
@@ -193,14 +193,14 @@ span
     @media (max-width 768px)
       padding 0 15px
   img
-    border-left 1px solid #d1d1d1
-    border-right 1px solid #d1d1d1
-    border-top 1px solid #d1d1d1
+    border-left 1px solid border-color
+    border-right 1px solid border-color
+    border-top 1px solid border-color
     height 194px
     width 99.3%
   .info
     background #fff
-    border 1px solid #d1d1d1
+    border 1px solid border-color
     .main
       padding 15px 10px
       a
@@ -209,4 +209,4 @@ span
         margin 15px 0
     .tagsBlock
       padding 15px 10px
-      border-top 1px solid #d1d1d1
+      border-top 1px solid border-color

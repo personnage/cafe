@@ -79,6 +79,10 @@ Route::get('/news/{categoryName}', [
     'uses' => 'NewsController@itemsList',
 ]);
 
+Route::get('community', 'CommunityController@index');
+
+Route::resource('community/user', 'CommunityUserController');
+
 /*
 // news template
 Route::get('/news/total', function () {
