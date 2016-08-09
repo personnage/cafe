@@ -21,7 +21,7 @@ class CreateNewsItemsTable extends Migration
             $table->string('title');
             $table->text('announcement');
             $table->text('body');
-            $table->boolean('comments_allowed');
+            $table->boolean('comments_allowed')->default(true);
 
             $table->boolean('published')->default(false);
             $table->timestamp('published_since');
@@ -40,6 +40,8 @@ class CreateNewsItemsTable extends Migration
                 ->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+
+            // $table->unique(['news_category_id', 'name']);
         });
     }
 
