@@ -62,4 +62,6 @@
       @endforeach
     </tbody>
   </table>
+
+  {{ $news->appends(['filter' => request('filter'), 'sort' => request('sort')])->links() }}
 </div>

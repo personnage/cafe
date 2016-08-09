@@ -3,7 +3,7 @@
     <div class="col-sm-6">
       <form method="GET" action="{{ url('admin/news') }}" class="bs-component" accept-charset="UTF-8">
         <div class="form-group label-floating is-empty">
-          <label class="control-label" for="namesearch">Name or title</label>
+          <label class="control-label" for="namesearch">Title</label>
           <div class="input-group">
             <input type="search" name="search" autocomplete="off" id="namesearch" class="form-control" spellcheck="false">
             @if(Request::has('filter'))
@@ -28,7 +28,7 @@
           </a>
           @include('admin.news.category._sort')
         </div>
-        <a href="{{ url('admin/permission/create') }}" class="btn btn-raised">New Category<div class="ripple-container"></div></a>
+        <a href="{{ url('admin/news/category/create') }}" class="btn btn-raised">New Category<div class="ripple-container"></div></a>
       </div>
     </div>
   </div>
