@@ -24,12 +24,13 @@
     <script src="{{ elixir('assets/js/admin/bootstrap-pkg.js') }}"></script>
     <script src="{{ elixir('assets/js/admin/selectize.js') }}"></script>
 
+    {{-- Note! This unit should not depend on "app.js" file! --}}
+    @stack('scripts')
+
     <script src="{{ elixir('assets/js/admin/app.js') }}"></script>
 
     @if(config('app.env') === 'local')
       @include('layouts.admin._bootlint')
     @endif
-
-    @stack('scripts')
   </body>
 </html>
