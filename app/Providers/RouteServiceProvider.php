@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Route;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -28,8 +27,13 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot($router);
 
         // Bind city domain to City model.
-        Route::bind('city', function ($value) {
+        $router->bind('city', function ($value) {
            return \App\Models\City::where('domain', $value)->first();
+        });
+
+        // Bind news category name to NewsCategory model.
+        $router->bind('categoryName', function ($value) {
+           return \App\Models\NewsCategory::where('name', $value)->first();
         });
     }
 
