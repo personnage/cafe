@@ -55,13 +55,7 @@ $factory->define(App\Models\NewsCategory::class, function (Faker\Generator $fake
         'name' => $faker->unique()->word,
         'title' => $faker->words(mt_rand(1, 4), true),
         'description' => $faker->sentence,
-    ];
-});
-
-$factory->define(App\Models\NewsCategoryImage::class, function (Faker\Generator $faker) {
-    return [
-        'name' => $faker->image('/', 800, 600, 'cats', false),
-        'news_category_id' => factory(App\Models\NewsCategory::class)->create()->id,
+        'thumbnail' => $faker->image('/', 800, 600, 'cats', false),
     ];
 });
 
