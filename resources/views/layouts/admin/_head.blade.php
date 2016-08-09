@@ -15,9 +15,7 @@
 
   @stack('meta-tags')
 
-  <link href='https://fonts.googleapis.com/css?family=Scada:400,700,400italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Scada:400,400italic,700' type='text/css'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
 
   <link rel="stylesheet" href="{{ elixir('assets/css/admin/bootstrap-pkg.css') }}">
