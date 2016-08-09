@@ -16,11 +16,29 @@ class NewsItem extends Model
     protected $dates = ['deleted_at', 'published_since'];
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'title',
+        'announcement',
+        'body',
+        'comments_allowed',
+        'published',
+        'published_since',
+    ];
+
+    /**
      * The casts attributes.
      *
      * @var array
      */
-    protected $casts = ['published' => 'boolean'];
+    protected $casts = [
+        'published' => 'boolean',
+        'comments_allowed' => 'boolean',
+    ];
 
     /**
      * Get category to currently news.
