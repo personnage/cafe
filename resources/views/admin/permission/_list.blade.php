@@ -12,14 +12,13 @@
       <tr>
         <td>
           <span class="text-middle text-nowrap">
-            <i class="material-icons @if($permission->trashed())text-danger @endif">lock_open</i>
+            <i class="fa fa-unlock-alt @if($permission->trashed())text-danger @endif" aria-hidden="true"></i>
             <a href="{{ url('admin/permission', $permission->id) }}" class="text-muted">{{ $permission->name }}</a>
           </span>
         </td>
 
         <td>
           <span class="text-middle">
-            <i class="material-icons">label_outline</i>
             <span>{{ $permission->label }}</span>
           </span>
         </td>

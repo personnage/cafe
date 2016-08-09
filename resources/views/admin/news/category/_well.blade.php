@@ -11,7 +11,7 @@
             @endif
             <span class="input-group-btn">
               <button type="submit" class="btn btn-fab btn-fab-mini btn-primary">
-                <i class="material-icons">search</i>
+                <i class="fa fa-search" aria-hidden="true"></i>
               </button>
             </span>
           </div>

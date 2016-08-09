@@ -12,7 +12,7 @@
       <tr>
         <td>
           <span class="text-middle text-nowrap">
-            <i class="material-icons @if($user->trashed())text-danger @endif">person</i>
+            <i class="fa fa-user @if($user->trashed())text-danger @endif" aria-hidden="true"></i>
             <a href="{{ url('admin/user', $user->id) }}" class="text-muted">{{ $user->name }}</a>
           </span>
 
@@ -26,7 +26,7 @@
 
         <td>
           <span class="text-middle">
-            <i class="material-icons">mail_outline</i>
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>
             <a href="mailto:{{ $user->email }}" class="text-muted">{{ $user->email }}</a>
           </span>
         </td>

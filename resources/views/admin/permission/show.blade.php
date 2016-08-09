@@ -57,7 +57,7 @@
             <div class="list-group-item">
               <div class="row-content">
                 <div class="action-secondary">
-                  <a href="{{ url('admin/role', $role->id) }}"><i class="material-icons">info</i></a>
+                  <a href="{{ url('admin/role', $role->id) }}"><i class="fa fa-info" aria-hidden="true"></i></a>
                 </div>
                 <h4 class="list-group-item-heading">{{ $role->name }}</h4>
                 <p class="list-group-item-text">{{ $role->label }}</p>

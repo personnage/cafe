@@ -57,7 +57,7 @@
             <div class="list-group-item">
               <div class="row-content">
                 <div class="action-secondary">
-                  <a href="{{ url('admin/permission', $permission->id) }}"><i class="material-icons">info</i></a>
+                  <a href="{{ url('admin/permission', $permission->id) }}"><i class="fa fa-info" aria-hidden="true"></i></a>
                 </div>
                 <h4 class="list-group-item-heading">{{ $permission->name }}</h4>
                 <p class="list-group-item-text">{{ $permission->label }}</p>
