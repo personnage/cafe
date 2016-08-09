@@ -52,3 +52,4 @@ RUN usermod -u ${DOCKER_USER_ID:-1000} www-data
 # RUN ln -sf /dev/stderr /var/www/html/storage/logs/laravel.log
 
 VOLUME ["/var/www/html"]
+USER 1000

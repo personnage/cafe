@@ -79,6 +79,12 @@ Route::get('/news/{categoryName}', [
     'uses' => 'NewsController@itemsList',
 ]);
 
+// Статья из категории "Новости ресторанов и отелей"
+Route::get('/news/total/{year}/{month}/{day}/{itemName}', [
+    'as' => 'news.items.show',
+    'uses' => 'NewsController@showNewsTotalItem',
+])->where('year', '\d{4}')->where('month', '\d{2}')->where('day', '\d{2}');
+
 /*
 // news template
 Route::get('/news/total', function () {
