@@ -83,9 +83,6 @@ Route::group(['prefix' => 'community', 'middleware' => 'auth', 'namespace' => 'C
     // Route::get('profile', 'ProfileControlller@show');
 });
 
-
-
-
 // Раздел "Новости и открытия, обзоры, интервью"
 Route::get('/news', [
     'as' => 'news.categories.list',
@@ -101,6 +98,12 @@ Route::get('/news/{categoryName}', [
 Route::get('community', 'CommunityController@index');
 
 Route::resource('community/user', 'CommunityUserController');
+
+// Статья из категории "Новости ресторанов и отелей"
+Route::get('/news/total/{year}/{month}/{day}/{itemName}', [
+    'as' => 'news.items.show',
+    'uses' => 'NewsController@showNewsTotalItem',
+])->where('year', '\d{4}')->where('month', '\d{2}')->where('day', '\d{2}');
 
 /*
 // news template

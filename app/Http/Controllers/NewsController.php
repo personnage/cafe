@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\NewsCategory;
+use App\Models\NewsItem;
 
 class NewsController extends Controller
 {
     public function categoriesList()
     {
-        $categories = NewsCategory::whereNull('parent_id')
-            ->whereNotNull('sort')
-            ->orderBy('sort')
+        // TODO repository
+        $categories = NewsCategory::roots()
+            ->orderBy('id')
             ->get();
 
         return view('app.news.categories_list', [
@@ -23,7 +24,6 @@ class NewsController extends Controller
         $currentCategory = NewsCategory::where('name', $categoryName)->firstOrFail();
 
         $items = $currentCategory->items()
-            ->where('is_published', true)
             ->whereRaw('published_since <= CURRENT_TIMESTAMP')
             ->whereRaw('published_until >= CURRENT_TIMESTAMP')
             ->get();
@@ -32,5 +32,24 @@ class NewsController extends Controller
             'categoryTitle' => $currentCategory->title,
             'items' => $items,
         ]);
+    }
+
+    public function showNewsTotalItem($year, $month, $day, $itemName)
+    {
+        $item = NewsItem::where('name', $itemName)
+            ->whereDate('published_since', '=', "{$year}-{$month}-{$day}")
+            ->firstOrFail();
+
+        dd($item);
+    }
+
+    public function showArticleItem($itemName)
+    {
+        dd($itemName);
+    }
+
+    private function showNewsItem(NewsItem $item)
+    {
+
     }
 }
