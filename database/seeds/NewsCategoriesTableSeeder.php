@@ -65,10 +65,8 @@ class NewsCategoriesTableSeeder extends Seeder
             'id'  => 8,
             'name'  => 'interview',
             'title' => 'Интервью',
-            'description' => null,
         ]);
 
         DB::statement('ALTER SEQUENCE news_categories_id_seq RESTART WITH 9');
-
     }
 }
