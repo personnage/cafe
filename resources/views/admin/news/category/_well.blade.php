@@ -1,7 +1,7 @@
 <div class="well">
   <div class="row">
     <div class="col-sm-6">
-      <form method="GET" action="{{ url('admin/news') }}" class="bs-component" accept-charset="UTF-8">
+      <form method="GET" action="{{ url('admin/news/category') }}" class="bs-component" accept-charset="UTF-8">
         <div class="form-group label-floating is-empty">
           <label class="control-label" for="namesearch">Title</label>
           <div class="input-group">
