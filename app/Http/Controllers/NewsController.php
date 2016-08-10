@@ -19,11 +19,19 @@ class NewsController extends Controller
 
     public function itemsList(NewsCategory $newsCategory)
     {
-        $items = $newsCategory->items;
+        $view = ($newsCategory->name === 'total')
+            ? 'app.news.news_items_list'
+            : 'app.news.articles_items_list';
 
-        return view('app.news.items_list', compact('items') + [
-            'categoryTitle' => $newsCategory->title,
-        ]);
+        $items = $newsCategory->items;
+        $categoryTitle = $newsCategory->title;
+        $categoryDescription = $newsCategory->description;
+
+        return view($view, compact(
+            'items',
+            'categoryTitle',
+            'categoryDescription'
+        ));
     }
 
     public function showNewsTotalItem($year, $month, $day, $itemName)
