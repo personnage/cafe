@@ -16,6 +16,7 @@ class UpdateNewsCategoryRequest extends NewsCategoryRequest
         return [
             'name' => 'required|max:255|unique:news_categories,name,'.$category->id,
             'title' => 'required|max:255|unique:news_categories,title,'.$category->id,
+            'announcement' => 'required',
             'description' => 'required',
             'category_thumbnail' => 'image',
         ];

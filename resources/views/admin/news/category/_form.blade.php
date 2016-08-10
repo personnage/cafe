@@ -26,6 +26,18 @@
       </div>
     </div>
 
+    <div class="form-group{{ $errors->has('announcement') ? ' has-error' : '' }}">
+      <label for="announcement" class="col-sm-2 control-label">Announcement</label>
+      <div class="col-sm-10">
+        <textarea class="implement-html-editor" name="announcement" id="announcement" placeholder="Short announcement">{{ old('announcement', $category->announcement) }}</textarea>
+        @if ($errors->has('announcement'))
+          <span class="help-block">
+            <strong>{{ $errors->first('announcement') }}</strong>
+          </span>
+        @endif
+      </div>
+    </div>
+
     <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
       <label for="description" class="col-sm-2 control-label">Description</label>
       <div class="col-sm-10">

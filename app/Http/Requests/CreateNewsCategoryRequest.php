@@ -13,6 +13,7 @@ class CreateNewsCategoryRequest extends NewsCategoryRequest
     {
         return [
             'title' => 'required|max:255|unique:news_categories',
+            'announcement' => 'required',
             'description' => 'required',
             'category_thumbnail' => 'image',
         ];
