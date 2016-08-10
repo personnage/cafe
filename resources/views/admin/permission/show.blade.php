@@ -8,7 +8,7 @@
   Show permission: <small>{{ $permission->name }}</small>
 </h2>
 
-@include('admin.shared._alert')
+@include('admin.common._alert')
 
 @unless($permission->trashed())
 {{--Not editable if it deleted.--}}

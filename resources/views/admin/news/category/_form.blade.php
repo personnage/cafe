@@ -3,8 +3,8 @@
   <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 @endpush
 
-@include('admin.shared._alert')
-@include('admin.shared._errors')
+@include('admin.common._alert')
+@include('admin.common._errors')
 
 <form enctype="multipart/form-data" method="POST" action="{{ url('admin/news/category', $category->id) }}" role="form" class="form-horizontal" accept-charset="utf-8" autocomplete="off">
   {{ csrf_field() }}

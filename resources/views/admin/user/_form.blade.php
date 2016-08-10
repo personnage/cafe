@@ -1,4 +1,4 @@
-@include('admin.shared._alert')
+@include('admin.common._alert')
 
 <form method="POST" action="{{ url('admin/user', $user->id) }}" role="form" class="form-horizontal" accept-charset="utf-8" autocomplete="off">
   {{ csrf_field() }}

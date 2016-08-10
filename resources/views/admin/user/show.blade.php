@@ -11,7 +11,7 @@
   @endif
 </h2>
 
-@include('admin.shared._alert')
+@include('admin.common._alert')
 
 <div class="btn-group btn-group-sm" role="group" aria-label="control user">
   @unless(Auth::id()===$user->id or $user->trashed())

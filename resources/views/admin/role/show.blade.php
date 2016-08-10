@@ -8,7 +8,7 @@
   Show role: <small>{{ $role->name }}</small>
 </h2>
 
-@include('admin.shared._alert')
+@include('admin.common._alert')
 
 @unless($role->trashed())
 {{--Not editable if it deleted.--}}

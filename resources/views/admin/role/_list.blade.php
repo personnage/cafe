@@ -1,4 +1,4 @@
-@include('admin.shared._alert')
+@include('admin.common._alert')
 @include('admin.role._filter')
 
 <hr>
