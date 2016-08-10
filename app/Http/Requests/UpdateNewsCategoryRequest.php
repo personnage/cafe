@@ -14,7 +14,7 @@ class UpdateNewsCategoryRequest extends NewsCategoryRequest
         $category = $this->route('category');
 
         return [
-            'name' => 'max:255|unique:news_categories,name,'.$category->id,
+            'name' => 'required|max:255|unique:news_categories,name,'.$category->id,
             'title' => 'required|max:255|unique:news_categories,title,'.$category->id,
             'description' => 'required',
             'category_thumbnail' => 'image',
