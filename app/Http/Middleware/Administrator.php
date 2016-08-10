@@ -17,14 +17,14 @@ class Administrator
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check() && Auth::guard($guard)->user()->admin) {
-            return $next($request);
+        if (Auth::guard($guard)->guest() || ! Auth::guard($guard)->user()->admin) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response(null, 404);
+            } else {
+                return abort(404);
+            }
         }
 
-        if ($request->ajax() || $request->wantsJson()) {
-            return response(null, 404);
-        } else {
-            return abort(404);
-        }
+        return $next($request);
     }
 }
