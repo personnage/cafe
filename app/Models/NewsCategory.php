@@ -27,7 +27,7 @@ class NewsCategory extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'description', 'thumbnail'];
+    protected $fillable = ['title', 'announcement', 'description', 'thumbnail'];
 
     /**
      * Set a URL friendly "slug" from the given name.
