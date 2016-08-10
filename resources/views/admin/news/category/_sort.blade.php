@@ -1,6 +1,6 @@
 <ul class="dropdown-menu">
-  <li @if(request('sort')=='name_asc') class="active" @endif>
-    <a href="{{ url('admin/news/category').sprintf('?filter=%s&sort=name_asc&page=%d', request('filter'), request('page')) }}">Name</a>
+  <li @if(request('sort')=='title_asc') class="active" @endif>
+    <a href="{{ url('admin/news/category').sprintf('?filter=%s&sort=title_asc&page=%d', request('filter'), request('page')) }}">Title</a>
   </li>
 
   <li @if(request('sort')=='id_desc') class="active" @endif>
