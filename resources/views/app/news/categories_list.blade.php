@@ -21,7 +21,7 @@
                         <a href="{!! route('news.items.list', ['categoryName' => $category->name]) !!}">
                             <h2>{{ $category->title }}</h2>
                         </a>
-                        <p>{{ $category->description }}</p>
+                        <p>{{ $category->announcement }}</p>
                     </div>
                 </div>
             </div>
