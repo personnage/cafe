@@ -4,15 +4,14 @@
     <div class="col-md-9 col-xs-12">
         <div class="itemBlock row std-block no-padding">
             <div class="col-lg-12 itemBlock__head">
-                <h1>
-                    Розыгрыш велосипедов Shulz в ресторане «Двор Помидор»
-                    <a href="http://spb.allcafe.ru/news/total/2016/07/08/rozygrysh-velosipedov-shulz-v-restorane-dvor-pomidor/edit" title="Изменить новость"><img width="16" height="16" alt="изменить" src="http://assets.allcafe.ru/icons/16/edit.png" class="manage"></a>
-                    <a href="http://spb.allcafe.ru/news/total/2016/07/08/rozygrysh-velosipedov-shulz-v-restorane-dvor-pomidor/delete" title="Удалить новость" class="confirm"><img width="16" height="16" alt="удалить" src="http://assets.allcafe.ru/icons/16/trash.png" class="manage"></a>
-                    <a href="http://spb.allcafe.ru/news/total/2016/07/08/rozygrysh-velosipedov-shulz-v-restorane-dvor-pomidor/twitter" title="Отправить новость персонально пользователям Twitter"><img width="16" height="16" alt="Отправить персонализированно в Twitter" src="http://assets.allcafe.ru/icons/16/comments.png" class="manage"></a>
-                </h1>
+                <h1>{{ $item->title }}</h1>
+                <a href="http://spb.allcafe.ru/news/total/2016/07/08/rozygrysh-velosipedov-shulz-v-restorane-dvor-pomidor/edit" title="Изменить новость"><img width="16" height="16" alt="изменить" src="http://assets.allcafe.ru/icons/16/edit.png" class="manage"></a>
+                <a href="http://spb.allcafe.ru/news/total/2016/07/08/rozygrysh-velosipedov-shulz-v-restorane-dvor-pomidor/delete" title="Удалить новость" class="confirm"><img width="16" height="16" alt="удалить" src="http://assets.allcafe.ru/icons/16/trash.png" class="manage"></a>
+                <a href="http://spb.allcafe.ru/news/total/2016/07/08/rozygrysh-velosipedov-shulz-v-restorane-dvor-pomidor/twitter" title="Отправить новость персонально пользователям Twitter"><img width="16" height="16" alt="Отправить персонализированно в Twitter" src="http://assets.allcafe.ru/icons/16/comments.png" class="manage"></a>
+
 
                 <div class="info">
-                    <time>8 июля 2016  10:41</time>
+                    <time>{{ $item->getPublishedDateTime() }}</time>
                     <div class="tagsBlock">
                         Теги:
                         <a href="http://spb.allcafe.ru/search2/tags/с велосипедом" class="tagsBlock__item"><span>с велосипедом</span></a>
@@ -20,18 +19,7 @@
                 </div>
             </div>
             <div class="itemBlock__body">
-                <p><span style="color:#A9A9A9;"><em>НПР.</em></span></p>
-
-                <p style="text-align: justify;">Летом самое время вспомнить про любимый транспорт детства — велосипед и всей семьей кататься наперегонки по солнечным паркам.</p>
-
-                <p style="text-align: justify;">Ресторан <a href="http://spb.allcafe.ru/restaurants/dvor-pomidor">«Двор Помидор»</a> предлагает своим гостям принять участие в розыгрыше сразу двух велосипедов Shulz, которые помогут вам организовать спортивный и веселый досуг для всей семьи.</p>
-
-                <p style="text-align: justify;">Весь июль за каждые 2000 рублей счета мы будем давать наклейку. Соберите 6 наклеек и приходите на праздничный розыгрыш, который состоится 29 июля в 20:00 — возможно, именно вы станете счастливым обладателем пары стильных велосипедов Shulz!</p>
-
-                <p style="text-align: justify;">Акция продлится с 1 по 28 июля. Желаем удачи!</p>
-
-                <p style="text-align: justify;"><img alt="" src="http://assets.allcafe.ru/pic/news/!_2016/2016_07/%D0%94%D0%B2%D0%BE%D1%80%D0%9F%D0%BE%D0%BC%D0%B8%D0%B4%D0%BE%D1%80-%D0%B2%D0%B5%D0%BB%D0%BE%D1%81%D0%B8%D0%BF%D0%B5%D0%B4.jpg" style="width: 100%;"></p>
-
+                {{ $item->body }}
                 <div class="clear-fix">&nbsp;</div>
 
                 <div class="address" style="margin-right: 15px;">

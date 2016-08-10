@@ -59,4 +59,30 @@ class NewsItem extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    /**
+     * URL новости
+     *
+     * @return string
+     */
+    public function url()
+    {
+        return route('news.items.show', [
+            'year'  => $this->published_since->format('Y'),
+            'month' => $this->published_since->format('m'),
+            'day'   => $this->published_since->format('d'),
+            'itemName' => $this->name,
+        ]);
+    }
+
+    /**
+     * Дата/время публикации новости (для листинга)
+     * TODO возможно, стоит выбрать другой формат (например, "9 августа 2016 в 8:42")
+     *
+     * @return string
+     */
+    public function getPublishedDateTime()
+    {
+        return $this->published_since->format('d.m в H:i');
+    }
 }
