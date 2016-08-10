@@ -54,6 +54,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'impersonator' => \App\Http\Middleware\Impersonator::class,
         'nocache'=> \App\Http\Middleware\AddNoCacheHeaders::class,
+        'staff' => \App\Http\Middleware\StaffRoom::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];
 }
