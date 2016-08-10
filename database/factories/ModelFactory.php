@@ -18,6 +18,10 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
         'password' => bcrypt(str_random(10)),
         'remember_token' => str_random(10),
         'api_token' => str_random(32),
+
+        'bio' => mt_rand(0,1) ? $faker->paragraph : '',
+        'skype' => mt_rand(0,1) ? $faker->userName : null,
+        'facebook' => mt_rand(0,1) ? $faker->userName : null,
     ];
 });
 

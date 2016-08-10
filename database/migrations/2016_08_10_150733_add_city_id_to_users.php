@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddProfileAttrToUsers extends Migration
+class AddCityIdToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class AddProfileAttrToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->text('bio')->default('');
-            $table->string('avatar')->nullable();
-            $table->string('skype')->nullable();
-            $table->string('facebook')->nullable();
+            $table->unsignedInteger('city_id')->nullable();
+
+            $table->foreign('city_id')
+                ->references('id')
+                ->on('cities')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
         });
     }
 
@@ -28,7 +31,7 @@ class AddProfileAttrToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['facebook', 'skype', 'avatar', 'bio']);
+            $table->dropColumn('city_id');
         });
     }
 }
