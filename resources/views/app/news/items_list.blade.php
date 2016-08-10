@@ -23,19 +23,17 @@
               <div class="col-xs-12 newsItem std-block no-padding">
                   <div class="newsItem__info col-xs-12">
                       <div class="info-img col-xs-3 no-padding">
-                          <a href="{{ url('news/total/2016/07/08/rozygrysh-velosipedov-shulz-v-restorane-dvor-pomidor') }}">
+                          <a href="{!! $item->url() !!}">
                               <img class="img-responsive" src="http://assets.allcafe.ru/pic/news2/260x194/3c73ec6217c142dd4b88935dbd88929569bc4118.jpeg" alt="Розыгрыш велосипедов Shulz в ресторане «Двор Помидор»">
                           </a>
                       </div>
                       <div class="info col-xs-9">
 
-                          <time>сегодня  10:41</time>
+                          <time>{{ $item->getPublishedDateTime() }}</time>
 
-                          <a class="title" href="{{ url('news/total/2016/07/08/rozygrysh-velosipedov-shulz-v-restorane-dvor-pomidor') }}">
-                              Розыгрыш велосипедов Shulz в ресторане «Двор Помидор»
-                          </a>
+                          <a class="title" href="{!! $item->url() !!}">{{ $item->title }}</a>
 
-                          <p class="hidden-sm hidden-xs"><span style="color:#A9A9A9;"><em>НПР. </em></span>Ресторан «Двор Помидор» предлагает своим гостям принять участие в розыгрыше сразу двух велосипедов Shulz, которые помогут вам организовать спортивный и веселый досуг для всей семьи.</p>
+                          <p class="hidden-sm hidden-xs">{!! $item->announcement !!}</p>
 
                           <div class="tagsBlock">
                               Теги:

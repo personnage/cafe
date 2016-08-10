@@ -14,23 +14,15 @@ class NewsController extends Controller
             ->orderBy('id')
             ->get();
 
-        return view('app.news.categories_list', [
-            'categories' => $categories,
-        ]);
+        return view('app.news.categories_list', compact('categories'));
     }
 
-    public function itemsList($categoryName)
+    public function itemsList(NewsCategory $newsCategory)
     {
-        $currentCategory = NewsCategory::where('name', $categoryName)->firstOrFail();
+        $items = $newsCategory->items;
 
-        $items = $currentCategory->items()
-            ->whereRaw('published_since <= CURRENT_TIMESTAMP')
-            ->whereRaw('published_until >= CURRENT_TIMESTAMP')
-            ->get();
-
-        return view('app.news.items_list', [
-            'categoryTitle' => $currentCategory->title,
-            'items' => $items,
+        return view('app.news.items_list', compact('items') + [
+            'categoryTitle' => $newsCategory->title,
         ]);
     }
 
@@ -40,7 +32,7 @@ class NewsController extends Controller
             ->whereDate('published_since', '=', "{$year}-{$month}-{$day}")
             ->firstOrFail();
 
-        dd($item);
+        return view('app.news.item', compact('item'));
     }
 
     public function showArticleItem($itemName)
