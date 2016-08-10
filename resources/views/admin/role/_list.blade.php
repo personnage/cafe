@@ -12,14 +12,13 @@
       <tr>
         <td>
           <span class="text-middle text-nowrap">
-            <i class="material-icons @if($role->trashed())text-danger @endif">card_membership</i>
+            <i class="fa fa-users @if($role->trashed())text-danger @endif" aria-hidden="true"></i>
             <a href="{{ url('admin/role', $role->id) }}" class="text-muted">{{ $role->name }}</a>
           </span>
         </td>
 
         <td>
           <span class="text-middle">
-            <i class="material-icons">label_outline</i>
             <span>{{ $role->label }}</span>
           </span>
         </td>
