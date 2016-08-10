@@ -53,7 +53,7 @@ class NewsCategoryController extends Controller
      */
     public function store(CreateNewsCategoryRequest $request)
     {
-        $category = new NewsCategory($request->only('title', 'description'));
+        $category = new NewsCategory($request->all());
         // When you create a category is not possible to specify a name.
         $category->name = $request->title;
 
@@ -90,12 +90,10 @@ class NewsCategoryController extends Controller
      */
     public function update(UpdateNewsCategoryRequest $request, NewsCategory $category)
     {
+        $category->fill($request->except('name'));
+        $category->name = $request->name;
+
         $response = back();
-        $category->forceFill([
-            'name' => $request->name,
-            'title' => $request->title,
-            'description' => $request->description,
-        ]);
 
         if ($request->hasThumbnail()) {
             if ( ! $category->uploadThumbnail($request->getThumbnail())) {
