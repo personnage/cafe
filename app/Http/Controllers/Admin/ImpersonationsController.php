@@ -7,13 +7,6 @@ use Illuminate\Http\Request;
 
 class ImpersonationsController extends Controller
 {
-    public function __construct()
-    {
-        // Skip "employee" middleware for turn off impersonate mode.
-        $this->skipMiddleware('employee');
-        $this->middleware('impersonator');
-    }
-
     /**
      * Destroy impersonate session.
      *

@@ -7,13 +7,6 @@ use App\Http\Controllers\Controller as BaseController;
 class Controller extends BaseController
 {
     /**
-     * Base middleware admin controller.
-     *
-     * @var array
-     */
-    protected $middleware = ['employee' => []];
-
-    /**
      * Remove middleware on the controller.
      *
      * @param  array|string  $middleware
