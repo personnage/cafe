@@ -58,7 +58,8 @@ $factory->define(App\Models\NewsCategory::class, function (Faker\Generator $fake
     return [
         'name' => $faker->unique()->word,
         'title' => $faker->words(mt_rand(1, 4), true),
-        'description' => $faker->sentence,
+        'announcement' => $faker->sentence,
+        'description' => $faker->paragraph,
         'thumbnail' => $faker->image('/', 800, 600, 'cats', false),
     ];
 });
