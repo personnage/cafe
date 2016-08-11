@@ -20,9 +20,21 @@ class UserEventListener
      */
     public function onUserLoginAttempt($event)
     {
-        $user = $event->user;
+        if (! is_null($event->user)) {
+            $this->attemptLogin($event->user, get_class($event));
 
-        switch (get_class($event)) {
+            //
+        }
+    }
+
+    /**
+     * @param  \App\Models\User  $user
+     * @param  string            $eventType
+     * @return void
+     */
+    protected function attemptLogin($user, $eventType)
+    {
+        switch ($eventType) {
             case Login::class:
                 if ($user->isConfirmed()) {
                     $user->increment('sign_in_count');
