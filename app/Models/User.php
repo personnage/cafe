@@ -70,6 +70,8 @@ class User extends Authenticatable implements Contracts\Confirmable
         // });
     }
 
+    //
+
     # Accessors
 
     /**

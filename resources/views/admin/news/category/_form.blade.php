@@ -29,7 +29,7 @@
     <div class="form-group{{ $errors->has('announcement') ? ' has-error' : '' }}">
       <label for="announcement" class="col-sm-2 control-label">Announcement</label>
       <div class="col-sm-10">
-        <textarea class="implement-html-editor" name="announcement" id="announcement" placeholder="Short announcement">{{ old('announcement', $category->announcement) }}</textarea>
+        <textarea class="implement-html-editor-as-basic" name="announcement" id="announcement" placeholder="Short announcement">{{ old('announcement', $category->announcement) }}</textarea>
         @if ($errors->has('announcement'))
           <span class="help-block">
             <strong>{{ $errors->first('announcement') }}</strong>
@@ -41,7 +41,7 @@
     <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
       <label for="description" class="col-sm-2 control-label">Description</label>
       <div class="col-sm-10">
-        <textarea class="implement-html-editor" name="description" id="description" placeholder="Short description">{{ old('description', $category->description) }}</textarea>
+        <textarea class="implement-html-editor-as-middle" name="description" id="description" placeholder="Short description">{{ old('description', $category->description) }}</textarea>
         @if ($errors->has('description'))
           <span class="help-block">
             <strong>{{ $errors->first('description') }}</strong>
@@ -71,7 +71,7 @@
 
   <fieldset>
     <div class="form-group{{ $errors->has('category_thumbnail') ? ' has-error' : '' }}">
-      <label for="category_thumbnail" class="col-md-2 control-label">Category image</label>
+      <label for="category_thumbnail" class="col-md-2 control-label">Thumbnail</label>
       <div class="col-md-3">
         <div class="thumbnail">
           @if($category->thumbnail)

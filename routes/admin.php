@@ -32,8 +32,8 @@ Route::get('help', 'HelpController@index');
 
 // News group.
 Route::group(['prefix' => 'news'], function () {
-    Route::patch('{news}/up', 'NewsController@publish');
-    Route::patch('{news}/down', 'NewsController@revoke');
+    Route::patch('{news}/up', 'NewsController@up');
+    Route::patch('{news}/down', 'NewsController@down');
     Route::patch('{news}/delete', 'NewsController@delete');
     Route::patch('{news}/restore', 'NewsController@restore');
 
@@ -41,7 +41,7 @@ Route::group(['prefix' => 'news'], function () {
         Route::patch('{category}/delete', 'NewsCategoryController@delete');
         Route::patch('{category}/restore', 'NewsCategoryController@restore');
     });
-    Route::resource('category', 'NewsCategoryController', ['except' => 'show']);
+    Route::resource('category', 'NewsCategoryController');
 });
 Route::resource('news', 'NewsController');
 // -- News group.

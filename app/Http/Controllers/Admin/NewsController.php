@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateNewsItemRequest;
 use App\Models\NewsItem;
 use App\Models\NewsCategory;
+use App\Jobs\ReleaseNewsItem;
+use App\Http\Requests\NewsItemCreateRequest;
+use App\Http\Requests\NewsItemUpdateRequest;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -28,10 +29,10 @@ class NewsController extends Controller
         $news = $news->simplePaginate($request->input('per_page') ?? 15);
 
         return view('admin.news.index', compact('news'))
-            ->with('active',   NewsItem::count())
-            ->with('pending',  NewsItem::onlyPending()->count())
-            ->with('inactive', NewsItem::onlyRevoked()->count())
-            ->with('deleted',  NewsItem::onlyTrashed()->count())
+            ->with('active',   NewsItem::filter('default')->count())
+            ->with('pending',  NewsItem::filter('pending')->count())
+            ->with('deleted',  NewsItem::filter('deleted')->count())
+            ->with('inactive', NewsItem::filter('inactive')->count())
         ;
     }
 
@@ -42,10 +43,9 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $news = new NewsItem;
-        $news->published_since = Carbon::now();
-        $news->comments_allowed = true;
-
+        $news = new NewsItem([
+            'published_since' => Carbon::now()
+        ]);
         $categories = NewsCategory::all();
 
         return view('admin.news.create', compact('news', 'categories'));
@@ -54,54 +54,82 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  NewsItemCreateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateNewsItemRequest $request)
+    public function store(NewsItemCreateRequest $request)
     {
-        dd($request->all());
+        $news = new NewsItem($request->all());
+        // When you create a news is not possible to specify a name.
+        $news->name = $request->title;
+        $news->published = $request->has('published');
+        $news->comments_allowed = $request->has('comments_allowed');
+        $news->author()->associate(auth()->user());
+        $news->category()->associate(NewsCategory::find($request->category));
 
-        // add author id before create...
+        $response = back();
 
-        if (NewsItem::create($request->all())->wasRecentlyCreated) {
-            return back()->with('notice', 'News was successfully created.');
+        if ($request->hasThumbnail()) {
+            if ( ! $news->uploadThumbnail($request->getThumbnail())) {
+                $response->with('warning', 'Thumbnail not uploaded!');
+            }
         }
 
-        return back()->with('alert', 'Error occurred. News was not created.');
+        $news->save();
+
+        return $response->with('notice', 'News was successfully created.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  NewsItem  $news
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(NewsItem $news)
     {
-        dd(12);
+        // redirect to to news page!
+        return 'Not implemented';
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  NewsItem  $news
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(NewsItem $news)
     {
-        //
+        $categories = NewsCategory::all();
+
+        return view('admin.news.edit', compact('news', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  NewsItemUpdateRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(NewsItemUpdateRequest $request, NewsItem $news)
     {
-        //
+        $news->fill($request->all());
+        $news->name = $request->name;
+        $news->published = $request->has('published');
+        $news->comments_allowed = $request->has('comments_allowed');
+        $news->category()->associate(NewsCategory::find($request->category));
+        $response = back();
+
+        if ($request->hasThumbnail()) {
+            if ( ! $news->uploadThumbnail($request->getThumbnail())) {
+                $response->with('warning', 'Thumbnail not uploaded!');
+            }
+        }
+
+        $news->save();
+
+        return $response->with('notice', 'News was successfully updated.');
     }
 
     /**
@@ -112,17 +140,13 @@ class NewsController extends Controller
      */
     public function destroy(int $news_id)
     {
-        // The news may be in two states at the same time.
-        $news = NewsItem::withoutGlobalScope(NewsItem::getScopeObject())
-            ->withTrashed()
-            ->findOrFail($news_id)
-        ;
+        $news = NewsItem::withTrashed()->findOrFail($news_id);
 
         if ($news->forceDelete()) {
-            return redirect()
-                ->route('admin.news.index', ['filter' => 'deleted'])
-                ->with('notice', 'The news is being deleted.')
-            ;
+            $this->dispatch(new ReleaseNewsItem($news));
+
+            return redirect()->route('admin.news.index', ['filter' => 'deleted'])
+                ->with('notice', 'The news is being deleted.');
         }
 
         return back()->with('alert', 'Error occurred. News was not deleted.');
@@ -153,9 +177,7 @@ class NewsController extends Controller
     {
         $news = NewsItem::withTrashed()->findOrFail($news_id);
 
-        if ($news->trashed()) {
-            $news->restore();
-
+        if ($news->trashed() && $news->restore()) {
             return back()->with('notice', 'The news restored.');
         }
 
@@ -165,16 +187,12 @@ class NewsController extends Controller
     /**
      * Activate news.
      *
-     * @param  int  $news_id
+     * @param  NewsItem  $news_id
      * @return \Illuminate\Http\Response
      */
-    public function publish(int $news_id)
+    public function up(NewsItem $news)
     {
-        // The news may be in two states at the same time.
-        $news = NewsItem::withoutGlobalScope(NewsItem::getScopeObject())
-            ->findOrFail($news_id);
-
-        if ($news->publish()) {
+        if ($news->isNotPublished() && $news->publish()) {
             return back()->with('notice', 'The news item is being published.');
         }
 
@@ -184,14 +202,12 @@ class NewsController extends Controller
     /**
      * Revoke news.
      *
-     * @param  int  $news_id
+     * @param  NewsItem  $news
      * @return \Illuminate\Http\Response
      */
-    public function revoke(int $news_id)
+    public function down(NewsItem $news)
     {
-        $news = NewsItem::withPending()->findOrFail($news_id);
-
-        if ($news->revoke()) {
+        if ($news->isPublished() && $news->revoke()) {
             return back()->with('notice', 'The news item is revoked.');
         }
 

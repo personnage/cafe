@@ -64,3 +64,42 @@
         where ("news_items"."published" = false or "news_items"."published_since" > :NOW)
             and "news_items"."deleted_at" is null
 
+---
+
+// NewsItem::all();
+select * from news_items;
+
+// NewsItem::published()
+select * from news_items where published == true
+
+// NewsItem::notPublished()
+select * from news_items where published == false
+
+// NewsItem::pending()
+select * from news_items where published_since > :NOW
+
+// NewsItem::notPending()
+select * from news_items where published_since <= :NOW
+
+// NewsItem::pending()->published()
+select * from news_items where published == true and published_since > :NOW
+
+// NewsItem::pending()->notPublished()
+select * from news_items where published == false and published_since > :NOW
+
+// NewsItem::notPending()->published()
+select * from news_items where published == true and published_since <= :NOW
+
+// NewsItem::notPending()->notPublished()
+select * from news_items where published == false and published_since <= :NOW
+
+// NewsItem::pending()->union( NewsItem::notPublished())->get()
+select * from news_items where published == false
+union
+select * from news_items where published_since > :NOW
+
+// NewsItem::pending()->get()->merge(NewsItem::notPublished()->get()
+
+
+
+

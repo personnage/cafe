@@ -21,6 +21,7 @@ class CreateNewsItemsTable extends Migration
             $table->string('title');
             $table->text('announcement');
             $table->text('body');
+            $table->string('thumbnail')->nullable();
             $table->boolean('comments_allowed')->default(true);
 
             $table->boolean('published')->default(false);

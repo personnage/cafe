@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\NewsCategory;
 use App\Jobs\ReleaseNewsCategory;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateNewsCategoryRequest;
-use App\Http\Requests\UpdateNewsCategoryRequest;
+use App\Http\Requests\NewsCategoryCreateRequest;
+use App\Http\Requests\NewsCategoryUpdateRequest;
 use Illuminate\Http\Request;
 
 class NewsCategoryController extends Controller
@@ -29,7 +28,7 @@ class NewsCategoryController extends Controller
 
         return view('admin.news.category.index', compact('categories'))
             ->with('active',  NewsCategory::count())
-            ->with('deleted', NewsCategory::onlyTrashed()->count())
+            ->with('deleted', NewsCategory::filter('deleted')->count())
         ;
     }
 
@@ -48,10 +47,10 @@ class NewsCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  CreateNewsCategoryRequest  $request
+     * @param  NewsCategoryCreateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateNewsCategoryRequest $request)
+    public function store(NewsCategoryCreateRequest $request)
     {
         $category = new NewsCategory($request->all());
         // When you create a category is not possible to specify a name.
@@ -73,7 +72,7 @@ class NewsCategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  NewsCategory  $category
      * @return \Illuminate\Http\Response
      */
     public function edit(NewsCategory $category)
@@ -84,11 +83,11 @@ class NewsCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  NewsCategoryUpdateRequest  $request
+     * @param  NewsCategory               $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateNewsCategoryRequest $request, NewsCategory $category)
+    public function update(NewsCategoryUpdateRequest $request, NewsCategory $category)
     {
         $category->fill($request->except('name'));
         $category->name = $request->name;
@@ -139,9 +138,7 @@ class NewsCategoryController extends Controller
     {
         $category = NewsCategory::withTrashed()->findOrFail($category_id);
 
-        if ($category->trashed()) {
-            $category->restore();
-
+        if ($category->trashed() && $category->restore()) {
             return back()->with('notice', 'The category restored.');
         }
 

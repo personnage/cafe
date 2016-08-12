@@ -22,9 +22,9 @@
         {{--set inner vars--}}
         @if($item->trashed())
           {{--*/ $css_class = 'text-danger fa fa-trash-o' /*--}}
-        @elseif($item->revoked()) {{--high priority--}}
+        @elseif($item->isNotPublished()) {{--high priority--}}
           {{--*/ $css_class = 'text-warning fa fa-times-circle-o' /*--}}
-        @elseif($item->pending()) {{--low priority--}}
+        @elseif($item->isPending()) {{--low priority--}}
           {{--*/ $css_class = 'text-muted fa fa-circle' /*--}}
         @else
           {{--*/ $css_class = 'text-success fa fa-check-circle-o' /*--}}
@@ -35,7 +35,11 @@
           <td>
             <div>
               <i class="{{ $css_class }}" aria-hidden="true"></i>
-              <a href="{{ url('admin/news', $item->id) }}" class="text-muted">{{ $item->title }}</a>
+              @if($item->trashed())
+                <span class="text-muted">{{ $item->title }}</span>
+              @else
+                <a href="{{ url('admin/news', $item->id) }}" class="text-muted">{{ $item->title }}</a>
+              @endif
             </div>
 
             <div class="btn-group invisible" role="group" aria-label="ctrl-news-item">
@@ -50,7 +54,7 @@
           </td>
 
           <td>
-            <a href="{{ url('admin/news/category', $item->category->id) }}">
+            <a href="{{ url('admin/news/category', [$item->category->id, 'edit']) }}">
               {{ $item->category->name }}
             </a>
           </td>

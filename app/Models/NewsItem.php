@@ -2,11 +2,18 @@
 
 namespace App\Models;
 
+use Storage;
+use App\Jobs\ReleaseNewsItem;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class NewsItem extends Model
 {
-    use SoftDeletes, Published, Scopes\NewsItem;
+    use SoftDeletes, Scopes\NewsItem;
+
+    /**
+     * @var string Base path to saving thumbnail.
+     */
+    protected $thumbnailBasePath = 'thumbnails/news/items';
 
     /**
      * The attributes that should be mutated to dates.
@@ -20,15 +27,8 @@ class NewsItem extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'title',
-        'announcement',
-        'body',
-        'comments_allowed',
-        'published',
-        'published_since',
-    ];
+    protected $fillable = ['title', 'announcement', 'body',
+        'thumbnail', 'comments_allowed', 'published', 'published_since'];
 
     /**
      * The casts attributes.
@@ -39,6 +39,34 @@ class NewsItem extends Model
         'published' => 'boolean',
         'comments_allowed' => 'boolean',
     ];
+
+    /**
+     * Set a URL friendly "slug" from the given name.
+     *
+     * This is method idempotence.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = str_slug($value);
+    }
+
+    /**
+     * Get thumbnail name.
+     *
+     * @param  string  $value
+     * @return string|null
+     */
+    public function getThumbnailAttribute($value)
+    {
+        if (! is_null($value)) {
+            return $this->thumbnailBasePath.DIRECTORY_SEPARATOR.$value;
+        }
+
+        return $value;
+    }
 
     /**
      * Get category to currently news.
@@ -84,5 +112,40 @@ class NewsItem extends Model
     public function getPublishedDateTime()
     {
         return $this->published_since->format('d.m в H:i');
+    }
+
+    /**
+     * Get full path to thumbnail storage.
+     *
+     * @return string
+     */
+    public function thumbnailUrl()
+    {
+        return Storage::url($this->thumbnail);
+    }
+
+    /**
+     * Upload thumbnail file to given news.
+     *
+     * @param  string|resource  $contents
+     * @return bool
+     */
+    public function uploadThumbnail($contents)
+    {
+        $that = clone $this;
+        $this->thumbnail = str_random();
+
+        $result = Storage::disk('public')->put($this->thumbnail, $contents);
+
+        if (! $result) {
+            // restore thumbnail
+            $this->thumbnail = $that->thumbnail;
+
+            return $result;
+        }
+
+        dispatch(new ReleaseNewsItem($that));
+
+        return true;
     }
 }

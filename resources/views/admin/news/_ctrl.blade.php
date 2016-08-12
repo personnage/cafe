@@ -1,10 +1,10 @@
 @unless($news->trashed())
-  <a href="{{ url('admin/news/', [$news->id, 'edit']) }}" class="btn btn-primary btn-xs" role="button">
+  <a href="{{ url('admin/news', [$news->id, 'edit']) }}" class="btn btn-primary btn-xs" role="button">
     <i class="fa fa-pencil" aria-hidden="true"></i> Edit
   </a>
 
   {{--Up/Down--}}
-  @if($news->revoked())
+  @if($news->isNotPublished())
   <form method="POST" action="{{ url('admin/news', [$news->id, 'up']) }}" role="form" id="up-news-item-{{ $news->id }}" class="hidden">
     {{ csrf_field() }}
     {{ method_field('PATCH') }}

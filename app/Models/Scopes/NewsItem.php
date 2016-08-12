@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait NewsItem
 {
+    use Published;
+
     /**
      * Scope a query to only include deleted categories.
      *
@@ -20,11 +22,11 @@ trait NewsItem
             case 'deleted':
                 return $query->onlyTrashed();
             case 'inactive':
-                return $query->onlyRevoked();
+                return $query->notPublished();
             case 'pending':
-                return $query->onlyPending();
+                return $query->pending()->published();
             default:
-                return $query;
+                return $query->notPending()->published();
         }
     }
 

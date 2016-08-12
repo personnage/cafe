@@ -66,14 +66,14 @@ $factory->define(App\Models\NewsCategory::class, function (Faker\Generator $fake
 
 $factory->define(App\Models\NewsItem::class, function (Faker\Generator $faker) {
     return [
+        // 'news_category_id' => factory(App\Models\NewsCategory::class)->create()->id,
+        // 'user_id' => factory(App\Models\User::class)->create()->id,
         'name' => $faker->slug,
         'title' => $faker->sentence,
         'announcement' => $faker->paragraph,
-        'body' => $faker->paragraphs(3, true),
+        'body' => $faker->paragraph,
         'comments_allowed' => $faker->boolean(60),
         'published' => $faker->boolean(80),
         'published_since' => $faker->dateTimeBetween('-3 days', '+2 days'),
-//        'content_category_id' => factory(App\Models\ContentCategory::class)->create()->id,
-//        'user_id' => factory(App\Models\User::class)->create()->id,
     ];
 });

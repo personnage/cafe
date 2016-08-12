@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class UpdateNewsCategoryRequest extends NewsCategoryRequest
+class NewsCategoryCreateRequest extends NewsCategoryRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -11,11 +11,8 @@ class UpdateNewsCategoryRequest extends NewsCategoryRequest
      */
     public function rules()
     {
-        $category = $this->route('category');
-
         return [
-            'name' => 'required|max:255|unique:news_categories,name,'.$category->id,
-            'title' => 'required|max:255|unique:news_categories,title,'.$category->id,
+            'title' => 'required|max:255|unique:news_categories',
             'announcement' => 'required',
             'description' => 'required',
             'category_thumbnail' => 'image',

@@ -75,7 +75,6 @@ class NewsCategory extends Model
     /**
      * Get full path to thumbnail storage.
      *
-     * @param  string  $filename
      * @return string
      */
     public function thumbnailUrl()
@@ -86,7 +85,7 @@ class NewsCategory extends Model
     /**
      * Upload thumbnail file to given category.
      *
-     * @param  string|resource  $contents]
+     * @param  string|resource  $contents
      * @return bool
      */
     public function uploadThumbnail($contents)
@@ -106,5 +105,16 @@ class NewsCategory extends Model
         dispatch(new ReleaseNewsCategory($that));
 
         return true;
+    }
+
+    /**
+     * Check related.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model $related
+     * @return boolean
+     */
+    public function owns($related)
+    {
+        return $this->id == $related->news_category_id;
     }
 }
