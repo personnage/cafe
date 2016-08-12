@@ -67,7 +67,7 @@ class NewsCategoriesTableSeeder extends Seeder
             'id'  => 8,
             'name'  => 'interview',
             'title' => 'Интервью',
-            'announcement' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum vel reprehenderit reiciendis optio quis, corrupti magnam harum consectetur obcaecati, nisi numquam facilis cumque quam dolore, earum minus voluptate ad odit.'
+            'announcement' => 'Здесь публикуются интервью.'
         ]);
 
         DB::statement('ALTER SEQUENCE news_categories_id_seq RESTART WITH 9');
