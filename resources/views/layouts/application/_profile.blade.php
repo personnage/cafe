@@ -2,7 +2,7 @@
   <img src="{{ Gravatar::src($user->email, 100) }}" class="col-lg-6 col-md-3 pull-right img-circle">
 
   <div class="info col-lg-6 col-md-9 col-sm-6 pull-right">
-    <a href="{{ url("community/feed") }}" class="info__profile">Мой AllCafe</a>
+    <a href="{{ url("profile", $user->id) }}" class="info__profile">Мой AllCafe</a>
     <span class="info__name">{{ $user->name }}</span>
     <a href="{{ url("logout") }}" class="info__exit">выход</a>
   </div>

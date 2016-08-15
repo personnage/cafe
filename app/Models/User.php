@@ -28,7 +28,7 @@ class User extends Authenticatable implements Contracts\Confirmable
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'notification_email', 'city_id'];
+    protected $fillable = ['name', 'email', 'password', 'notification_email', 'city_id', 'skype', 'facebook', 'bio'];
 
     /**
      * The attributes that should be hidden for arrays.

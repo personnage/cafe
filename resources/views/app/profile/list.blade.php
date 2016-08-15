@@ -20,7 +20,7 @@
                                     <span class="badge">9836</span>
                                 </div>
                                 <div class="body col-sm-10">
-                                    <a href="{{ url("community/user", $user->id) }}">{{ $user->name }}</a>
+                                    <a href="{{ url("profile", $user->id) }}">{{ $user->name }}</a>
                                     <p>Санкт-Петербург</p>
                                     <time><strong>Зарегистрирован: </strong>{{ $user->created_at->format('d.m.Y в H:i') }}</time>
                                 </div>

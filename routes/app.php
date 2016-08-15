@@ -43,9 +43,22 @@ Route::get('/news/{categoryName}', [
     'uses' => 'NewsController@itemsList',
 ]);
 
-Route::get('community', 'CommunityController@index');
-
-Route::resource('community/user', 'CommunityUserController');
+Route::get('profile/{profile}/edit/password', [
+    'as' => 'profile.edit.password',
+    'uses' => 'ProfileController@showPasswordForm'
+]);
+Route::get('profile/{profile}/edit/notice', [
+    'as' => 'profile.edit.notice',
+    'uses' => 'ProfileController@showNoticeForm'
+]);
+Route::get('profile/{profile}/edit/account', [
+    'as' => 'profile.edit.account',
+    'uses' => 'ProfileController@showAccountForm'
+]);
+Route::patch('profile/{profile}/edit/password', 'ProfileController@updatePassword');
+Route::patch('profile/{profile}/edit/notice', 'ProfileController@updateNotifications');
+Route::patch('profile/{profile}/edit/account', 'ProfileController@softDelete');
+Route::resource('profile', 'ProfileController', ['except' => ['create']]);
 
 // Статья из категории "Новости ресторанов и отелей"
 Route::get('/news/total/{year}/{month}/{day}/{itemName}', [
